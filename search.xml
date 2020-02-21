@@ -210,9 +210,9 @@
 <li>事件修饰符: <code>.prevent</code>, <code>.self</code>, <code>.once</code>, <code>.capture</code>, <code>.passive</code> 仅在 H5 平台支持, <code>.stop</code> 全平台均支持， 阻止事件冒泡，在<strong>非</strong> <code>H5</code> 端**使用时同时阻止事件的默认行为, <code>uni-app</code>专注移动端，未支持键盘事件，因此不支持按键修饰符。</li>
 </ol>
 </li>
-<li><p><a href="https://uniapp.dcloud.io/use?id=v-html%E6%8C%87%E4%BB%A4" target="_blank" rel="noopener">v-html</a>: 目前只支持 <code>H5</code> 端和在 <a href="https://ask.dcloud.net.cn/article/36599" target="_blank" rel="noopener">uni-app V3 版本编译模式</a>下的 <code>App</code> 端, 社区有<a href="https://uniapp.dcloud.io/use?id=v-html%E6%8C%87%E4%BB%A4" target="_blank" rel="noopener">跨端的富文本处理方案</a></p>
+<li><p><a href="https://uniapp.dcloud.io/use?id=v-html%E6%8C%87%E4%BB%A4" target="_blank" rel="noopener">v-html</a>: 目前只支持 <code>H5</code> 端和在 <a href="https://ask.dcloud.net.cn/article/36599" target="_blank" rel="noopener">uni-app V3 版本编译模式</a>下的 <code>App</code> 端, 社区有<a href="https://ask.dcloud.net.cn/article/35772" target="_blank" rel="noopener">跨端的富文本处理方案</a></p>
 </li>
-<li><p>除了支持 “<code>Vue</code> 组件三步法(引入, 注册, 使用)” 外, <code>2.5.0+</code> 版本支持在 <code>page.json</code>中配置组件,配置完成后, 无需引入, 无需注册, 即可直接使用, 详见 <a href="https://uniapp.dcloud.io/collocation/pages?id=easycom" target="_blank" rel="noopener">easycom</a></p>
+<li><p>除了支持 <code>Vue</code> “组件三步法”：“引入”, “注册”, “使用” 外, <code>uni-app 2.5.0+</code> 版本支持在 <code>page.json</code>中配置组件,配置完成后, 无需引入, 无需注册, 即可直接使用, 详见 <a href="https://uniapp.dcloud.io/collocation/pages?id=easycom" target="_blank" rel="noopener">easycom</a></p>
 </li>
 <li><p>非 <code>H5</code> 端不支持如下组件特性:</p>
 <ul>
