@@ -248,7 +248,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>Document Excerpt Notes</category>
+        <category>Extract and Organize</category>
       </categories>
       <tags>
         <tag>get started</tag>
@@ -263,7 +263,7 @@
 <h3 id="Stop-the-network-connections-by-corresponding-PID-number-of-the-occupied-port"><a href="#Stop-the-network-connections-by-corresponding-PID-number-of-the-occupied-port" class="headerlink" title="Stop the network connections by corresponding PID number of the occupied port"></a>Stop the network connections by corresponding PID number of the occupied port</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">taskkill</span> /F /PID [the corresponding PID number]</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>Points</category>
+        <category>Learn A Bit</category>
       </categories>
       <tags>
         <tag>issue</tag>
@@ -310,7 +310,7 @@
 <h1 id="Postscript"><a href="#Postscript" class="headerlink" title="Postscript:"></a>Postscript:</h1><p>Customize the pretty style, configure the local search, add comment and so on by the powerful and interesting third party theme <a href="http://theme-next.iissnan.com/" target="_blank" rel="noopener">NexT</a>,<br>Through a variety of technical to add a variety of plugins…<br>The blog was born O(∩ _ ∩)O~</p>
 ]]></content>
       <categories>
-        <category>Original Notes</category>
+        <category>Extract and Organize</category>
       </categories>
       <tags>
         <tag>get started</tag>
