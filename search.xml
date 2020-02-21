@@ -7,15 +7,15 @@
 <p>最后更新于 <code>2020-2-20</code>, 信息出入请以 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> 为准<br>为了保证信息有效性, 大量使用了文字链接关联官方文档的相关内容</p>
 </blockquote>
 <p><img src="/images/hello-uni-app/front-cover.png" alt><br>(<strong><em> 图片源 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> </em></strong>)</p>
-<p>开局一张图, 内容开始编.</p>
+<p>开局一张图，内容开始编。</p>
 <p>近期接手维护一个基于 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app</a> 框架开发的项目，故笔墨伺候，简单做下功课。</p>
-<p>以下内容对于仅是 <code>uni-app</code> 框架”小白”或者未听说过 <code>uni-app</code> 的前端“熟练工”相对比较友好些，内容有误，敬请指正。</p>
+<p>以下内容对于未听说过或者未使用过 <code>uni-app</code>的前端“熟练工”相对比较友好些，内容有误，敬请指正。</p>
 <p><code>uni-app</code> 是一个使用 <code>Vue.js</code> 开发全平台(<code>App</code>,<code>小程序</code>,<code>Web/H5</code>)前端应用的框架, 由”为开发者而生的” <a href="https://www.w3.org/" target="_blank" rel="noopener">W3C</a> 成员及 <a href="https://www.html5plus.org/" target="_blank" rel="noopener">HTML5 中国产业联盟</a>的发起单位，数字天堂(北京)网络技术有限公司(<a href="https://www.dcloud.io/" target="_blank" rel="noopener">DCloud</a>)出品。</p>
 <blockquote>
 <p><code>uni</code>，<a href="https://uniapp.dcloud.io/history" target="_blank" rel="noopener">读</a> <code>you ni</code>，是统一的意思.<br><code>app</code> 当指“应用（软件）”时，按 <code>Google</code> 翻译以及 <code>Apple</code> 官方读音, 读<code>/æp/</code>，而非 <code>/eɪ̯.pʰiː.pʰiː/</code></p>
 </blockquote>
-<p>已知全貌, 准予置评. 🙈🙈🙈</p>
-<p>开始吧.</p>
+<p>已知全貌，准予置评。 🙈🙈🙈</p>
+<p>开始吧…</p>
 <a id="more"></a>
 <h1 id="已有技术储备"><a href="#已有技术储备" class="headerlink" title="已有技术储备"></a>已有技术储备</h1><ul>
 <li><p><a href="https://cn.vuejs.org/v2/guide/" target="_blank" rel="noopener">Vue</a>, <a href="https://cli.vuejs.org/" target="_blank" rel="noopener">Vue CLI</a></p>
@@ -256,96 +256,10 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello Webpack</title>
-    <url>/2017/03/02/Hello-Webpack/</url>
-    <content><![CDATA[<blockquote>
-<p>just notes, following content comes from <a href="https://webpack.js.org/" target="_blank" rel="noopener">webpack official documentation</a>_</p>
-</blockquote>
-<h1 id="Version"><a href="#Version" class="headerlink" title="Version"></a>Version</h1><p><strong>2.2</strong></p>
-<h1 id="Concepts"><a href="#Concepts" class="headerlink" title="Concepts"></a>Concepts</h1><h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>webpack is a module bundler, and it can creates a “graph” of all of your application’s dependencies.<br>It is necessary to first understand <strong>Four Core Concepts</strong>(entry,output,loader and plugins) before get started!</p>
-<ul>
-<li>entry tells webpack where to start and what to bundle.</li>
-<li>output tells webpack where to put bundled various resources and how to treat bundled code.</li>
-<li><a href="https://webpack.js.org/loaders/" target="_blank" rel="noopener">loaders</a> transform files ( .js(<a href="http://www.ecma-international.org/ecma-262/6.0/" target="_blank" rel="noopener">ECMAScript 2015</a>), <a href="https://facebook.github.io/react/docs/introducing-jsx.html" target="_blank" rel="noopener">.jsx</a>, <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener">.ts</a>, <a href="http://coffeescript.org/" target="_blank" rel="noopener">.coffee</a> <a href="http://sass-lang.com/" target="_blank" rel="noopener">.sass</a>, etc. ) into .js(<a href="https://www.ecma-international.org/ecma-262/5.1/" target="_blank" rel="noopener">ECMAScript 2011</a>) or transfrom files ( .css, .html, .jpg, etc. ) into modules, and then add all of them into “dependency graph”.</li>
-<li><a href="https://webpack.js.org/plugins/" target="_blank" rel="noopener">plugins</a> can extend a variety of functionality, customize the webpack build process.</li>
-</ul>
-<a id="more"></a>
-<h3 id="Entry-Points"><a href="#Entry-Points" class="headerlink" title="Entry Points"></a>Entry Points</h3><ul>
-<li><h4 id="Single-Entry-Syntax"><a href="#Single-Entry-Syntax" class="headerlink" title="Single Entry Syntax"></a>Single Entry Syntax</h4><code>entry: string | Array&lt;sting&gt;</code></li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">entry: <span class="string">"path/fileName.js"</span>;</span><br></pre></td></tr></table></figure>
-<p>The single entry syntax is a shorthand for <strong>object syntax</strong> :</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">entry: &#123;</span><br><span class="line">  chunkName: <span class="string">"path/fileName.js"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Passing an array of file paths will inject multiple dependent files together graph their dependencies into one “chunk”.</p>
-<ul>
-<li><h4 id="Object-Syntax"><a href="#Object-Syntax" class="headerlink" title="Object Syntax"></a>Object Syntax</h4><code>entry: { entryChunkName : string | Array&lt;string&gt; }</code></li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">entry:&#123;</span><br><span class="line">  vendors: [<span class="string">'path/lib1.js'</span>,<span class="string">'path/lib2.js'</span>],</span><br><span class="line">  main: <span class="string">'path/fileName.js'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The object syntax is verbose,but it is the most <strong>scalable</strong> way.<br><strong><em>“Scalable webpack configurations”</em></strong> that means can be reused and combined with other partial configurations. ( More info : specialized tools like <a href="https://github.com/survivejs/webpack-merge" target="_blank" rel="noopener">webpack-merge</a> ).</p>
-<ul>
-<li><h4 id="Use-Cases"><a href="#Use-Cases" class="headerlink" title="Use Cases"></a>Use Cases</h4></li>
-</ul>
-<font color="#DC143C">Separate App and Vendor Entries</font>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: <span class="string">"./src/js/app.js"</span>,</span><br><span class="line">    vendors: <span class="string">"./src/js/vendors.js"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<font color="#DC143C">Multi Page Application</font>
-
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    pageOne: <span class="string">"./src/js/pageOne/index.js"</span>,</span><br><span class="line">    pageTwo: <span class="string">"./src/js/pageTwo/index.js"</span>,</span><br><span class="line">    pageThree: <span class="string">"./src/js/pageThree/index.js"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h3><p>Output options tell webpack how to write the compiled files to disk.<br>There’re two properties be required, <code>filename</code> and <code>path</code> .<br>Only one output configuration can be specified.</p>
-<p><strong><code>output.path</code></strong><br>The output directory(required).</p>
-<p><strong><code>output.filename</code></strong><br>Specifies the name of each output file on disk.<br><strong><font color="#DC143C">single entry</font></strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  entry: <span class="string">"./src/js/app.js"</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">"./script/bundle.js"</span>,</span><br><span class="line">    path: __dirname + <span class="string">"/dist"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//Output to disk: ./dist/bundle.js</span></span><br></pre></td></tr></table></figure>
-<p><strong><font color="#DC143C">multiple entries</font></strong><br>If configuration creates more than a single “chunk”, then should ensure each file has a unique name.<br><code>[name]</code> name of chunk<br><code>[hash]</code> hash of compilation<br><code>[chunkhash]</code> hash of chunk</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  entry: &#123;</span><br><span class="line">    main: <span class="string">'./src/js/app.js'</span>,</span><br><span class="line">    componet: <span class="string">'./src/js/componet.js'</span></span><br><span class="line">  &#125;</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'./script/[name].js'</span>,</span><br><span class="line">    path: __dirname +  <span class="string">'/dist'</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Output to disk: ./dist/main.js, ./dist/componet.js</span></span><br></pre></td></tr></table></figure>
-<p>More info:</p>
-<ul>
-<li><a href="https://nodejs.org/docs/latest/api/globals.html#globals_dirname" target="_blank" rel="noopener"> <strong><font color="#DC143C">__dirname</font></strong> </a> refers to the directory where the <strong><code>webpack.config.js</code></strong> lives.</li>
-<li>more other <a href="https://webpack.js.org/concepts/output/#options" target="_blank" rel="noopener"><strong><font color="#DC143C">options</font></strong></a> of <strong>Output</strong>.</li>
-</ul>
-<h3 id="Loaders"><a href="#Loaders" class="headerlink" title="Loaders"></a>Loaders</h3><p>They are functions (running in <a href="https://nodejs.org/docs/latest/api/" target="_blank" rel="noopener">Node.js</a>) that take the source as the parameter and return the new source after transformation.<br><strong><code>rules</code></strong> be used instead of <strong><code>loaders</code></strong> since <a href="https://github.com/webpack/webpack/releases/tag/v2.1.0-beta.23" target="_blank" rel="noopener"><strong><em>webpack v2.1.0-beta.23</em></strong></a></p>
-<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><p>Firstly, install the corresponding loaders:</p>
-<figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">npm install --save-dev css-loader</span><br></pre></td></tr></table></figure>
-<p>Secondly, configure the <strong><code>webpack.config.js</code></strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">    entry: ...,</span><br><span class="line">    output: ...,</span><br><span class="line">    <span class="built_in">module</span>: &#123;</span><br><span class="line">      rules: [&#123;</span><br><span class="line">        test: <span class="regexp">/\.css$/</span>,</span><br><span class="line">        use: <span class="string">'css-loader'</span></span><br><span class="line">      &#125;]</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The other two ways to use loaders</p>
-<ul>
-<li><a href="https://webpack.js.org/concepts/loaders/#via-require" target="_blank" rel="noopener">via <strong>Require</strong> statement</a></li>
-<li><a href="https://webpack.js.org/concepts/loaders/#via-cli" target="_blank" rel="noopener">via <strong>CLI</strong></a></li>
-</ul>
-<h4 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h4><ul>
-<li>Loaders can be chained.</li>
-<li>Loaders can be synchronous or asynchronous.</li>
-<li>Loaders can do everything that’s possible in Node.js</li>
-<li>Loaders accept query parameters.( This can be used to pass configuration to the loader )</li>
-<li>Loaders can also be configured with an <code>options</code> object.</li>
-<li>Loaders can produce additional arbitrary files.</li>
-</ul>
-<h3 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h3><p>Plugins are the backbone of webpack.<br>Plugins can give loaders more features,can do anything else that a loader cannot do.<br>A webpack plugin is a javascript object that has <code>apply</code> method.The <code>apply</code> method will be called by the webpack compiler,so the plugin can access to the entire compilation lifecycle.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// log-process-plugin.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">LogProcessPlugin</span>(<span class="params">options</span>) </span>&#123;&#125;</span><br><span class="line">LogProcessPlugin.prototype.apply = <span class="function"><span class="keyword">function</span>(<span class="params">compiler</span>) </span>&#123;</span><br><span class="line">  compiler.plugin(<span class="string">"run"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">compiler, callback</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"The build process starting"</span>);</span><br><span class="line">    callback();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  compiler.plugin(<span class="string">"compile"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"The compiler is starting to compile..."</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  compiler.plugin(<span class="string">"compilation"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">compilation</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"The compiler is starting a new compilation..."</span>);</span><br><span class="line"></span><br><span class="line">    compilation.plugin(<span class="string">"optimize"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"The compilation is starting to optimize files..."</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  compiler.plugin(<span class="string">"emit"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">compilation, callback</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"The compilation is going to emit files..."</span>);</span><br><span class="line">    callback();</span><br><span class="line">  &#125;);</span><br><span class="line">  compiler.plugin(<span class="string">"done"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">compiler, callback</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"The build process over"</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports = LogProcessPlugin;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="keyword">const</span> LogProcessPlugin = <span class="built_in">require</span>(<span class="string">'./path/log-process-plugin.js'</span>);</span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">  entry: ...,</span><br><span class="line">  output: ...,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> LogProcessPlugin();</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="Configuration"><a href="#Configuration" class="headerlink" title="Configuration"></a>Configuration</h3><p>Webpack’s configuration file( <code>webpack.config.js</code> ) exports an object. Webpack will process the object based the properties defined by the object.</p>
-<p><code>webpack.config.js</code> is a standard Node.js CommonJS module, so more flexible than using <code>.json</code> to configure. Technically you can do almost all you want to do, but <strong><em>not recommended</em></strong> following things:</p>
-<ul>
-<li>Access CLI arguments, when using the webpack CLI (instead write your own CLI, or use <code>--env</code>)</li>
-<li>Export non-deterministic values (calling webpack twice should result in the same output files)</li>
-<li>Write long configurations (instead split the configuration into multiple files)</li>
-</ul>
-<h4 id="Simplest-Configuration"><a href="#Simplest-Configuration" class="headerlink" title="Simplest Configuration"></a>Simplest Configuration</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry:<span class="string">'./index.js'</span></span><br><span class="line">  output:&#123;</span><br><span class="line">    path:path.resolve(__dirname,<span class="string">'dist'</span>),</span><br><span class="line">    filename:<span class="string">'bundle.js'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h3><h3 id="Modules-Resolution"><a href="#Modules-Resolution" class="headerlink" title="Modules Resolution"></a>Modules Resolution</h3><h3 id="Dependency-Graph"><a href="#Dependency-Graph" class="headerlink" title="Dependency Graph"></a>Dependency Graph</h3><h3 id="Targets"><a href="#Targets" class="headerlink" title="Targets"></a>Targets</h3><h3 id="Hot-Module-Replacement"><a href="#Hot-Module-Replacement" class="headerlink" title="Hot Module Replacement"></a>Hot Module Replacement</h3><h1 id="Guides"><a href="#Guides" class="headerlink" title="Guides"></a>Guides</h1><h1 id="Documention"><a href="#Documention" class="headerlink" title="Documention"></a>Documention</h1>]]></content>
-      <categories>
-        <category>Document Excerpt Notes</category>
-      </categories>
-      <tags>
-        <tag>get started</tag>
-        <tag>webpack</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Stop the occupied port by cmd on windows OS</title>
     <url>/2017/02/28/Stop-the-occupied-port-by-cmd-on-windows-OS/</url>
     <content><![CDATA[<h3 id="List-corresponding-ports-and-PIDs-of-all-the-network-connections"><a href="#List-corresponding-ports-and-PIDs-of-all-the-network-connections" class="headerlink" title="List corresponding ports and PIDs of all the network connections"></a>List corresponding ports and PIDs of all the network connections</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
-<h3 id="cmdOr-just-show-the-network-connections-on-the-occupied-port"><a href="#cmdOr-just-show-the-network-connections-on-the-occupied-port" class="headerlink" title="cmdOr just show the network connections on the occupied port"></a>cmdOr just show the network connections on the occupied port</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">netstat -ano|<span class="built_in">find</span> "the occupied port number"</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+<h3 id="Show-the-network-connections-on-the-occupied-port"><a href="#Show-the-network-connections-on-the-occupied-port" class="headerlink" title="Show the network connections on the occupied port"></a>Show the network connections on the occupied port</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">netstat -ano|<span class="built_in">find</span> "the occupied port number"</span><br></pre></td></tr></table></figure>
 <h3 id="Stop-the-network-connections-by-corresponding-PID-number-of-the-occupied-port"><a href="#Stop-the-network-connections-by-corresponding-PID-number-of-the-occupied-port" class="headerlink" title="Stop the network connections by corresponding PID number of the occupied port"></a>Stop the network connections by corresponding PID number of the occupied port</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">taskkill</span> /F /PID [the corresponding PID number]</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
@@ -356,8 +270,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello Blog</title>
-    <url>/2017/02/27/Hello-Blog/</url>
+    <title>Hello Hexo</title>
+    <url>/2017/02/27/Hello-Hexo/</url>
     <content><![CDATA[<h1 id="Create-blog"><a href="#Create-blog" class="headerlink" title="Create blog"></a>Create blog</h1><h2 id="Pre-requirements"><a href="#Pre-requirements" class="headerlink" title="Pre-requirements"></a>Pre-requirements</h2><ul>
 <li><a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js</a></li>
 <li><a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a></li>
@@ -378,7 +292,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo d -g</span><br></pre></td></tr></table></figure>
 <p>More info: about <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a> and <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 <h2 id="At-last"><a href="#At-last" class="headerlink" title="At last"></a>At last</h2><p>open the <code>package.json</code> in the root directory,<br>and then add scripts to run <code>hexo-cli</code> command line combination via npm,<br>just like:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">// windows OS</span><br><span class="line">...,</span><br><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;deploy&quot;: &quot;hexo clean &amp;&amp; hexo g -d &amp;&amp; start https://username.github.io&quot;,</span><br><span class="line">  &quot;serve&quot;: &quot;hexo clean &amp;&amp; concurrently \&quot;hexo server -p portNumber\&quot; \&quot;hexo g -w\&quot; \&quot;start http://localhost:portNumber/\&quot;&quot;</span><br><span class="line">&#125;,</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">// linux</span><br><span class="line">...,</span><br><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">  &quot;deploy&quot;: &quot;hexo clean &amp;&amp; hexo g -d &amp;&amp; xdg-open https://xllily.github.io&quot;,</span><br><span class="line">  &quot;serve&quot;: &quot;hexo clean &amp;&amp; concurrently \&quot;hexo server -p 1314\&quot; \&quot;hexo g -w\&quot; \&quot;xdg-open http://localhost:1314/\&quot;&quot;</span><br><span class="line">&#125;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">// windows OS</span><br><span class="line">...,</span><br><span class="line">"scripts": &#123;</span><br><span class="line">  "deploy": "hexo clean &amp;&amp; hexo g -d &amp;&amp; start https://username.github.io",</span><br><span class="line">  "serve": "hexo clean &amp;&amp; concurrently \"hexo server -p portNumber\" \"hexo g -w\" \"start http://localhost:portNumber/\""</span><br><span class="line">&#125;,</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">// linux (Ubuntu)</span><br><span class="line">...,</span><br><span class="line">"scripts": &#123;</span><br><span class="line">  "deploy": "hexo clean &amp;&amp; hexo g -d &amp;&amp; xdg-open https://username.github.io",</span><br><span class="line">  "serve": "hexo clean &amp;&amp; concurrently \"hexo server -p 1314\" \"hexo g -w\" \"xdg-open http://localhost:1314/\""</span><br><span class="line">&#125;,</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>More info :</p>
 <ul>
 <li>about <a href="https://hexo.io/docs/commands.html#clean" target="_blank" rel="noopener">hexo clean</a> and <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">hexo server</a></li>
