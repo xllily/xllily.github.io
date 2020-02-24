@@ -68,7 +68,7 @@
 <ul>
 <li><p>条件编译是利用注释实现的，在不同语法里注释写法不一样，如: <code>js</code> 使用 <code>// 注释</code>、<code>css</code> 使用 <code>/* 注释 */</code>、<code>vue/nvue</code> 模板里使用 <code>&lt;!-- 注释 --&gt;</code>；</p>
 </li>
-<li><p><code>pages.json</code> 的条件编译，如不同平台的 key 名称相同，cli 项目下开发者自己安装的校验器会报错，需自行关闭这些校验器对 <code>json</code> 相同 <code>key</code> 的校验规则。</p>
+<li><p><code>pages.json</code> 的条件编译，如不同平台的 <code>key</code> 名称相同，<code>cli</code> 项目下开发者自己安装的校验器会报错，需自行关闭这些校验器对 <code>json</code> 相同 <code>key</code> 的校验规则。</p>
 </li>
 </ul>
 <p><strong><code>%PLATFORM%</code>值:</strong></p>
@@ -212,11 +212,11 @@
 </li>
 <li><p><a href="https://uniapp.dcloud.io/use?id=v-html%E6%8C%87%E4%BB%A4" target="_blank" rel="noopener">v-html</a>: 目前只支持 <code>H5</code> 端和在 <a href="https://ask.dcloud.net.cn/article/36599" target="_blank" rel="noopener">uni-app V3 版本编译模式</a>下的 <code>App</code> 端, 社区有<a href="https://ask.dcloud.net.cn/article/35772" target="_blank" rel="noopener">跨端的富文本处理方案</a></p>
 </li>
-<li><p>除了支持 <code>Vue</code> “组件三步法”：“引入”, “注册”, “使用” 外, <code>uni-app 2.5.0+</code> 版本支持在 <code>page.json</code>中配置组件,配置完成后, 无需引入, 无需注册, 即可直接使用, 详见 <a href="https://uniapp.dcloud.io/collocation/pages?id=easycom" target="_blank" rel="noopener">easycom</a></p>
+<li><p>除了支持 <code>Vue</code> “组件三步法”：<code>引入</code>, <code>注册</code>, <code>使用</code> 外, <code>uni-app 2.5.0+</code> 版本支持在 <code>page.json</code>中配置组件,配置完成后, 无需引入, 无需注册, 即可直接使用, 详见 <a href="https://uniapp.dcloud.io/collocation/pages?id=easycom" target="_blank" rel="noopener">easycom</a></p>
 </li>
 <li><p>非 <code>H5</code> 端不支持如下组件特性:</p>
 <ul>
-<li><code>Slot</code>（scoped 暂时还没做支持）</li>
+<li><code>Slots</code>（scoped 暂时还没做支持）</li>
 <li>动态组件</li>
 <li>异步组件</li>
 <li><code>inline-template</code></li>
