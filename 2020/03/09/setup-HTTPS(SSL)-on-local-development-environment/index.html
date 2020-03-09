@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="issue,">
 
 
 
@@ -87,14 +87,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://xllily.github.io/categories/index.html">
+<meta name="description" content="Edit hosts filelocation: /etc/hosts 123# e.g:# add a local domain127.0.0.1 xllily.com Install nginx123456apt-get updateapt-get install nginx# create folder &apos;ssl&apos; for subsequent usecd /etc/nginxmkdir s">
+<meta name="keywords" content="issue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="setup HTTPS(SSL) on local development environment (Ubuntu)">
+<meta property="og:url" content="http://xllily.github.io/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/index.html">
 <meta property="og:site_name" content="Just Notes">
+<meta property="og:description" content="Edit hosts filelocation: /etc/hosts 123# e.g:# add a local domain127.0.0.1 xllily.com Install nginx123456apt-get updateapt-get install nginx# create folder &apos;ssl&apos; for subsequent usecd /etc/nginxmkdir s">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-21T06:50:13.775Z">
+<meta property="og:image" content="http://xllily.github.io/images/setup-https-local-dev-env/shot1.png">
+<meta property="og:image" content="http://xllily.github.io/images/setup-https-local-dev-env/shot2.png">
+<meta property="og:updated_time" content="2020-03-09T07:56:49.362Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
+<meta name="twitter:title" content="setup HTTPS(SSL) on local development environment (Ubuntu)">
+<meta name="twitter:description" content="Edit hosts filelocation: /etc/hosts 123# e.g:# add a local domain127.0.0.1 xllily.com Install nginx123456apt-get updateapt-get install nginx# create folder &apos;ssl&apos; for subsequent usecd /etc/nginxmkdir s">
+<meta name="twitter:image" content="http://xllily.github.io/images/setup-https-local-dev-env/shot1.png">
 
 
 
@@ -122,19 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://xllily.github.io/categories/">
+  <link rel="canonical" href="http://xllily.github.io/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/">
 
 
 
 
 
-  <title>
-  
-
-  
-    categories | Just Notes
-  
-</title>
+  <title> setup HTTPS(SSL) on local development environment (Ubuntu) | Just Notes </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -159,7 +160,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -296,25 +297,229 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h2 class="post-title" itemprop="name headline">categories</h2>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xllily.github.io/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="「λ」xllily">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Just Notes">
+    </span>
 
     
-    
-      <div class="category-all-page">
-        <div class="category-all-title">
-            2 categories in total
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                setup HTTPS(SSL) on local development environment (Ubuntu)
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-09T14:29:47+08:00">
+                2020-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn-A-Bit/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn A Bit</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+          
+          
         </div>
-        <div class="category-all">
-          <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Extract-and-Organize/">Extract and Organize</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Learn-A-Bit/">Learn A Bit</a><span class="category-list-count">2</span></li></ul>
-        </div>
-      </div>
+      </header>
     
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Edit-hosts-file"><a href="#Edit-hosts-file" class="headerlink" title="Edit hosts file"></a>Edit <code>hosts</code> file</h1><p>location: <code>/etc/hosts</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># e.g:</span></span><br><span class="line"><span class="meta"># add a local domain</span></span><br><span class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> xllily.com</span><br></pre></td></tr></table></figure>
+<h1 id="Install-nginx"><a href="#Install-nginx" class="headerlink" title="Install nginx"></a>Install nginx</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># create folder 'ssl' for subsequent use</span></span><br><span class="line"><span class="built_in">cd</span> /etc/nginx</span><br><span class="line">mkdir ssl</span><br></pre></td></tr></table></figure>
+<p><strong>Control:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nginx <span class="_">-s</span> [ stop | quit | reopen | reload ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"></span><br><span class="line">sudo systemctl [ stop | start | restart | reload | <span class="built_in">disable</span> ] nginx</span><br></pre></td></tr></table></figure>
+<p>sudo systemctl enable nginx</p>
+<h1 id="Generate-self-signed-TLS-certificate-using-OpenSSL"><a href="#Generate-self-signed-TLS-certificate-using-OpenSSL" class="headerlink" title="Generate self-signed TLS certificate using OpenSSL"></a>Generate self-signed TLS certificate using OpenSSL</h1><p>Someone has written a bash script</p>
+<p><a href="https://github.com/loganstellway/self-signed-ssl" target="_blank" rel="noopener">loganstellway/self-signed-ssl</a></p>
+<p>Just execute the script and pass in the options</p>
+<p><strong>Options:</strong></p>
+<ul>
+<li><p><code>-c</code> | <code>--country</code></p>
+<p>Country Name (2 letter code)</p>
+</li>
+<li><p><code>-s</code> | <code>--state</code></p>
+<p>State or Province Name (full name)</p>
+</li>
+<li><p><code>-l</code> | <code>--locality</code></p>
+<p>Locality Name (eg, city)</p>
+</li>
+<li><p><code>-o</code> | <code>--organization</code></p>
+<p>Organization Name (eg, company)</p>
+</li>
+<li><p><code>-u</code> | <code>--unit</code></p>
+<p>Organizational Unit Name (eg, section)</p>
+</li>
+<li><p><code>-n</code> | <code>--common-name</code></p>
+<p>Common Name (e.g. server FQDN or YOUR name)</p>
+</li>
+<li><p><code>-e</code> | <code>--email</code></p>
+<p>Email Address</p>
+</li>
+<li><p><code>-p</code> | <code>--path</code></p>
+<p>Path to output generated keys</p>
+</li>
+<li><p><code>-h</code> | <code>--help</code></p>
+<p>Display help and exit</p>
+</li>
+<li><p><code>-v</code> | <code>--verbose</code><br>Verbose output</p>
+</li>
+</ul>
+<p><strong>Usage:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Generate the certificate in the previously created directory 'ssl'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># e.g</span></span><br><span class="line">$ sudo ./self-signed-tls -c=CN <span class="_">-s</span>=Shang-Hai <span class="_">-l</span>=shanghai -o=xllily -u=dev -n=xllily.com <span class="_">-e</span>=xllily@email.com -p=/etc/nginx/ssl/</span><br></pre></td></tr></table></figure>
+<h1 id="Import-the-crt-to-the-browser-and-restart"><a href="#Import-the-crt-to-the-browser-and-restart" class="headerlink" title="Import the crt to the browser and restart"></a>Import the <code>crt</code> to the browser and restart</h1><p>Chrome:</p>
+<p><code>Setting</code></p>
+<p>-&gt; <code>(Advanced) Manage Certificates</code></p>
+<p>-&gt; <code>toggle to the &#39;Authorities&#39;(Tab)</code><br><img src="/images/setup-https-local-dev-env/shot1.png" alt></p>
+<p>-&gt; <code>Import</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># eg: import the</span></span><br><span class="line">/etc/nginx/ssl/xllily.com_CA.pem</span><br></pre></td></tr></table></figure>
+<p>-&gt; <code>Restart the browser</code></p>
+<h1 id="Configure-nginx-and-reload"><a href="#Configure-nginx-and-reload" class="headerlink" title="Configure nginx and reload"></a>Configure nginx and reload</h1><p>Edit <code>/etc/nginx/nginx.conf</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># ...</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line"># ...</span><br><span class="line">	server &#123;</span><br><span class="line">		listen <span class="number">80</span>;</span><br><span class="line">		listen <span class="number">443</span> ssl http2;</span><br><span class="line">		server_name xllily.com;</span><br><span class="line">		ssl_certificate /etc/nginx/ssl/xllily.com.crt;</span><br><span class="line">		ssl_certificate_key /etc/nginx/ssl/xllily.com.key;</span><br><span class="line">		location / &#123;</span><br><span class="line">			root html;</span><br><span class="line">			index index.html index.htm;</span><br><span class="line">            <span class="meta"># you can open the proxy</span></span><br><span class="line">            # proxy_pass http:<span class="comment">//....;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"># ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># ...</span><br></pre></td></tr></table></figure>
+<h1 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h1><p><img src="/images/setup-https-local-dev-env/shot2.png" alt></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/issue/" rel="tag"># issue</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/19/Hello-Uni-App/" rel="next" title="Hello uni-app">
+                <i class="fa fa-chevron-left"></i> Hello uni-app
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58b675d5bf731501" async></script>
+</div>
+
+      
+    </div>
   </div>
 
           
@@ -323,6 +528,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80ODcyOC8yNTIyMg=="></div>
+    
+  </div>
+
 
         </div>
         
@@ -342,8 +553,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="「λ」xllily">
           <p class="site-author-name" itemprop="name">「λ」xllily</p>
@@ -410,6 +630,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Edit-hosts-file"><span class="nav-number">1.</span> <span class="nav-text">Edit hosts file</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Install-nginx"><span class="nav-number">2.</span> <span class="nav-text">Install nginx</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Generate-self-signed-TLS-certificate-using-OpenSSL"><span class="nav-number">3.</span> <span class="nav-text">Generate self-signed TLS certificate using OpenSSL</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Import-the-crt-to-the-browser-and-restart"><span class="nav-number">4.</span> <span class="nav-text">Import the crt to the browser and restart</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Configure-nginx-and-reload"><span class="nav-number">5.</span> <span class="nav-text">Configure nginx and reload</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Done"><span class="nav-number">6.</span> <span class="nav-text">Done</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -530,6 +766,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
