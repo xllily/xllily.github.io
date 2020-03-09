@@ -8,7 +8,7 @@
 <h1 id="Install-nginx"><a href="#Install-nginx" class="headerlink" title="Install nginx"></a>Install nginx</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># create folder 'ssl' for subsequent use</span></span><br><span class="line"><span class="built_in">cd</span> /etc/nginx</span><br><span class="line">mkdir ssl</span><br></pre></td></tr></table></figure>
 <p><strong>Control:</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nginx <span class="_">-s</span> [ stop | quit | reopen | reload ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"></span><br><span class="line">sudo systemctl [ stop | start | restart | reload | <span class="built_in">disable</span> ] nginx</span><br></pre></td></tr></table></figure>
-<p>sudo systemctl enable nginx</p>
+<a id="more"></a>
 <h1 id="Generate-self-signed-TLS-certificate-using-OpenSSL"><a href="#Generate-self-signed-TLS-certificate-using-OpenSSL" class="headerlink" title="Generate self-signed TLS certificate using OpenSSL"></a>Generate self-signed TLS certificate using OpenSSL</h1><p>Someone has written a bash script</p>
 <p><a href="https://github.com/loganstellway/self-signed-ssl" target="_blank" rel="noopener">loganstellway/self-signed-ssl</a></p>
 <p>Just execute the script and pass in the options</p>
