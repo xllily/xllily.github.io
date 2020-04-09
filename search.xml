@@ -7,6 +7,7 @@
 <p>When I want to set <code>Touchpad</code> to automatically switch the “disabled” or “enabled” according to whether an external mouse is currently connected, but I failed to find the settings that can be achieved in <code>Settings</code> &gt; <code>Devices</code> &gt; <code>Mouse &amp; Touchpad</code></p>
 </blockquote>
 <h1 id="Edit-Aliases"><a href="#Edit-Aliases" class="headerlink" title="Edit Aliases"></a>Edit Aliases</h1><p>Found a high-quality answer from awesome guy <strong><em>Jacob Vlijm</em></strong> : <a href="https://askubuntu.com/a/787434/957585" target="_blank" rel="noopener">Reference</a></p>
+<a id="more"></a>
 <p>Add some aliases like following content in <code>~/.bash_aliases</code></p>
 <p>E.g：</p>
 <blockquote>
