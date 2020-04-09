@@ -97,7 +97,7 @@
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://xllily.github.io/images/setup-https-local-dev-env/shot1.png">
 <meta property="og:image" content="http://xllily.github.io/images/setup-https-local-dev-env/shot2.png">
-<meta property="og:updated_time" content="2020-04-08T07:37:23.202Z">
+<meta property="og:updated_time" content="2020-04-09T02:28:07.976Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="setup HTTPS(SSL) on local development environment (Ubuntu)">
 <meta name="twitter:description" content="Edit hosts filelocation: /etc/hosts 123# e.g:# add a local domain127.0.0.1 xllily.com Install nginx123456apt-get updateapt-get install nginx# create folder &apos;ssl&apos; for subsequent usecd /etc/nginxmkdir s">
@@ -407,7 +407,7 @@
 <p><strong>Control:</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">nginx <span class="_">-s</span> [ stop | quit | reopen | reload ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"></span><br><span class="line">sudo systemctl [ stop | start | restart | reload | <span class="built_in">disable</span> ] nginx</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="Generate-self-signed-TLS-certificate-using-OpenSSL"><a href="#Generate-self-signed-TLS-certificate-using-OpenSSL" class="headerlink" title="Generate self-signed TLS certificate using OpenSSL"></a>Generate self-signed TLS certificate using OpenSSL</h1><p>Someone has written a bash script</p>
+<h1 id="Generate-self-signed-TLS-certificate-using-OpenSSL"><a href="#Generate-self-signed-TLS-certificate-using-OpenSSL" class="headerlink" title="Generate self-signed TLS certificate using OpenSSL"></a>Generate self-signed TLS certificate using OpenSSL</h1><p>A great guy wrote a bash script</p>
 <p><a href="https://github.com/loganstellway/self-signed-ssl" target="_blank" rel="noopener">loganstellway/self-signed-ssl</a></p>
 <p>Just execute the script and pass in the options</p>
 <p><strong>Options:</strong></p>
