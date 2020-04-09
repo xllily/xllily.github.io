@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Automatically Disable Touchpad When External Mouse Is Connected (Ubuntu)</title>
+    <url>/2020/04/08/Automatically-Disable-Touchpad-When-External-Mouse-Is-Connected-Ubuntu/</url>
+    <content><![CDATA[<blockquote>
+<p>When I want to set <code>Touchpad</code> to automatically switch the “disabled” or “enabled” according to whether an external mouse is currently connected, but I failed to find the settings that can be achieved in <code>Settings</code> &gt; <code>Devices</code> &gt; <code>Mouse &amp; Touchpad</code></p>
+</blockquote>
+<h1 id="Edit-Aliases"><a href="#Edit-Aliases" class="headerlink" title="Edit Aliases"></a>Edit Aliases</h1><p>Found a high-quality answer from awesome guy <strong><em>Jacob Vlijm</em></strong> : <a href="https://askubuntu.com/a/787434/957585" target="_blank" rel="noopener">Reference</a></p>
+<p>Just open and edit the aliases file <code>~/.bash_aliases</code></p>
+<p>E.g：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># add aliases， just like following content</span></span><br><span class="line"><span class="built_in">alias</span> touchpad:status=<span class="string">"gsettings get org.gnome.desktop.peripherals.touchpad send-events"</span></span><br><span class="line"><span class="built_in">alias</span> touchpad:on=<span class="string">"gsettings set org.gnome.desktop.peripherals.touchpad send-events enabled"</span></span><br><span class="line"><span class="built_in">alias</span> touchpad:off=<span class="string">"gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled"</span></span><br><span class="line"><span class="built_in">alias</span> touchpad:auto=<span class="string">"gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse"</span></span><br></pre></td></tr></table></figure>
+<p><strong>After saving, execute</strong> <code>source ~/.bash_aliases</code></p>
+<h1 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h1><h2 id="view-current-status-of-the-touchpad"><a href="#view-current-status-of-the-touchpad" class="headerlink" title="view current status of the touchpad"></a>view current status of the touchpad</h2><figure class="highlight"><table><tr><td class="code"><pre><span class="line">touchpad:status</span><br><span class="line"></span><br><span class="line"># will output: 'enabled' | 'disabled' | 'disabled-on-external-mouse'</span><br></pre></td></tr></table></figure>
+<h2 id="turn-on"><a href="#turn-on" class="headerlink" title="turn on"></a>turn on</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">touchpad:on</span><br></pre></td></tr></table></figure>
+<h2 id="turn-off"><a href="#turn-off" class="headerlink" title="turn off"></a>turn off</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">touchpad:off</span><br></pre></td></tr></table></figure>
+<h2 id="auto-switching"><a href="#auto-switching" class="headerlink" title="auto switching"></a>auto switching</h2><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">touchpad:<span class="keyword">auto</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># automatically disable touchpad when mouse connected and enable touchpad when mouse disconnected</span></span><br></pre></td></tr></table></figure>
+<h1 id="🔓"><a href="#🔓" class="headerlink" title="🔓"></a>🔓</h1><p>Done！ O(∩ _ ∩)O~</p>
+]]></content>
+      <categories>
+        <category>Learn A Bit</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>termainal</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>setup HTTPS(SSL) on local development environment (Ubuntu)</title>
     <url>/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/</url>
     <content><![CDATA[<h1 id="Edit-hosts-file"><a href="#Edit-hosts-file" class="headerlink" title="Edit hosts file"></a>Edit <code>hosts</code> file</h1><p>location: <code>/etc/hosts</code></p>
@@ -61,6 +86,7 @@
         <category>Learn A Bit</category>
       </categories>
       <tags>
+        <tag>ubuntu</tag>
         <tag>nginx</tag>
         <tag>openssl</tag>
         <tag>https</tag>
@@ -333,6 +359,8 @@
       </categories>
       <tags>
         <tag>issue</tag>
+        <tag>cmd</tag>
+        <tag>windows</tag>
       </tags>
   </entry>
   <entry>

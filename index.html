@@ -300,6 +300,159 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xllily.github.io/2020/04/08/Automatically-Disable-Touchpad-When-External-Mouse-Is-Connected-Ubuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="「λ」xllily">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Just Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2020/04/08/Automatically-Disable-Touchpad-When-External-Mouse-Is-Connected-Ubuntu/" itemprop="url">
+                  Automatically Disable Touchpad When External Mouse Is Connected (Ubuntu)
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-08T15:34:47+08:00">
+                2020-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Learn-A-Bit/" itemprop="url" rel="index">
+                    <span itemprop="name">Learn A Bit</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>When I want to set <code>Touchpad</code> to automatically switch the “disabled” or “enabled” according to whether an external mouse is currently connected, but I failed to find the settings that can be achieved in <code>Settings</code> &gt; <code>Devices</code> &gt; <code>Mouse &amp; Touchpad</code></p>
+</blockquote>
+<h1 id="Edit-Aliases"><a href="#Edit-Aliases" class="headerlink" title="Edit Aliases"></a>Edit Aliases</h1><p>Found a high-quality answer from awesome guy <strong><em>Jacob Vlijm</em></strong> : <a href="https://askubuntu.com/a/787434/957585" target="_blank" rel="noopener">Reference</a></p>
+<p>Just open and edit the aliases file <code>~/.bash_aliases</code></p>
+<p>E.g：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># add aliases， just like following content</span></span><br><span class="line"><span class="built_in">alias</span> touchpad:status=<span class="string">"gsettings get org.gnome.desktop.peripherals.touchpad send-events"</span></span><br><span class="line"><span class="built_in">alias</span> touchpad:on=<span class="string">"gsettings set org.gnome.desktop.peripherals.touchpad send-events enabled"</span></span><br><span class="line"><span class="built_in">alias</span> touchpad:off=<span class="string">"gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled"</span></span><br><span class="line"><span class="built_in">alias</span> touchpad:auto=<span class="string">"gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled-on-external-mouse"</span></span><br></pre></td></tr></table></figure>
+<p><strong>After saving, execute</strong> <code>source ~/.bash_aliases</code></p>
+<h1 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h1><h2 id="view-current-status-of-the-touchpad"><a href="#view-current-status-of-the-touchpad" class="headerlink" title="view current status of the touchpad"></a>view current status of the touchpad</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">touchpad:status</span><br><span class="line"></span><br><span class="line"># will output: 'enabled' | 'disabled' | 'disabled-on-external-mouse'</span><br></pre></td></tr></table></figure>
+<h2 id="turn-on"><a href="#turn-on" class="headerlink" title="turn on"></a>turn on</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touchpad:on</span><br></pre></td></tr></table></figure>
+<h2 id="turn-off"><a href="#turn-off" class="headerlink" title="turn off"></a>turn off</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touchpad:off</span><br></pre></td></tr></table></figure>
+<h2 id="auto-switching"><a href="#auto-switching" class="headerlink" title="auto switching"></a>auto switching</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">touchpad:<span class="keyword">auto</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># automatically disable touchpad when mouse connected and enable touchpad when mouse disconnected</span></span><br></pre></td></tr></table></figure>
+<h1 id="🔓"><a href="#🔓" class="headerlink" title="🔓"></a>🔓</h1><p>Done！ O(∩ _ ∩)O~</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://xllily.github.io/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -936,7 +1089,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -954,7 +1107,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
