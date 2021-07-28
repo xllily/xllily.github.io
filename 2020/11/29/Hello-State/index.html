@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"xllily.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="TL;DR 主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。 而”三大框架“ ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV 的设计模式，在此设计模式下开发，就绕不开">
+  <meta name="description" content="TL;DR 主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。 而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV 的设计模式，在此设计模式下开发，就绕不">
 <meta name="keywords" content="get started,web,state">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hello State">
 <meta property="og:url" content="https://xllily.github.io/2020/11/29/Hello-State/index.html">
 <meta property="og:site_name" content="Just Notes">
-<meta property="og:description" content="TL;DR 主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。 而”三大框架“ ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV 的设计模式，在此设计模式下开发，就绕不开">
+<meta property="og:description" content="TL;DR 主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。 而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV 的设计模式，在此设计模式下开发，就绕不">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://xllily.github.io/images/hello-state/mvvm.jpg">
 <meta property="og:image" content="https://xllily.github.io/images/hello-state/components.png">
 <meta property="og:image" content="https://xllily.github.io/images/hello-state/flux.jpg">
-<meta property="og:updated_time" content="2021-07-28T03:51:27.224Z">
+<meta property="og:updated_time" content="2021-07-28T03:59:10.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hello State">
-<meta name="twitter:description" content="TL;DR 主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。 而”三大框架“ ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV 的设计模式，在此设计模式下开发，就绕不开">
+<meta name="twitter:description" content="TL;DR 主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。 而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV 的设计模式，在此设计模式下开发，就绕不">
 <meta name="twitter:image" content="https://xllily.github.io/images/hello-state/mvvm.jpg">
 
 <link rel="canonical" href="https://xllily.github.io/2020/11/29/Hello-State/">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-28 11:51:27" itemprop="dateModified" datetime="2021-07-28T11:51:27+08:00">2021-07-28</time>
+                <time title="Modified: 2021-07-28 11:59:10" itemprop="dateModified" datetime="2021-07-28T11:59:10+08:00">2021-07-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -264,8 +264,8 @@
 
       
         <p><strong><em>TL;DR</em></strong></p>
-<p>主导着当今世界前端技术发展的两家公司依然是 <code>Google</code>, <code>Facebook</code>；<br>目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。</p>
-<p>而”三大框架“ ，哪怕自身只是一个 <code>View Library</code>, 无一列外也都离不开 MV<em> 的设计模式，在此设计模式下开发，就绕不开至关重要的的概念：<strong>状态管理</strong>，笔者也一如既往固执己见地认为，整个状态管理的过程其实就是贯彻 `MV</em><code>对</code>Model<code>、</code>View<code>、</code>Controller<code>/</code>View Model<code>三者分层管理具体实施的过程，从而尽可能地保证</code>View<code>层的单薄，保证</code>Controller<code>的逻辑“C位”， 保证</code>Model` 的数据中心，自始至终将应用的可维护性控制在一个较好的水平。</p>
+<p>主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；<br>目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。</p>
+<p>而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV<em> 的设计模式，在此设计模式下开发，就绕不开至关重要的的概念：<strong>状态管理</strong>，笔者也一如既往固执己见地认为，整个状态管理的过程其实就是贯彻 MV</em> 对 Model、View 、 Controller/View Model 三者分层管理具体实施的过程，从而尽可能地保证 View 层的单薄，保证 Controller 的逻辑“C位”， 保证 Model 的数据中心，自始至终将应用的可维护性控制在一个较好的水平。</p>
 <p>今天借 「State Management」 题发挥，基于团队目前项目所采用的技术框架 Vue, 来聊一聊状态管理。</p>
 <h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>Vue 框架也是深受 <code>MVVM</code>（model, view, view-model) 优秀的编程模型规范的启发,</p>
 <p><img src="/images/hello-state/mvvm.jpg" alt></p>

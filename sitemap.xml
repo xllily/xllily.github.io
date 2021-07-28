@@ -95,20 +95,6 @@
   </url>
   
   <url>
-    <loc>https://xllily.github.io/tags/web/</loc>
-    <lastmod>2021-07-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://xllily.github.io/tags/state/</loc>
-    <lastmod>2021-07-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://xllily.github.io/tags/node/</loc>
     <lastmod>2021-07-28</lastmod>
     <changefreq>daily</changefreq>
@@ -117,6 +103,20 @@
   
   <url>
     <loc>https://xllily.github.io/tags/hexo/</loc>
+    <lastmod>2021-07-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xllily.github.io/tags/web/</loc>
+    <lastmod>2021-07-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://xllily.github.io/tags/state/</loc>
     <lastmod>2021-07-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -188,14 +188,14 @@
   </url>
   
   <url>
-    <loc>https://xllily.github.io/categories/Chat-Aimlessly/</loc>
+    <loc>https://xllily.github.io/categories/Extract-and-Organize/</loc>
     <lastmod>2021-07-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://xllily.github.io/categories/Extract-and-Organize/</loc>
+    <loc>https://xllily.github.io/categories/Chat-Aimlessly/</loc>
     <lastmod>2021-07-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
