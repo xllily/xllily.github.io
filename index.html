@@ -216,10 +216,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-08-13 17:33:01 / Modified: 17:52:27" itemprop="dateCreated datePublished" datetime="2021-08-13T17:33:01+08:00">2021-08-13</time>
+              <time title="Created: 2021-08-13 17:33:01" itemprop="dateCreated datePublished" datetime="2021-08-13T17:33:01+08:00">2021-08-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-14 17:26:20" itemprop="dateModified" datetime="2021-08-14T17:26:20+08:00">2021-08-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -320,7 +326,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-13 16:44:52" itemprop="dateModified" datetime="2021-08-13T16:44:52+08:00">2021-08-13</time>
+                <time title="Modified: 2021-08-14 16:57:36" itemprop="dateModified" datetime="2021-08-14T16:57:36+08:00">2021-08-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -348,9 +354,9 @@
 <p>而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV<em> 的设计模式，在此设计模式下开发，就绕不开至关重要的的概念：<strong>状态管理</strong>，笔者也一如既往固执己见地认为，整个状态管理的过程其实就是贯彻 MV</em> 对 Model、View 、 Controller/View Model 三者分层管理具体实施的过程，从而尽可能地保证 View 层的单薄，保证 Controller 的逻辑“C位”， 保证 Model 的数据中心，自始至终将应用的可维护性控制在一个较好的水平。</p>
 <p>今天借 「State Management」 题发挥，基于团队目前项目所采用的技术框架 Vue, 来聊一聊状态管理。</p>
 <h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>Vue 框架也是深受 <code>MVVM</code>（model, view, view-model) 优秀的编程模型规范的启发,</p>
-<p><img src="/assets/images/hello-state/mvvm.jpg" alt></p>
+<p><img src="/images/hello-state/mvvm.jpg" alt></p>
 <p>同时结合了<strong>组件化</strong>的先进理念，自然而然地驱使开发者将整个WEB应用抽象分离到一个一个组件的颗粒度， 当一个应用不断被组件化抽象，小到一个按钮，大到一个页面，每个组件本身就是一个个独立的 <code>vm</code> 单元。</p>
-<p><img src="/assets/images/hello-state/components.png" alt></p>
+<p><img src="/images/hello-state/components.png" alt></p>
 <p>在 <a href="https://cn.vuejs.org/v2/guide/single-file-components.html" target="_blank" rel="noopener">SFC (single-file components)</a> 单文件组件的开发范式下，每个 <code>*.vue</code> 文件就是一个 <code>vm</code> ， <code>&lt;template&gt;...&lt;/template&gt;</code> 可以理解为 <code>vm</code> 中的 <code>v</code> ；而  <code>&lt;style&gt;&lt;style&gt;</code> 可以理解为 <code>vm</code> 中的 <code>m</code>的样式控制部分，<code>&lt;script&gt;&lt;/script&gt;</code> 可以理解为 <code>vm</code>中的 <code>m</code>的逻辑和数据部分, 另外框架底层实现了一个 <code>MVVM</code> 模型中的“绑定器” ，通过开发者对每个视图模型的声明式编程来驱动程序的视图更新。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// *.vue</span></span><br><span class="line">vm</span><br><span class="line">├── v <span class="comment">// view</span></span><br><span class="line">│   └── template</span><br><span class="line">└── m <span class="comment">// model</span></span><br><span class="line">    ├── style</span><br><span class="line">    └── script</span><br><span class="line">        ├── data</span><br><span class="line">        │   ├── data()&#123;&#125;</span><br><span class="line">        │   └── computed:&#123;&#125;</span><br><span class="line">        └── logic</span><br><span class="line">            ├── lifecycle-hooks <span class="comment">// created,...</span></span><br><span class="line">            ├── watch:&#123;&#125;</span><br><span class="line">            └── methods&#123;&#125;</span><br><span class="line"><span class="comment">// 这种“奇怪的结构“思维，源于笔者入门编程时，深受 `MVC`（model, view, controller）编程模型启蒙式的“洗脑”，应用程序分层的思维早已根深蒂固</span></span><br></pre></td></tr></table></figure></p>
 <p>如此，开发者管理维护单个组件（<code>vm</code> 实例）本身，确实可以做到非常高效、清晰，<br>但是随着应用迭代，不知不觉，整个应用也变成了庞大的 “vm” 集合， 相隔层级较深的组件与组件之间可能形成了较长的通信路径。</p>
 <p>而 <code>Vue</code> 本身内置的数据流管理方案有限， <code>props</code>(其实本质就像一个函数定义的参数), <code>event emit</code> 等其实在复杂场景发挥有限，不适合长路径的通信，无法支撑组织管理整个”前端应用“的状态，虽然又不是不能用，但是要追求合理可维护性则显的捉襟见肘。</p>
@@ -497,7 +503,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-13 16:44:52" itemprop="dateModified" datetime="2021-08-13T16:44:52+08:00">2021-08-13</time>
+                <time title="Modified: 2021-08-14 16:57:36" itemprop="dateModified" datetime="2021-08-14T16:57:36+08:00">2021-08-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -582,7 +588,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-13 16:44:52" itemprop="dateModified" datetime="2021-08-13T16:44:52+08:00">2021-08-13</time>
+                <time title="Modified: 2021-08-14 16:57:36" itemprop="dateModified" datetime="2021-08-14T16:57:36+08:00">2021-08-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -608,7 +614,7 @@
           <blockquote>
 <p>最后更新于 <code>2020-2-20</code>, 信息出入请以 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> 为准<br>为了保证信息有效性, 大量使用了文字链接关联官方文档的相关内容</p>
 </blockquote>
-<p><img src="/assets/images/hello-uni-app/front-cover.png" alt><br>(<strong><em> 图片源 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> </em></strong>)</p>
+<p><img src="/images/hello-uni-app/front-cover.png" alt><br>(<strong><em> 图片源 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> </em></strong>)</p>
 <p>开局一张图，内容开始编。</p>
 <p>近期接手维护一个基于 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app</a> 框架开发的项目，故笔墨伺候，简单做下功课。</p>
 <p>以下内容对于未听说过或者未使用过 <code>uni-app</code>的前端“熟练工”相对比较友好些，内容有误，敬请指正。</p>

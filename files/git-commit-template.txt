@@ -1,0 +1,43 @@
+Write header here ...
+# ⬆️ header （必填，必须写在第一行，限50字）
+# 格式：<类型>(<改动范围>)：<主题>
+# 类型（必填）范围（选填）主题概要（必填，以动词开头）。
+# -------------------------------
+
+# body （选填，每行限72个字）
+# 格式： 无要求
+# 对本次提交阐述代码变动的动机或者改动的原因，说明对比之前的差异
+Write body here...
+
+# -------------------------------
+
+# footer (选填)
+# 不兼容改动说明，ISSUE 关联
+# 格式：与上一版本不兼容的描述须以 BREAKING CHANGE: 开头； 关联ISSUE则使用关键字以及ISSUE-ID
+Write fotter here...
+
+# -------------------------------
+
+# 提交类型的类型值包含：
+#    feat (feature 增加新功能)
+#    fix (bug 修复)
+#    docs (README.md 等文档改动)
+#    style (代码格式化, 代码缺失分号等)
+#    refactor (重构代码)
+#    test (自测脚本)
+#    chore (打包编译配置更新)
+# -------------------------------
+# 注意：
+#    header 和 body 以一个空行分隔
+#    header 限制为最多50个字，header 行结束不使用任何标点符号
+#    body 每行限制最多72个字，body 用于解释为什么和说明是什么,而不是怎么做
+#    body 多行时可以以列表形式，每行以'-'符号开头
+# -------------------------------
+# 特殊提交：
+#     当撤销以前的 commit , 则 header 前必须添加 revert: ,
+#     revert: 之前提交的 header
+#     撤销提交的 body 必须写成 This reverts commit commit的SHA标识符ID
+#
+# Please enter the commit message for your changes.
+# Lines starting with '#' will be ignored
+# And an empty message aborts the commit.

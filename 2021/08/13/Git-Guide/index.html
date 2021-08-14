@@ -28,15 +28,15 @@
 <meta property="og:site_name" content="Just Notes">
 <meta property="og:description" content="本指南暂不包含 fetch , pull, push, clone 等 Git 版本库操作和 CI/CD 工作流搭建等  一、版本规范：结合 semver 语义化版本以及 software release life cycle 软件发布生命周期两块概念，约定 git tag 标签规则 格式命名基础版本格式：   &amp;lt;主版本号&amp;gt;.&amp;lt;次版本号&amp;gt;.&amp;lt;修订版本号&amp;gt; 三位">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://xllily.github.io/assets/images/git-guide/angular-commit-style.png">
-<meta property="og:image" content="https://xllily.github.io/assets/images/git-guide/git-commit.gif">
-<meta property="og:image" content="https://xllily.github.io/assets/images/git-guide/changelog.png">
-<meta property="og:image" content="https://xllily.github.io/assets/images/git-guide/react-release-notes.png">
-<meta property="og:updated_time" content="2021-08-13T09:52:27.762Z">
+<meta property="og:image" content="https://xllily.github.io/images/git-guide/angular-commit-style.png">
+<meta property="og:image" content="https://xllily.github.io/images/git-guide/git-commit.gif">
+<meta property="og:image" content="https://xllily.github.io/images/git-guide/changelog.png">
+<meta property="og:image" content="https://xllily.github.io/images/git-guide/react-release-notes.png">
+<meta property="og:updated_time" content="2021-08-14T09:26:20.951Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git 指北">
 <meta name="twitter:description" content="本指南暂不包含 fetch , pull, push, clone 等 Git 版本库操作和 CI/CD 工作流搭建等  一、版本规范：结合 semver 语义化版本以及 software release life cycle 软件发布生命周期两块概念，约定 git tag 标签规则 格式命名基础版本格式：   &amp;lt;主版本号&amp;gt;.&amp;lt;次版本号&amp;gt;.&amp;lt;修订版本号&amp;gt; 三位">
-<meta name="twitter:image" content="https://xllily.github.io/assets/images/git-guide/angular-commit-style.png">
+<meta name="twitter:image" content="https://xllily.github.io/images/git-guide/angular-commit-style.png">
 
 <link rel="canonical" href="https://xllily.github.io/2021/08/13/Git-Guide/">
 
@@ -226,10 +226,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-08-13 17:33:01 / Modified: 17:52:27" itemprop="dateCreated datePublished" datetime="2021-08-13T17:33:01+08:00">2021-08-13</time>
+              <time title="Created: 2021-08-13 17:33:01" itemprop="dateCreated datePublished" datetime="2021-08-13T17:33:01+08:00">2021-08-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-14 17:26:20" itemprop="dateModified" datetime="2021-08-14T17:26:20+08:00">2021-08-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -284,7 +290,7 @@
 <h2 id="二、提交规范"><a href="#二、提交规范" class="headerlink" title="二、提交规范"></a>二、提交规范</h2><h3 id="提交人"><a href="#提交人" class="headerlink" title="提交人"></a>提交人</h3><p>根据团队约定，从项目维度上去设置&lt;用户名&gt;和&lt;邮箱&gt;,不影响开发着全局配置</p>
 <h4 id="方法一：进入当前项目根目录，执行如下命令"><a href="#方法一：进入当前项目根目录，执行如下命令" class="headerlink" title="方法一：进入当前项目根目录，执行如下命令"></a>方法一：进入当前项目根目录，执行如下命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出全局配置信息</span></span><br><span class="line">$ git config --global -l</span><br><span class="line"><span class="comment"># 列出项目当前的配置信息，没有字段的将继承全局，相同的字段将优先于全局</span></span><br><span class="line">$ git config --<span class="built_in">local</span> -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置当前项目</span></span><br><span class="line">$ git config --<span class="built_in">local</span> user.name xxx</span><br><span class="line">$ git config --<span class="built_in">local</span> user.email xxx</span><br></pre></td></tr></table></figure>
 <h4 id="方式二：-在当前项目根目录-git-config-配置文件中设置"><a href="#方式二：-在当前项目根目录-git-config-配置文件中设置" class="headerlink" title="方式二： 在当前项目根目录 .git/config 配置文件中设置"></a>方式二： 在当前项目根目录 <code>.git/config</code> 配置文件中设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">name = xxx</span><br><span class="line">email = xxx</span><br></pre></td></tr></table></figure>
-<h3 id="提交风格"><a href="#提交风格" class="headerlink" title="提交风格"></a>提交风格</h3><p><img src="/assets/images/git-guide/angular-commit-style.png" alt><br>如上图为 <code>AngularJS</code> 开源仓库参考 <a href="https://google.github.io/styleguide/jsguide.html" target="_blank" rel="noopener">Google’s JavaScript Style Guide</a> 制定并使用的提交风格，目前前端开源生态普遍遵循。<br><strong>这样统一标准的提交好处是</strong>：</p>
+<h3 id="提交风格"><a href="#提交风格" class="headerlink" title="提交风格"></a>提交风格</h3><p><img src="/images/git-guide/angular-commit-style.png" alt><br>如上图为 <code>AngularJS</code> 开源仓库参考 <a href="https://google.github.io/styleguide/jsguide.html" target="_blank" rel="noopener">Google’s JavaScript Style Guide</a> 制定并使用的提交风格，目前前端开源生态普遍遵循。<br><strong>这样统一标准的提交好处是</strong>：</p>
 <ul>
 <li>降低 <code>Code Review</code> 成本</li>
 <li>标准化结构化的提交消息文本格式，便于 <code>git log</code> 格式化打印输出日志如 <code>git log --format=&#39;%s (%h)&#39; --reverse --grep &#39;^\(feat\|fix\)&#39; --since=2020-01-01</code> 或者直接借助一些工具可自动化地“一键”生成 <code>Change Log</code></li>
@@ -333,17 +339,16 @@
 <li><a href="https://docs.gitlab.com/ee/integration/jira/" target="_blank" rel="noopener">Jira 与 GitLab 集成</a></li>
 </ul>
 </blockquote>
-<p>当系统集成后，就可以在</p>
-<p><code>Git</code> 可以与 <code>Jira</code> 、<code>禅道</code> 等第三方相互集成后，就可以同样通过<code>关键字</code>来直接操作事务，区别是操作的事务的编号以第三方提供的为准</p>
+<p><code>Git</code> 可以与 <code>Jira</code> 、<code>禅道</code> 等第三方相互集成后，就可以同样通过<code>关键字</code>来直接操作事务，区别是操作的事务的编号将以第三方提供的信息为准</p>
 <h3 id="提交操作"><a href="#提交操作" class="headerlink" title="提交操作"></a>提交操作</h3><h4 id="CLI-手动"><a href="#CLI-手动" class="headerlink" title="CLI 手动"></a>CLI 手动</h4><blockquote>
 <p>以下适用于 Mac OS X (or Linux like Ubuntu)</p>
 </blockquote>
-<h5 id="1-准备一个-txt-作为提交模版"><a href="#1-准备一个-txt-作为提交模版" class="headerlink" title="1. 准备一个 *.txt 作为提交模版"></a>1. 准备一个 *.txt 作为提交模版</h5><p>下载 <a href="/assets/.git-commit-template.txt">template</a>后建议存放在 home 根目录 <code>～/</code> 下</p>
+<h5 id="1-准备一个-txt-作为提交模版"><a href="#1-准备一个-txt-作为提交模版" class="headerlink" title="1. 准备一个 *.txt 作为提交模版"></a>1. 准备一个 *.txt 作为提交模版</h5><p>打开 <a href="/files/git-commit-template.txt">template</a> 后另存为到本地，建议存放在 home 目录 <code>～/</code> 下, 并可选择性地重命名为 <code>.git-commit-template.txt</code> 隐藏文件</p>
 <h5 id="2-Git-配置提交模版"><a href="#2-Git-配置提交模版" class="headerlink" title="2. Git 配置提交模版"></a>2. Git 配置提交模版</h5><p>直接运行命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global commit.template ～/.git-commit-template.txt</span><br></pre></td></tr></table></figure></p>
 <p>或者在 <code>～/.gitconfig</code> 中编辑 <code>git</code> 配置项：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[commit]</span><br><span class="line">template = ～/.git-commit-template.txt</span><br></pre></td></tr></table></figure>
 <h5 id="3-Git-配置默认编辑器"><a href="#3-Git-配置默认编辑器" class="headerlink" title="3. Git 配置默认编辑器"></a>3. Git 配置默认编辑器</h5><p>配置默认 <code>git</code> 默认编辑器，建议同自己的代码编辑器，例如 <code>vscode</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[core]</span><br><span class="line">editor = code -w  ( -w 参数必须 ，代表等待提交信息编辑完成)</span><br></pre></td></tr></table></figure></p>
-<h5 id="test"><a href="#test" class="headerlink" title="test"></a>test</h5><p>在 Terminal 中 执行 <code>git commit</code> 回车，自动使用配置的默认编辑器调起配置好的“提交模版”<br><img src="/assets/images/git-guide/git-commit.gif" alt></p>
+<h5 id="test"><a href="#test" class="headerlink" title="test"></a>test</h5><p>在 Terminal 中 执行 <code>git commit</code> 回车，自动使用配置的默认编辑器调起配置好的“提交模版”<br><img src="/images/git-guide/git-commit.gif" alt></p>
 <p>Done, 编写完提交信息文本保存后关闭则提交成功，如果未保存关闭则退出保存，提交成功可以 <code>git log</code> 查看提交信息, 也可以在 <code>push</code> 前， 通过 <code>git commit --amend</code> 堪误本次提交信息。</p>
 <h4 id="CLI-脚本工具"><a href="#CLI-脚本工具" class="headerlink" title="CLI 脚本工具"></a>CLI 脚本工具</h4><ul>
 <li><a href="https://www.npmjs.com/package/git-cz" target="_blank" rel="noopener">git-cz</a></li>
@@ -356,7 +361,7 @@
 <li><a href="https://plugins.jetbrains.com/plugin/13405-angular-conventional-commit" target="_blank" rel="noopener">plugin: angular-conventional-commit</a></li>
 <li>…</li>
 </ul>
-<h2 id="发布管理"><a href="#发布管理" class="headerlink" title="发布管理"></a>发布管理</h2><h3 id="CHANGELOG-变更日志"><a href="#CHANGELOG-变更日志" class="headerlink" title="CHANGELOG 变更日志"></a>CHANGELOG 变更日志</h3><p><code>Change Log</code> 属于软件发布生命周期，面向内部协作。<br>在项目根目录书写 <code>CHANGELOG.md</code>，如：<br><img src="/assets/images/git-guide/changelog.png" alt><br>通常在遵循<strong>提交规范</strong>后，直接使用类似 <a href="https://github.com/conventional-changelog/conventional-changelog" target="_blank" rel="noopener">conventional-changelog</a> 这样的工具可以一键生成 <code>Change Log</code>。</p>
+<h2 id="发布管理"><a href="#发布管理" class="headerlink" title="发布管理"></a>发布管理</h2><h3 id="CHANGELOG-变更日志"><a href="#CHANGELOG-变更日志" class="headerlink" title="CHANGELOG 变更日志"></a>CHANGELOG 变更日志</h3><p><code>Change Log</code> 属于软件发布生命周期，面向内部协作。<br>在项目根目录书写 <code>CHANGELOG.md</code>，如：<br><img src="/images/git-guide/changelog.png" alt><br>通常在遵循<strong>提交规范</strong>后，直接使用类似 <a href="https://github.com/conventional-changelog/conventional-changelog" target="_blank" rel="noopener">conventional-changelog</a> 这样的工具可以一键生成 <code>Change Log</code>。</p>
 <h3 id="Release-Notes-发行说明"><a href="#Release-Notes-发行说明" class="headerlink" title="Release Notes 发行说明"></a>Release Notes 发行说明</h3><p>与 <code>Change Log</code> 同属于软件发布生命周期，区别是 <code>Release Notes</code>是面向外部交付的<br><code>Release Notes</code> 没有标准格式可循，通常根据要传播表达的信息的要求来采用定制化的格式样式。</p>
 <p><strong>Release Notes 可能包括以下部分：</strong></p>
 <ul>
@@ -372,7 +377,7 @@
 <li><strong>免责声明</strong> - 公司和标准产品相关信息。例如; <a href="https://en.wikipedia.org/wiki/Freeware" target="_blank" rel="noopener">免费软件</a>、<a href="https://en.wikipedia.org/wiki/Copy_protection#Anti-piracy" target="_blank" rel="noopener">反盗版</a>、复制等。另见<a href="https://en.wikipedia.org/wiki/Disclaimer" target="_blank" rel="noopener">免责声明</a>。</li>
 <li><strong>联系</strong> - 支持联系信息</li>
 </ul>
-<p><code>GitLab</code> 和 <code>GitHub</code> 均将 <code>Release Notes</code> 功能集成在 <code>Tags</code> 中，当 <code>Tag</code> 推送到远程仓库，可以找到 Tag 对应的编辑按钮，在远程仓库直接在线编写 <code>Release Notes</code><br>如 <code>React</code> 版本库：<br><img src="/assets/images/git-guide/react-release-notes.png" alt></p>
+<p><code>GitLab</code> 和 <code>GitHub</code> 均将 <code>Release Notes</code> 功能集成在 <code>Tags</code> 中，当 <code>Tag</code> 推送到远程仓库，可以找到 Tag 对应的编辑按钮，在远程仓库直接在线编写 <code>Release Notes</code><br>如 <code>React</code> 版本库：<br><img src="/images/git-guide/react-release-notes.png" alt></p>
 <p><strong>参考资料：</strong></p>
 <ul>
 <li><a href="https://github.com/facebook/react/releases" target="_blank" rel="noopener">ReactJs Release Notes</a></li>

@@ -30,204 +30,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Git 指北</title>
-    <url>/2021/08/13/Git-Guide/</url>
-    <content><![CDATA[<blockquote>
-<p>本指南暂不包含 <code>fetch</code> , <code>pull</code>, <code>push</code>, <code>clone</code> 等 Git 版本库操作和 <code>CI/CD</code> 工作流搭建等</p>
-</blockquote>
-<h2 id="一、版本规范："><a href="#一、版本规范：" class="headerlink" title="一、版本规范："></a>一、版本规范：</h2><p>结合 <a href="https://semver.org/" target="_blank" rel="noopener">semver</a> 语义化版本以及 <a href="http://en.wikipedia.org/wiki/Software_release_life_cycle" target="_blank" rel="noopener">software release life cycle</a> 软件发布生命周期两块概念，约定 <code>git tag</code> 标签规则</p>
-<h3 id="格式命名"><a href="#格式命名" class="headerlink" title="格式命名"></a>格式命名</h3><h4 id="基础版本格式："><a href="#基础版本格式：" class="headerlink" title="基础版本格式："></a>基础版本格式：</h4><p>   <code>&lt;主版本号&gt;.&lt;次版本号&gt;.&lt;修订版本号&gt;</code> 三位数字用 <code>.</code> 连接组成一个版本号，如 <code>1.0.0</code><br>   版本号数字递增规则：</p>
-<ul>
-<li><strong>主版本号</strong>：对代码进行了不向前兼容的修改</li>
-<li><strong>次版本号</strong>：向前兼容的修改，只是新增了功能</li>
-<li><strong>修订版本号</strong>：向前兼容的故障修复、需求细节变更<h4 id="细化版本格式："><a href="#细化版本格式：" class="headerlink" title="细化版本格式："></a>细化版本格式：</h4>在原来 <code>x.y.z</code> 基础版本号后面添加<code>软件生命周期</code>作为先行版本号，以及添加<code>附加信息（编译信息、时间戳、序号等）</code>来进一步细化控制版本</li>
-<li><strong>先行版本号</strong>：表示在正式版之前发布的版本，并非稳定而且可能无法满足预期的兼容性需求，格式是标注在修订版之后，先加上一个连接号<code>-</code>, 再加上一连串以句点分隔的标识符来修饰, 。范例：<code>1.0.0-alpha.1</code>、<code>1.0.0-rc.22</code>、<code>1.0.0-beta.33</code> …<blockquote>
-<p>常见的先行版本</p>
-<ul>
-<li><code>alpha</code>: 内测版本，通常提测至测试部</li>
-<li><code>beta</code>: 公测版本，通常可以面向用户全量或者灰度发布</li>
-<li><code>rc</code>: 即 <code>Release candiate</code>，正式版本的候选版本，用作预发布<br>注：这些版本的发布可能需要团队的工作流程以及部署环境的隔离去支撑</li>
-</ul>
-</blockquote>
-</li>
-<li><strong>版本编译信息</strong>: 可以在修订版或先行版本号之后，先加上一个加号再加上一连串以句点分隔的标识符来修饰。范例：<code>1.0.0+jested</code>、<code>1.0.0-alpha+001</code>、<code>1.0.0-rc+20130313144700</code>、<code>1.0.0-beta+exp.sha.5114f85</code>、<code>1.0.0-next+0</code>…</li>
-</ul>
-<h3 id="创建标签"><a href="#创建标签" class="headerlink" title="创建标签"></a>创建标签</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建</span></span><br><span class="line">$ git tag -a <span class="string">"x.y.z-alpha+timestamp"</span> -m <span class="string">"summary..."</span></span><br><span class="line"><span class="comment"># 推送</span></span><br><span class="line">$ git push --tags</span><br></pre></td></tr></table></figure>
-<h3 id="常用命令行"><a href="#常用命令行" class="headerlink" title="常用命令行:"></a>常用命令行:</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># &lt; xxx &gt; just means variable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># List tags</span></span><br><span class="line">$ git tag</span><br><span class="line"></span><br><span class="line"><span class="comment"># Show details of the tag</span></span><br><span class="line">$ git show &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add tag to newest commit</span></span><br><span class="line">$ git tag &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add tag to specified commit</span></span><br><span class="line">$ git tag &lt;TAG Name&gt; &lt;Commit Hash ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove tag (local)</span></span><br><span class="line">$ git tag -d &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove tag (remote)</span></span><br><span class="line">$ git push &lt;Host Name&gt; :refs/tags/&lt;TAG Name&gt;</span><br><span class="line">$ git push &lt;Host Name&gt; :&lt;TAG Name&gt;</span><br><span class="line">$ git push --delete &lt;Host Name&gt; &lt;TAG Name&gt;</span><br><span class="line">$ git push -d &lt;Host Name&gt; &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Push specified tag to remote</span></span><br><span class="line">$ git push &lt;Host Name&gt; &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Push all tags to remote</span></span><br><span class="line">$ git push &lt;Host Name&gt; --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fetch all tags from remote</span></span><br><span class="line">$ git fetch --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a new branch from the TAG</span></span><br><span class="line">$ git checkout -b &lt;New Branch Name&gt; &lt;TAG Name&gt;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h2 id="二、提交规范"><a href="#二、提交规范" class="headerlink" title="二、提交规范"></a>二、提交规范</h2><h3 id="提交人"><a href="#提交人" class="headerlink" title="提交人"></a>提交人</h3><p>根据团队约定，从项目维度上去设置&lt;用户名&gt;和&lt;邮箱&gt;,不影响开发着全局配置</p>
-<h4 id="方法一：进入当前项目根目录，执行如下命令"><a href="#方法一：进入当前项目根目录，执行如下命令" class="headerlink" title="方法一：进入当前项目根目录，执行如下命令"></a>方法一：进入当前项目根目录，执行如下命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出全局配置信息</span></span><br><span class="line">$ git config --global -l</span><br><span class="line"><span class="comment"># 列出项目当前的配置信息，没有字段的将继承全局，相同的字段将优先于全局</span></span><br><span class="line">$ git config --<span class="built_in">local</span> -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置当前项目</span></span><br><span class="line">$ git config --<span class="built_in">local</span> user.name xxx</span><br><span class="line">$ git config --<span class="built_in">local</span> user.email xxx</span><br></pre></td></tr></table></figure>
-<h4 id="方式二：-在当前项目根目录-git-config-配置文件中设置"><a href="#方式二：-在当前项目根目录-git-config-配置文件中设置" class="headerlink" title="方式二： 在当前项目根目录 .git/config 配置文件中设置"></a>方式二： 在当前项目根目录 <code>.git/config</code> 配置文件中设置</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[user]</span><br><span class="line">name = xxx</span><br><span class="line">email = xxx</span><br></pre></td></tr></table></figure>
-<h3 id="提交风格"><a href="#提交风格" class="headerlink" title="提交风格"></a>提交风格</h3><p><img src="/assets/images/git-guide/angular-commit-style.png" alt><br>如上图为 <code>AngularJS</code> 开源仓库参考 <a href="https://google.github.io/styleguide/jsguide.html" target="_blank" rel="noopener">Google’s JavaScript Style Guide</a> 制定并使用的提交风格，目前前端开源生态普遍遵循。<br><strong>这样统一标准的提交好处是</strong>：</p>
-<ul>
-<li>降低 <code>Code Review</code> 成本</li>
-<li>标准化结构化的提交消息文本格式，便于 <code>git log</code> 格式化打印输出日志如 <code>git log --format=&#39;%s (%h)&#39; --reverse --grep &#39;^\(feat\|fix\)&#39; --since=2020-01-01</code> 或者直接借助一些工具可自动化地“一键”生成 <code>Change Log</code></li>
-<li>便于追溯历史时快速搜索过滤</li>
-</ul>
-<p><strong>提交的消息格式如下：</strong><br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;footer&gt;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>每次提交可以包含页眉(<code>header</code>)、正文(<code>body</code>)和脚注(<code>footer</code>)</li>
-<li>每次提交必须包含页眉内容，其他可选</li>
-<li>每次提交的信息尽量不超过 <code>100</code> 个字符</li>
-</ul>
-<p><strong>具体说明文档：</strong></p>
-<ul>
-<li><a href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#" target="_blank" rel="noopener">AngularJS Git Commit Message Conventions</a></li>
-<li><a href="https://www.conventionalcommits.org/zh-hans/v1.0.0/" target="_blank" rel="noopener">conventionalcommits.org</a></li>
-</ul>
-<h3 id="Commit-vs-Issue"><a href="#Commit-vs-Issue" class="headerlink" title="Commit vs Issue"></a>Commit <strong><em>vs</em></strong> Issue</h3><h4 id="1-自有的Issue-系统事务操作"><a href="#1-自有的Issue-系统事务操作" class="headerlink" title="1. 自有的Issue 系统事务操作"></a>1. 自有的<code>Issue</code> 系统事务操作</h4><blockquote>
-<p><code>Github</code> 、 <code>Gitlab</code> 等都提供了关键字，允许在提交 commit message 中通过声明关键字以及对应的 ISSUE- NUMBER 来操作事务</p>
-</blockquote>
-<h5 id="1-Github-关闭事务"><a href="#1-Github-关闭事务" class="headerlink" title="1) Github 关闭事务"></a>1) Github 关闭事务</h5><h6 id="keywords"><a href="#keywords" class="headerlink" title="keywords"></a>keywords</h6><ul>
-<li><code>close</code>,<code>closes</code>,<code>closed</code>,<code>Close</code>,<code>Closes</code>,<code>Closed</code>,</li>
-<li><code>fix</code>,<code>fixes</code>,<code>fixed</code>,<code>Fix</code>,<code>Fixes</code>,<code>Fixed</code></li>
-<li><code>resolve</code>,<code>resolves</code>,<code>resolved</code>,<code>Resolve</code>,<code>Resolves</code>,<code>Resolved</code></li>
-</ul>
-<h6 id="syntax"><a href="#syntax" class="headerlink" title="syntax"></a>syntax</h6><ul>
-<li>同一个仓库 <code>KEYWORD #ISSUE-NUMBER</code>, 如    <code>Closes #10</code></li>
-<li>不同的仓库 <code>KEYWORD OWNER/REPOSITORY#ISSUE-NUMBER</code>, 如<code>Fixes octo-org/octo-repo#100</code></li>
-<li>多个Issue <code>&lt;full syntax&gt;, &lt;full syntax&gt;, ...</code>, 如 <code>Resolves #10, fix #123, closes owner/octo-repo#100</code></li>
-</ul>
-<h5 id="2-Gitlab-关闭事务"><a href="#2-Gitlab-关闭事务" class="headerlink" title="2) Gitlab 关闭事务"></a>2) Gitlab 关闭事务</h5><h6 id="keywords-syntax-pattern"><a href="#keywords-syntax-pattern" class="headerlink" title="keywords syntax pattern"></a>keywords syntax pattern</h6><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">\b((?:[Cc]los(?:e[sd]?|ing)|\b[Ff]ix(?:e[sd]|ing)?|\b[Rr]esolv(?:e[sd]?|ing)|\b[Ii]mplement(?:s|ed|ing)?)(:?) +(?:(?:issues? +)?%&#123;issue_ref&#125;(?:(?: *,? +and +| *,? *)?)|([A-Z][A-Z0<span class="number">-9</span>_]+-\d+))+)</span><br></pre></td></tr></table></figure>
-<h6 id="all-keywords"><a href="#all-keywords" class="headerlink" title="all keywords"></a>all keywords</h6><ul>
-<li><code>Close</code>, <code>Closes</code>, <code>Closed</code>, <code>Closing</code>, <code>close</code>, <code>closes</code>, <code>closed</code>, <code>closing</code></li>
-<li><code>Fix</code>, <code>Fixes</code>, <code>Fixed</code>, <code>Fixing</code>, <code>fix</code>, <code>fixes</code>, <code>fixed</code>, <code>fixing</code></li>
-<li><code>Resolve</code>, <code>Resolves</code>, <code>Resolved</code>, <code>Resolving</code>, <code>resolve</code>, <code>resolves</code>, <code>resolved</code>, <code>resolving</code></li>
-<li><code>Implement</code>, <code>Implements</code>, <code>Implemented</code>, <code>Implementing</code>, <code>implement</code>, <code>implements</code>, <code>implemented</code>, <code>implementing</code></li>
-</ul>
-<h6 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h6><ul>
-<li>当前项目仓库的 <code>issue</code> , 如 <code>close #123</code></li>
-<li>组内跨仓库的 <code>issue</code>, 如 <code>fix group/project#123</code></li>
-<li>直接链接其他仓库 <code>issue</code>, 如 <code>Resolve https://gitlab.example.com/group/project/issues/123</code></li>
-</ul>
-<h4 id="2-第三方事务管理系统"><a href="#2-第三方事务管理系统" class="headerlink" title="2. 第三方事务管理系统"></a>2. 第三方事务管理系统</h4><blockquote>
-<p>Git 服务端推荐优先私有化部署 <a href="https://about.gitlab.com/" target="_blank" rel="noopener">GitLab</a> 以支持集成第三方事务管理系统<br>第三方事务管理系统可以是 Jira 、 禅道等</p>
-<ul>
-<li><a href="https://www.zentao.net/book//207.html" target="_blank" rel="noopener">禅道 与 GitLab 集成</a></li>
-<li><a href="https://docs.gitlab.com/ee/integration/jira/" target="_blank" rel="noopener">Jira 与 GitLab 集成</a></li>
-</ul>
-</blockquote>
-<p>当系统集成后，就可以在</p>
-<p><code>Git</code> 可以与 <code>Jira</code> 、<code>禅道</code> 等第三方相互集成后，就可以同样通过<code>关键字</code>来直接操作事务，区别是操作的事务的编号以第三方提供的为准</p>
-<h3 id="提交操作"><a href="#提交操作" class="headerlink" title="提交操作"></a>提交操作</h3><h4 id="CLI-手动"><a href="#CLI-手动" class="headerlink" title="CLI 手动"></a>CLI 手动</h4><blockquote>
-<p>以下适用于 Mac OS X (or Linux like Ubuntu)</p>
-</blockquote>
-<h5 id="1-准备一个-txt-作为提交模版"><a href="#1-准备一个-txt-作为提交模版" class="headerlink" title="1. 准备一个 *.txt 作为提交模版"></a>1. 准备一个 *.txt 作为提交模版</h5><p>下载 <a href="/assets/.git-commit-template.txt">template</a>后建议存放在 home 根目录 <code>～/</code> 下</p>
-<h5 id="2-Git-配置提交模版"><a href="#2-Git-配置提交模版" class="headerlink" title="2. Git 配置提交模版"></a>2. Git 配置提交模版</h5><p>直接运行命令<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git config --global commit.template ～/.git-commit-template.txt</span><br></pre></td></tr></table></figure></p>
-<p>或者在 <code>～/.gitconfig</code> 中编辑 <code>git</code> 配置项：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[commit]</span><br><span class="line">template = ～/.git-commit-template.txt</span><br></pre></td></tr></table></figure>
-<h5 id="3-Git-配置默认编辑器"><a href="#3-Git-配置默认编辑器" class="headerlink" title="3. Git 配置默认编辑器"></a>3. Git 配置默认编辑器</h5><p>配置默认 <code>git</code> 默认编辑器，建议同自己的代码编辑器，例如 <code>vscode</code>:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[core]</span><br><span class="line">editor = code -w  ( -w 参数必须 ，代表等待提交信息编辑完成)</span><br></pre></td></tr></table></figure></p>
-<h5 id="test"><a href="#test" class="headerlink" title="test"></a>test</h5><p>在 Terminal 中 执行 <code>git commit</code> 回车，自动使用配置的默认编辑器调起配置好的“提交模版”<br><img src="/assets/images/git-guide/git-commit.gif" alt></p>
-<p>Done, 编写完提交信息文本保存后关闭则提交成功，如果未保存关闭则退出保存，提交成功可以 <code>git log</code> 查看提交信息, 也可以在 <code>push</code> 前， 通过 <code>git commit --amend</code> 堪误本次提交信息。</p>
-<h4 id="CLI-脚本工具"><a href="#CLI-脚本工具" class="headerlink" title="CLI 脚本工具"></a>CLI 脚本工具</h4><ul>
-<li><a href="https://www.npmjs.com/package/git-cz" target="_blank" rel="noopener">git-cz</a></li>
-<li><a href="https://github.com/conventional-changelog/commitlint" target="_blank" rel="noopener">conventional-changelog/commitlint</a></li>
-<li>…</li>
-</ul>
-<h4 id="IDE-插件"><a href="#IDE-插件" class="headerlink" title="IDE 插件"></a>IDE 插件</h4><p>像 <code>IntelliJ IDEA</code> 此类集成 GIT 的开发环境，可以直接安装一些第三方插件，如</p>
-<ul>
-<li><a href="https://plugins.jetbrains.com/plugin/13389-conventional-commit" target="_blank" rel="noopener">plugin: conventional-commit</a></li>
-<li><a href="https://plugins.jetbrains.com/plugin/13405-angular-conventional-commit" target="_blank" rel="noopener">plugin: angular-conventional-commit</a></li>
-<li>…</li>
-</ul>
-<h2 id="发布管理"><a href="#发布管理" class="headerlink" title="发布管理"></a>发布管理</h2><h3 id="CHANGELOG-变更日志"><a href="#CHANGELOG-变更日志" class="headerlink" title="CHANGELOG 变更日志"></a>CHANGELOG 变更日志</h3><p><code>Change Log</code> 属于软件发布生命周期，面向内部协作。<br>在项目根目录书写 <code>CHANGELOG.md</code>，如：<br><img src="/assets/images/git-guide/changelog.png" alt><br>通常在遵循<strong>提交规范</strong>后，直接使用类似 <a href="https://github.com/conventional-changelog/conventional-changelog" target="_blank" rel="noopener">conventional-changelog</a> 这样的工具可以一键生成 <code>Change Log</code>。</p>
-<h3 id="Release-Notes-发行说明"><a href="#Release-Notes-发行说明" class="headerlink" title="Release Notes 发行说明"></a>Release Notes 发行说明</h3><p>与 <code>Change Log</code> 同属于软件发布生命周期，区别是 <code>Release Notes</code>是面向外部交付的<br><code>Release Notes</code> 没有标准格式可循，通常根据要传播表达的信息的要求来采用定制化的格式样式。</p>
-<p><strong>Release Notes 可能包括以下部分：</strong></p>
-<ul>
-<li><strong>Header</strong> – 文档名称（即发行说明）、产品名称、发行编号、发行日期、注释日期、注释版本等。</li>
-<li><strong>概述</strong> - 在没有其他正式文档的情况下，对产品和更改的简要概述。</li>
-<li><strong>目的</strong> - 简要概述发行说明的目的，并列出此版本中的新增功能，包括<a href="https://en.wikipedia.org/wiki/Bug_fix" target="_blank" rel="noopener">错误修复</a>和新功能。</li>
-<li><strong>问题摘要</strong> - 对该版本中的错误或增强功能的简短描述。</li>
-<li><strong>重现步骤</strong> - 遇到错误时遵循的步骤。</li>
-<li><strong>解决方案</strong> - 为修复错误而进行的修改/增强的简短描述。</li>
-<li><strong>最终用户影响</strong> - 应用程序的最终用户需要哪些不同的操作。这应该包括其他功能是否受到这些更改的影响。</li>
-<li><strong>支持影响</strong> - 管理软件的日常过程中所需的更改。</li>
-<li><strong>注释</strong> - 有关软件或硬件<a href="https://en.wikipedia.org/wiki/Installation_(computer_programs" target="_blank" rel="noopener">安装</a>)、升级和产品文档（包括文档更新）的注释</li>
-<li><strong>免责声明</strong> - 公司和标准产品相关信息。例如; <a href="https://en.wikipedia.org/wiki/Freeware" target="_blank" rel="noopener">免费软件</a>、<a href="https://en.wikipedia.org/wiki/Copy_protection#Anti-piracy" target="_blank" rel="noopener">反盗版</a>、复制等。另见<a href="https://en.wikipedia.org/wiki/Disclaimer" target="_blank" rel="noopener">免责声明</a>。</li>
-<li><strong>联系</strong> - 支持联系信息</li>
-</ul>
-<p><code>GitLab</code> 和 <code>GitHub</code> 均将 <code>Release Notes</code> 功能集成在 <code>Tags</code> 中，当 <code>Tag</code> 推送到远程仓库，可以找到 Tag 对应的编辑按钮，在远程仓库直接在线编写 <code>Release Notes</code><br>如 <code>React</code> 版本库：<br><img src="/assets/images/git-guide/react-release-notes.png" alt></p>
-<p><strong>参考资料：</strong></p>
-<ul>
-<li><a href="https://github.com/facebook/react/releases" target="_blank" rel="noopener">ReactJs Release Notes</a></li>
-<li><a href="http://maven.apache.org/release-notes-all.html" target="_blank" rel="noopener">Apache Maven Release Notes</a></li>
-<li><a href="https://support.apple.com/en-us/HT211808" target="_blank" rel="noopener">iOS 14 Release Notes</a></li>
-<li><a href="https://developer.apple.com/documentation/macos-release-notes" target="_blank" rel="noopener">macOS Release Notes</a></li>
-<li><a href="https://developer.apple.com/documentation/xcode-release-notes/xcode-12_5-beta-release-notes/" target="_blank" rel="noopener">Xcode Release Notes</a></li>
-<li><a href="https://www.kernel.org/doc/html/latest/admin-guide/README.html" target="_blank" rel="noopener">Linux code Release Notes (5.x)</a></li>
-<li><a href="https://docs.microsoft.com/en-gb/visualstudio/windows/?view=vs-2019" target="_blank" rel="noopener">Microsoft Visual Studio Release Notes</a></li>
-<li><a href="https://www.tesla.com/support/software-updates" target="_blank" rel="noopener">Tesla Software Update Release Notes</a></li>
-<li><a href="https://docs.microsoft.com/en-us/windows/release-health/release-information" target="_blank" rel="noopener">Windows 10 Release Notes</a></li>
-</ul>
-<h2 id="README-文档"><a href="#README-文档" class="headerlink" title="README 文档"></a>README 文档</h2><p>始终遵循 <a href="https://github.com/RichardLitt/standard-readme/blob/master/spec.zh-CN.md" target="_blank" rel="noopener">规范</a> 书写 <code>README.md</code> <strong>将利于项目维护以及交接流转。</strong></p>
-<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><h3 id="Renaming-default-branch-‘master’-to-‘main’"><a href="#Renaming-default-branch-‘master’-to-‘main’" class="headerlink" title="Renaming default branch, ‘master’ to ‘main’"></a>Renaming default branch, ‘master’ to ‘main’</h3><p>由于 <code>cultural sensitivity</code> ，2020年, 计算机行业对 <a href="https://www.theserverside.com/opinion/Master-slave-terminology-alternatives-you-can-use-right-now" target="_blank" rel="noopener">master，slave</a> 这两个词的使用引起了关注，这两个词被认为 harmful and antiquated ，不适合作为行业术语，同时也引发了众多抗议。<br><code>GitHub</code> 根据 <a href="https://sfconservancy.org/news/2020/jun/23/gitbranchname/" target="_blank" rel="noopener">Conservancy 的建议</a> 采取了行动，并在 <code>Git</code> 存储库初始化时<strong>不再使用术语 master</strong>， 因此，GitHub 将默认分支从 <strong>master</strong> 重命名为了 <strong>main</strong>。</p>
-<p>相关资料：</p>
-<ul>
-<li><em><a href="https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main" target="_blank" rel="noopener">https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main</a></em></li>
-<li><em><a href="https://github.com/github/renaming" target="_blank" rel="noopener">https://github.com/github/renaming</a></em></li>
-</ul>
-<h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><ul>
-<li>生产/开发模型  <code>main/dev</code></li>
-<li>特性/发布模型 <code>main/dev/feat</code></li>
-<li>开发/发布分离模型  <code>main/dev/feat/release</code></li>
-<li>开发/发布/缺陷分离模型 <code>main/dev/feat/release/hotfix</code></li>
-</ul>
-<h4 id="常驻分支"><a href="#常驻分支" class="headerlink" title="常驻分支"></a>常驻分支</h4><p><strong>main</strong> 主干分支（锁定，被保护），仅用于发布新版本，必须限制任何角色包括管理员自己在此分支上的任何提交操作，只允许管理员在此分支上进行 <code>merge request</code> or <code>pull request</code> 请求，以及进行打版本标签的操作，同时搭建好 <code>CI/CD</code> 流程，理论上每当对 <code>main</code> 分支有一个合并操作，就可以自动触发 <code>Git</code> 钩子脚本来构建并且发布软件到生产服务器。<br>​<br><strong>dev</strong>开发分支（非锁定），平时干活的地方。每当发版时，需要被合并到 <code>main</code>。对于简单的项目而言，这样的分支模型已经够用了。</p>
-<h4 id="辅助分支-临时分支"><a href="#辅助分支-临时分支" class="headerlink" title="辅助分支 (临时分支)"></a>辅助分支 (临时分支)</h4><p>除了常驻分支，通常大的<strong>特性开发</strong>或<strong>生产缺陷修复</strong>还建议创建相应的<strong>临时分支</strong>。<br>因为：</p>
-<ol>
-<li>在分支上开发可以让你随意尝试，进退自如，比如碰上无法正常工作的特性或补丁，可以先搁置，直到有时间仔细核查修复为止。</li>
-<li>团队中如果有代码审查流程，独立的分支还可以留给审查者抽空审查的时间和改进代码的余地，并将是否合并、是否发布的权利留给审查者，为代码质量设一道门槛。</li>
-</ol>
-<p>每一类分支都有一个特定目的，如何命名每一类分支？建议用相关的主题关键字进行命名，并且建议将分支名称分置于不同<strong>命名空间（前缀）</strong>下，例如：</p>
-<table>
-<thead>
-<tr>
-<th><strong>分支</strong></th>
-<th><strong>来源分支</strong></th>
-<th><strong>合并分支</strong></th>
-<th><strong>锁定</strong></th>
-<th><strong>说明</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>feat-*</code></td>
-<td><code>dev</code></td>
-<td><code>dev</code></td>
-<td><strong>NO</strong></td>
-<td>特性分支，为了开发新增特定功能而建</td>
-</tr>
-<tr>
-<td><code>release-*</code></td>
-<td><code>dev</code></td>
-<td><code>dev</code>,<code>main</code></td>
-<td><strong>YES</strong></td>
-<td>预发布分支，为了新版本的发布做准备，一般命名为<code>release-&lt;版本号&gt;</code></td>
-</tr>
-<tr>
-<td><code>hotfix-*</code></td>
-<td><code>main</code></td>
-<td><code>dev</code>,<code>main</code></td>
-<td><strong>NO</strong></td>
-<td>补丁分支，为了修复生产缺陷而建，一般命名为 <code>hotfix-&lt;故障名或故障编号&gt;</code></td>
-</tr>
-</tbody>
-</table>
-<p>与常驻分支不同，这些辅助性分支总是有一个<strong>有限的生命期</strong>，<strong>等被合并到常驻分支之后，就应该会被移除掉。</strong><br>​</p>
-<h2 id="扩展资料"><a href="#扩展资料" class="headerlink" title="扩展资料"></a>扩展资料</h2><ul>
-<li>整合了「提交」和「发布」的方案：<a href="https://github.com/conventional-changelog/standard-version" target="_blank" rel="noopener">conventional-changelog/standard-version</a></li>
-<li>…</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Extract and Organize</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-        <tag>SOP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello Hexo</title>
     <url>/2017/02/27/Hello-Hexo/</url>
     <content><![CDATA[<h1 id="Create-blog"><a href="#Create-blog" class="headerlink" title="Create blog"></a>Create blog</h1><h2 id="Pre-requirements"><a href="#Pre-requirements" class="headerlink" title="Pre-requirements"></a>Pre-requirements</h2><ul>
@@ -287,9 +89,9 @@
 <p>而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV<em> 的设计模式，在此设计模式下开发，就绕不开至关重要的的概念：<strong>状态管理</strong>，笔者也一如既往固执己见地认为，整个状态管理的过程其实就是贯彻 MV</em> 对 Model、View 、 Controller/View Model 三者分层管理具体实施的过程，从而尽可能地保证 View 层的单薄，保证 Controller 的逻辑“C位”， 保证 Model 的数据中心，自始至终将应用的可维护性控制在一个较好的水平。</p>
 <p>今天借 「State Management」 题发挥，基于团队目前项目所采用的技术框架 Vue, 来聊一聊状态管理。</p>
 <h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>Vue 框架也是深受 <code>MVVM</code>（model, view, view-model) 优秀的编程模型规范的启发,</p>
-<p><img src="/assets/images/hello-state/mvvm.jpg" alt></p>
+<p><img src="/images/hello-state/mvvm.jpg" alt></p>
 <p>同时结合了<strong>组件化</strong>的先进理念，自然而然地驱使开发者将整个WEB应用抽象分离到一个一个组件的颗粒度， 当一个应用不断被组件化抽象，小到一个按钮，大到一个页面，每个组件本身就是一个个独立的 <code>vm</code> 单元。</p>
-<p><img src="/assets/images/hello-state/components.png" alt></p>
+<p><img src="/images/hello-state/components.png" alt></p>
 <p>在 <a href="https://cn.vuejs.org/v2/guide/single-file-components.html" target="_blank" rel="noopener">SFC (single-file components)</a> 单文件组件的开发范式下，每个 <code>*.vue</code> 文件就是一个 <code>vm</code> ， <code>&lt;template&gt;...&lt;/template&gt;</code> 可以理解为 <code>vm</code> 中的 <code>v</code> ；而  <code>&lt;style&gt;&lt;style&gt;</code> 可以理解为 <code>vm</code> 中的 <code>m</code>的样式控制部分，<code>&lt;script&gt;&lt;/script&gt;</code> 可以理解为 <code>vm</code>中的 <code>m</code>的逻辑和数据部分, 另外框架底层实现了一个 <code>MVVM</code> 模型中的“绑定器” ，通过开发者对每个视图模型的声明式编程来驱动程序的视图更新。<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// *.vue</span></span><br><span class="line">vm</span><br><span class="line">├── v <span class="comment">// view</span></span><br><span class="line">│   └── template</span><br><span class="line">└── m <span class="comment">// model</span></span><br><span class="line">    ├── style</span><br><span class="line">    └── script</span><br><span class="line">        ├── data</span><br><span class="line">        │   ├── data()&#123;&#125;</span><br><span class="line">        │   └── computed:&#123;&#125;</span><br><span class="line">        └── logic</span><br><span class="line">            ├── lifecycle-hooks <span class="comment">// created,...</span></span><br><span class="line">            ├── watch:&#123;&#125;</span><br><span class="line">            └── methods&#123;&#125;</span><br><span class="line"><span class="comment">// 这种“奇怪的结构“思维，源于笔者入门编程时，深受 `MVC`（model, view, controller）编程模型启蒙式的“洗脑”，应用程序分层的思维早已根深蒂固</span></span><br></pre></td></tr></table></figure></p>
 <p>如此，开发者管理维护单个组件（<code>vm</code> 实例）本身，确实可以做到非常高效、清晰，<br>但是随着应用迭代，不知不觉，整个应用也变成了庞大的 “vm” 集合， 相隔层级较深的组件与组件之间可能形成了较长的通信路径。</p>
 <p>而 <code>Vue</code> 本身内置的数据流管理方案有限， <code>props</code>(其实本质就像一个函数定义的参数), <code>event emit</code> 等其实在复杂场景发挥有限，不适合长路径的通信，无法支撑组织管理整个”前端应用“的状态，虽然又不是不能用，但是要追求合理可维护性则显的捉襟见肘。</p>
@@ -298,7 +100,7 @@
 <a id="more"></a>
 <h1 id="Flux"><a href="#Flux" class="headerlink" title="Flux"></a><a href="https://facebook.github.io/flux/" target="_blank" rel="noopener">Flux</a></h1><p>答案是肯定的，就在彼时，“状态管理”的思想横空出世也顺利成章（其实万变不离其宗，依然是编程模式，依然是分层的思想），将前端应用着实变成了一部“状态机”，管理好状态，即是管理好了应用。</p>
 <p>依然是前端界风向标 <code>Facebook</code> 首当其冲，引入经典的编程思想，在前端生态提出了 <code>Flux</code> 设计思想, 「状态管理」也由此慢慢在前端生态大行其道，可谓一发不可收拾， <a href="https://redux.js.org/" target="_blank" rel="noopener">redux</a>、<a href="https://mobx.js.org/README.html" target="_blank" rel="noopener">mobx</a>、<a href="https://dvajs.com/" target="_blank" rel="noopener">dvajs</a>、<a href="https://rematchjs.org/" target="_blank" rel="noopener">rematchjs</a> 、 <a href="https://vuex.vuejs.org/" target="_blank" rel="noopener">vuex</a> 等优秀的状态管理方案，也如雨后春笋般纷纷涌现，成为前端开发者的福音。</p>
-<p><img src="/assets/images/hello-state/flux.jpg" alt></p>
+<p><img src="/images/hello-state/flux.jpg" alt></p>
 <ul>
 <li>View： 视图层</li>
 <li>Action（动作）：视图层发出的消息（比如mouseClick）</li>
@@ -374,7 +176,7 @@
     <content><![CDATA[<blockquote>
 <p>最后更新于 <code>2020-2-20</code>, 信息出入请以 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> 为准<br>为了保证信息有效性, 大量使用了文字链接关联官方文档的相关内容</p>
 </blockquote>
-<p><img src="/assets/images/hello-uni-app/front-cover.png" alt><br>(<strong><em> 图片源 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> </em></strong>)</p>
+<p><img src="/images/hello-uni-app/front-cover.png" alt><br>(<strong><em> 图片源 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> </em></strong>)</p>
 <p>开局一张图，内容开始编。</p>
 <p>近期接手维护一个基于 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app</a> 框架开发的项目，故笔墨伺候，简单做下功课。</p>
 <p>以下内容对于未听说过或者未使用过 <code>uni-app</code>的前端“熟练工”相对比较友好些，内容有误，敬请指正。</p>
@@ -641,6 +443,203 @@
       </tags>
   </entry>
   <entry>
+    <title>Git 指北</title>
+    <url>/2021/08/13/Git-Guide/</url>
+    <content><![CDATA[<blockquote>
+<p>本指南暂不包含 <code>fetch</code> , <code>pull</code>, <code>push</code>, <code>clone</code> 等 Git 版本库操作和 <code>CI/CD</code> 工作流搭建等</p>
+</blockquote>
+<h2 id="一、版本规范："><a href="#一、版本规范：" class="headerlink" title="一、版本规范："></a>一、版本规范：</h2><p>结合 <a href="https://semver.org/" target="_blank" rel="noopener">semver</a> 语义化版本以及 <a href="http://en.wikipedia.org/wiki/Software_release_life_cycle" target="_blank" rel="noopener">software release life cycle</a> 软件发布生命周期两块概念，约定 <code>git tag</code> 标签规则</p>
+<h3 id="格式命名"><a href="#格式命名" class="headerlink" title="格式命名"></a>格式命名</h3><h4 id="基础版本格式："><a href="#基础版本格式：" class="headerlink" title="基础版本格式："></a>基础版本格式：</h4><p>   <code>&lt;主版本号&gt;.&lt;次版本号&gt;.&lt;修订版本号&gt;</code> 三位数字用 <code>.</code> 连接组成一个版本号，如 <code>1.0.0</code><br>   版本号数字递增规则：</p>
+<ul>
+<li><strong>主版本号</strong>：对代码进行了不向前兼容的修改</li>
+<li><strong>次版本号</strong>：向前兼容的修改，只是新增了功能</li>
+<li><strong>修订版本号</strong>：向前兼容的故障修复、需求细节变更<h4 id="细化版本格式："><a href="#细化版本格式：" class="headerlink" title="细化版本格式："></a>细化版本格式：</h4>在原来 <code>x.y.z</code> 基础版本号后面添加<code>软件生命周期</code>作为先行版本号，以及添加<code>附加信息（编译信息、时间戳、序号等）</code>来进一步细化控制版本</li>
+<li><strong>先行版本号</strong>：表示在正式版之前发布的版本，并非稳定而且可能无法满足预期的兼容性需求，格式是标注在修订版之后，先加上一个连接号<code>-</code>, 再加上一连串以句点分隔的标识符来修饰, 。范例：<code>1.0.0-alpha.1</code>、<code>1.0.0-rc.22</code>、<code>1.0.0-beta.33</code> …<blockquote>
+<p>常见的先行版本</p>
+<ul>
+<li><code>alpha</code>: 内测版本，通常提测至测试部</li>
+<li><code>beta</code>: 公测版本，通常可以面向用户全量或者灰度发布</li>
+<li><code>rc</code>: 即 <code>Release candiate</code>，正式版本的候选版本，用作预发布<br>注：这些版本的发布可能需要团队的工作流程以及部署环境的隔离去支撑</li>
+</ul>
+</blockquote>
+</li>
+<li><strong>版本编译信息</strong>: 可以在修订版或先行版本号之后，先加上一个加号再加上一连串以句点分隔的标识符来修饰。范例：<code>1.0.0+jested</code>、<code>1.0.0-alpha+001</code>、<code>1.0.0-rc+20130313144700</code>、<code>1.0.0-beta+exp.sha.5114f85</code>、<code>1.0.0-next+0</code>…</li>
+</ul>
+<h3 id="创建标签"><a href="#创建标签" class="headerlink" title="创建标签"></a>创建标签</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建</span></span><br><span class="line">$ git tag -a <span class="string">"x.y.z-alpha+timestamp"</span> -m <span class="string">"summary..."</span></span><br><span class="line"><span class="comment"># 推送</span></span><br><span class="line">$ git push --tags</span><br></pre></td></tr></table></figure>
+<h3 id="常用命令行"><a href="#常用命令行" class="headerlink" title="常用命令行:"></a>常用命令行:</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># &lt; xxx &gt; just means variable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># List tags</span></span><br><span class="line">$ git tag</span><br><span class="line"></span><br><span class="line"><span class="comment"># Show details of the tag</span></span><br><span class="line">$ git show &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add tag to newest commit</span></span><br><span class="line">$ git tag &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add tag to specified commit</span></span><br><span class="line">$ git tag &lt;TAG Name&gt; &lt;Commit Hash ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove tag (local)</span></span><br><span class="line">$ git tag -d &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove tag (remote)</span></span><br><span class="line">$ git push &lt;Host Name&gt; :refs/tags/&lt;TAG Name&gt;</span><br><span class="line">$ git push &lt;Host Name&gt; :&lt;TAG Name&gt;</span><br><span class="line">$ git push --delete &lt;Host Name&gt; &lt;TAG Name&gt;</span><br><span class="line">$ git push -d &lt;Host Name&gt; &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Push specified tag to remote</span></span><br><span class="line">$ git push &lt;Host Name&gt; &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Push all tags to remote</span></span><br><span class="line">$ git push &lt;Host Name&gt; --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fetch all tags from remote</span></span><br><span class="line">$ git fetch --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a new branch from the TAG</span></span><br><span class="line">$ git checkout -b &lt;New Branch Name&gt; &lt;TAG Name&gt;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="二、提交规范"><a href="#二、提交规范" class="headerlink" title="二、提交规范"></a>二、提交规范</h2><h3 id="提交人"><a href="#提交人" class="headerlink" title="提交人"></a>提交人</h3><p>根据团队约定，从项目维度上去设置&lt;用户名&gt;和&lt;邮箱&gt;,不影响开发着全局配置</p>
+<h4 id="方法一：进入当前项目根目录，执行如下命令"><a href="#方法一：进入当前项目根目录，执行如下命令" class="headerlink" title="方法一：进入当前项目根目录，执行如下命令"></a>方法一：进入当前项目根目录，执行如下命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 列出全局配置信息</span></span><br><span class="line">$ git config --global -l</span><br><span class="line"><span class="comment"># 列出项目当前的配置信息，没有字段的将继承全局，相同的字段将优先于全局</span></span><br><span class="line">$ git config --<span class="built_in">local</span> -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置当前项目</span></span><br><span class="line">$ git config --<span class="built_in">local</span> user.name xxx</span><br><span class="line">$ git config --<span class="built_in">local</span> user.email xxx</span><br></pre></td></tr></table></figure>
+<h4 id="方式二：-在当前项目根目录-git-config-配置文件中设置"><a href="#方式二：-在当前项目根目录-git-config-配置文件中设置" class="headerlink" title="方式二： 在当前项目根目录 .git/config 配置文件中设置"></a>方式二： 在当前项目根目录 <code>.git/config</code> 配置文件中设置</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[user]</span><br><span class="line">name = xxx</span><br><span class="line">email = xxx</span><br></pre></td></tr></table></figure>
+<h3 id="提交风格"><a href="#提交风格" class="headerlink" title="提交风格"></a>提交风格</h3><p><img src="/images/git-guide/angular-commit-style.png" alt><br>如上图为 <code>AngularJS</code> 开源仓库参考 <a href="https://google.github.io/styleguide/jsguide.html" target="_blank" rel="noopener">Google’s JavaScript Style Guide</a> 制定并使用的提交风格，目前前端开源生态普遍遵循。<br><strong>这样统一标准的提交好处是</strong>：</p>
+<ul>
+<li>降低 <code>Code Review</code> 成本</li>
+<li>标准化结构化的提交消息文本格式，便于 <code>git log</code> 格式化打印输出日志如 <code>git log --format=&#39;%s (%h)&#39; --reverse --grep &#39;^\(feat\|fix\)&#39; --since=2020-01-01</code> 或者直接借助一些工具可自动化地“一键”生成 <code>Change Log</code></li>
+<li>便于追溯历史时快速搜索过滤</li>
+</ul>
+<p><strong>提交的消息格式如下：</strong><br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;footer&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>每次提交可以包含页眉(<code>header</code>)、正文(<code>body</code>)和脚注(<code>footer</code>)</li>
+<li>每次提交必须包含页眉内容，其他可选</li>
+<li>每次提交的信息尽量不超过 <code>100</code> 个字符</li>
+</ul>
+<p><strong>具体说明文档：</strong></p>
+<ul>
+<li><a href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#" target="_blank" rel="noopener">AngularJS Git Commit Message Conventions</a></li>
+<li><a href="https://www.conventionalcommits.org/zh-hans/v1.0.0/" target="_blank" rel="noopener">conventionalcommits.org</a></li>
+</ul>
+<h3 id="Commit-vs-Issue"><a href="#Commit-vs-Issue" class="headerlink" title="Commit vs Issue"></a>Commit <strong><em>vs</em></strong> Issue</h3><h4 id="1-自有的Issue-系统事务操作"><a href="#1-自有的Issue-系统事务操作" class="headerlink" title="1. 自有的Issue 系统事务操作"></a>1. 自有的<code>Issue</code> 系统事务操作</h4><blockquote>
+<p><code>Github</code> 、 <code>Gitlab</code> 等都提供了关键字，允许在提交 commit message 中通过声明关键字以及对应的 ISSUE- NUMBER 来操作事务</p>
+</blockquote>
+<h5 id="1-Github-关闭事务"><a href="#1-Github-关闭事务" class="headerlink" title="1) Github 关闭事务"></a>1) Github 关闭事务</h5><h6 id="keywords"><a href="#keywords" class="headerlink" title="keywords"></a>keywords</h6><ul>
+<li><code>close</code>,<code>closes</code>,<code>closed</code>,<code>Close</code>,<code>Closes</code>,<code>Closed</code>,</li>
+<li><code>fix</code>,<code>fixes</code>,<code>fixed</code>,<code>Fix</code>,<code>Fixes</code>,<code>Fixed</code></li>
+<li><code>resolve</code>,<code>resolves</code>,<code>resolved</code>,<code>Resolve</code>,<code>Resolves</code>,<code>Resolved</code></li>
+</ul>
+<h6 id="syntax"><a href="#syntax" class="headerlink" title="syntax"></a>syntax</h6><ul>
+<li>同一个仓库 <code>KEYWORD #ISSUE-NUMBER</code>, 如    <code>Closes #10</code></li>
+<li>不同的仓库 <code>KEYWORD OWNER/REPOSITORY#ISSUE-NUMBER</code>, 如<code>Fixes octo-org/octo-repo#100</code></li>
+<li>多个Issue <code>&lt;full syntax&gt;, &lt;full syntax&gt;, ...</code>, 如 <code>Resolves #10, fix #123, closes owner/octo-repo#100</code></li>
+</ul>
+<h5 id="2-Gitlab-关闭事务"><a href="#2-Gitlab-关闭事务" class="headerlink" title="2) Gitlab 关闭事务"></a>2) Gitlab 关闭事务</h5><h6 id="keywords-syntax-pattern"><a href="#keywords-syntax-pattern" class="headerlink" title="keywords syntax pattern"></a>keywords syntax pattern</h6><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">\b((?:[Cc]los(?:e[sd]?|ing)|\b[Ff]ix(?:e[sd]|ing)?|\b[Rr]esolv(?:e[sd]?|ing)|\b[Ii]mplement(?:s|ed|ing)?)(:?) +(?:(?:issues? +)?%&#123;issue_ref&#125;(?:(?: *,? +and +| *,? *)?)|([A-Z][A-Z0<span class="number">-9</span>_]+-\d+))+)</span><br></pre></td></tr></table></figure>
+<h6 id="all-keywords"><a href="#all-keywords" class="headerlink" title="all keywords"></a>all keywords</h6><ul>
+<li><code>Close</code>, <code>Closes</code>, <code>Closed</code>, <code>Closing</code>, <code>close</code>, <code>closes</code>, <code>closed</code>, <code>closing</code></li>
+<li><code>Fix</code>, <code>Fixes</code>, <code>Fixed</code>, <code>Fixing</code>, <code>fix</code>, <code>fixes</code>, <code>fixed</code>, <code>fixing</code></li>
+<li><code>Resolve</code>, <code>Resolves</code>, <code>Resolved</code>, <code>Resolving</code>, <code>resolve</code>, <code>resolves</code>, <code>resolved</code>, <code>resolving</code></li>
+<li><code>Implement</code>, <code>Implements</code>, <code>Implemented</code>, <code>Implementing</code>, <code>implement</code>, <code>implements</code>, <code>implemented</code>, <code>implementing</code></li>
+</ul>
+<h6 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h6><ul>
+<li>当前项目仓库的 <code>issue</code> , 如 <code>close #123</code></li>
+<li>组内跨仓库的 <code>issue</code>, 如 <code>fix group/project#123</code></li>
+<li>直接链接其他仓库 <code>issue</code>, 如 <code>Resolve https://gitlab.example.com/group/project/issues/123</code></li>
+</ul>
+<h4 id="2-第三方事务管理系统"><a href="#2-第三方事务管理系统" class="headerlink" title="2. 第三方事务管理系统"></a>2. 第三方事务管理系统</h4><blockquote>
+<p>Git 服务端推荐优先私有化部署 <a href="https://about.gitlab.com/" target="_blank" rel="noopener">GitLab</a> 以支持集成第三方事务管理系统<br>第三方事务管理系统可以是 Jira 、 禅道等</p>
+<ul>
+<li><a href="https://www.zentao.net/book//207.html" target="_blank" rel="noopener">禅道 与 GitLab 集成</a></li>
+<li><a href="https://docs.gitlab.com/ee/integration/jira/" target="_blank" rel="noopener">Jira 与 GitLab 集成</a></li>
+</ul>
+</blockquote>
+<p><code>Git</code> 可以与 <code>Jira</code> 、<code>禅道</code> 等第三方相互集成后，就可以同样通过<code>关键字</code>来直接操作事务，区别是操作的事务的编号将以第三方提供的信息为准</p>
+<h3 id="提交操作"><a href="#提交操作" class="headerlink" title="提交操作"></a>提交操作</h3><h4 id="CLI-手动"><a href="#CLI-手动" class="headerlink" title="CLI 手动"></a>CLI 手动</h4><blockquote>
+<p>以下适用于 Mac OS X (or Linux like Ubuntu)</p>
+</blockquote>
+<h5 id="1-准备一个-txt-作为提交模版"><a href="#1-准备一个-txt-作为提交模版" class="headerlink" title="1. 准备一个 *.txt 作为提交模版"></a>1. 准备一个 *.txt 作为提交模版</h5><p>打开 <a href="/files/git-commit-template.txt">template</a> 后另存为到本地，建议存放在 home 目录 <code>～/</code> 下, 并可选择性地重命名为 <code>.git-commit-template.txt</code> 隐藏文件</p>
+<h5 id="2-Git-配置提交模版"><a href="#2-Git-配置提交模版" class="headerlink" title="2. Git 配置提交模版"></a>2. Git 配置提交模版</h5><p>直接运行命令<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git config --global commit.template ～/.git-commit-template.txt</span><br></pre></td></tr></table></figure></p>
+<p>或者在 <code>～/.gitconfig</code> 中编辑 <code>git</code> 配置项：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[commit]</span><br><span class="line">template = ～/.git-commit-template.txt</span><br></pre></td></tr></table></figure>
+<h5 id="3-Git-配置默认编辑器"><a href="#3-Git-配置默认编辑器" class="headerlink" title="3. Git 配置默认编辑器"></a>3. Git 配置默认编辑器</h5><p>配置默认 <code>git</code> 默认编辑器，建议同自己的代码编辑器，例如 <code>vscode</code>:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[core]</span><br><span class="line">editor = code -w  ( -w 参数必须 ，代表等待提交信息编辑完成)</span><br></pre></td></tr></table></figure></p>
+<h5 id="test"><a href="#test" class="headerlink" title="test"></a>test</h5><p>在 Terminal 中 执行 <code>git commit</code> 回车，自动使用配置的默认编辑器调起配置好的“提交模版”<br><img src="/images/git-guide/git-commit.gif" alt></p>
+<p>Done, 编写完提交信息文本保存后关闭则提交成功，如果未保存关闭则退出保存，提交成功可以 <code>git log</code> 查看提交信息, 也可以在 <code>push</code> 前， 通过 <code>git commit --amend</code> 堪误本次提交信息。</p>
+<h4 id="CLI-脚本工具"><a href="#CLI-脚本工具" class="headerlink" title="CLI 脚本工具"></a>CLI 脚本工具</h4><ul>
+<li><a href="https://www.npmjs.com/package/git-cz" target="_blank" rel="noopener">git-cz</a></li>
+<li><a href="https://github.com/conventional-changelog/commitlint" target="_blank" rel="noopener">conventional-changelog/commitlint</a></li>
+<li>…</li>
+</ul>
+<h4 id="IDE-插件"><a href="#IDE-插件" class="headerlink" title="IDE 插件"></a>IDE 插件</h4><p>像 <code>IntelliJ IDEA</code> 此类集成 GIT 的开发环境，可以直接安装一些第三方插件，如</p>
+<ul>
+<li><a href="https://plugins.jetbrains.com/plugin/13389-conventional-commit" target="_blank" rel="noopener">plugin: conventional-commit</a></li>
+<li><a href="https://plugins.jetbrains.com/plugin/13405-angular-conventional-commit" target="_blank" rel="noopener">plugin: angular-conventional-commit</a></li>
+<li>…</li>
+</ul>
+<h2 id="发布管理"><a href="#发布管理" class="headerlink" title="发布管理"></a>发布管理</h2><h3 id="CHANGELOG-变更日志"><a href="#CHANGELOG-变更日志" class="headerlink" title="CHANGELOG 变更日志"></a>CHANGELOG 变更日志</h3><p><code>Change Log</code> 属于软件发布生命周期，面向内部协作。<br>在项目根目录书写 <code>CHANGELOG.md</code>，如：<br><img src="/images/git-guide/changelog.png" alt><br>通常在遵循<strong>提交规范</strong>后，直接使用类似 <a href="https://github.com/conventional-changelog/conventional-changelog" target="_blank" rel="noopener">conventional-changelog</a> 这样的工具可以一键生成 <code>Change Log</code>。</p>
+<h3 id="Release-Notes-发行说明"><a href="#Release-Notes-发行说明" class="headerlink" title="Release Notes 发行说明"></a>Release Notes 发行说明</h3><p>与 <code>Change Log</code> 同属于软件发布生命周期，区别是 <code>Release Notes</code>是面向外部交付的<br><code>Release Notes</code> 没有标准格式可循，通常根据要传播表达的信息的要求来采用定制化的格式样式。</p>
+<p><strong>Release Notes 可能包括以下部分：</strong></p>
+<ul>
+<li><strong>Header</strong> – 文档名称（即发行说明）、产品名称、发行编号、发行日期、注释日期、注释版本等。</li>
+<li><strong>概述</strong> - 在没有其他正式文档的情况下，对产品和更改的简要概述。</li>
+<li><strong>目的</strong> - 简要概述发行说明的目的，并列出此版本中的新增功能，包括<a href="https://en.wikipedia.org/wiki/Bug_fix" target="_blank" rel="noopener">错误修复</a>和新功能。</li>
+<li><strong>问题摘要</strong> - 对该版本中的错误或增强功能的简短描述。</li>
+<li><strong>重现步骤</strong> - 遇到错误时遵循的步骤。</li>
+<li><strong>解决方案</strong> - 为修复错误而进行的修改/增强的简短描述。</li>
+<li><strong>最终用户影响</strong> - 应用程序的最终用户需要哪些不同的操作。这应该包括其他功能是否受到这些更改的影响。</li>
+<li><strong>支持影响</strong> - 管理软件的日常过程中所需的更改。</li>
+<li><strong>注释</strong> - 有关软件或硬件<a href="https://en.wikipedia.org/wiki/Installation_(computer_programs" target="_blank" rel="noopener">安装</a>)、升级和产品文档（包括文档更新）的注释</li>
+<li><strong>免责声明</strong> - 公司和标准产品相关信息。例如; <a href="https://en.wikipedia.org/wiki/Freeware" target="_blank" rel="noopener">免费软件</a>、<a href="https://en.wikipedia.org/wiki/Copy_protection#Anti-piracy" target="_blank" rel="noopener">反盗版</a>、复制等。另见<a href="https://en.wikipedia.org/wiki/Disclaimer" target="_blank" rel="noopener">免责声明</a>。</li>
+<li><strong>联系</strong> - 支持联系信息</li>
+</ul>
+<p><code>GitLab</code> 和 <code>GitHub</code> 均将 <code>Release Notes</code> 功能集成在 <code>Tags</code> 中，当 <code>Tag</code> 推送到远程仓库，可以找到 Tag 对应的编辑按钮，在远程仓库直接在线编写 <code>Release Notes</code><br>如 <code>React</code> 版本库：<br><img src="/images/git-guide/react-release-notes.png" alt></p>
+<p><strong>参考资料：</strong></p>
+<ul>
+<li><a href="https://github.com/facebook/react/releases" target="_blank" rel="noopener">ReactJs Release Notes</a></li>
+<li><a href="http://maven.apache.org/release-notes-all.html" target="_blank" rel="noopener">Apache Maven Release Notes</a></li>
+<li><a href="https://support.apple.com/en-us/HT211808" target="_blank" rel="noopener">iOS 14 Release Notes</a></li>
+<li><a href="https://developer.apple.com/documentation/macos-release-notes" target="_blank" rel="noopener">macOS Release Notes</a></li>
+<li><a href="https://developer.apple.com/documentation/xcode-release-notes/xcode-12_5-beta-release-notes/" target="_blank" rel="noopener">Xcode Release Notes</a></li>
+<li><a href="https://www.kernel.org/doc/html/latest/admin-guide/README.html" target="_blank" rel="noopener">Linux code Release Notes (5.x)</a></li>
+<li><a href="https://docs.microsoft.com/en-gb/visualstudio/windows/?view=vs-2019" target="_blank" rel="noopener">Microsoft Visual Studio Release Notes</a></li>
+<li><a href="https://www.tesla.com/support/software-updates" target="_blank" rel="noopener">Tesla Software Update Release Notes</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/release-health/release-information" target="_blank" rel="noopener">Windows 10 Release Notes</a></li>
+</ul>
+<h2 id="README-文档"><a href="#README-文档" class="headerlink" title="README 文档"></a>README 文档</h2><p>始终遵循 <a href="https://github.com/RichardLitt/standard-readme/blob/master/spec.zh-CN.md" target="_blank" rel="noopener">规范</a> 书写 <code>README.md</code> <strong>将利于项目维护以及交接流转。</strong></p>
+<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><h3 id="Renaming-default-branch-‘master’-to-‘main’"><a href="#Renaming-default-branch-‘master’-to-‘main’" class="headerlink" title="Renaming default branch, ‘master’ to ‘main’"></a>Renaming default branch, ‘master’ to ‘main’</h3><p>由于 <code>cultural sensitivity</code> ，2020年, 计算机行业对 <a href="https://www.theserverside.com/opinion/Master-slave-terminology-alternatives-you-can-use-right-now" target="_blank" rel="noopener">master，slave</a> 这两个词的使用引起了关注，这两个词被认为 harmful and antiquated ，不适合作为行业术语，同时也引发了众多抗议。<br><code>GitHub</code> 根据 <a href="https://sfconservancy.org/news/2020/jun/23/gitbranchname/" target="_blank" rel="noopener">Conservancy 的建议</a> 采取了行动，并在 <code>Git</code> 存储库初始化时<strong>不再使用术语 master</strong>， 因此，GitHub 将默认分支从 <strong>master</strong> 重命名为了 <strong>main</strong>。</p>
+<p>相关资料：</p>
+<ul>
+<li><em><a href="https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main" target="_blank" rel="noopener">https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main</a></em></li>
+<li><em><a href="https://github.com/github/renaming" target="_blank" rel="noopener">https://github.com/github/renaming</a></em></li>
+</ul>
+<h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><ul>
+<li>生产/开发模型  <code>main/dev</code></li>
+<li>特性/发布模型 <code>main/dev/feat</code></li>
+<li>开发/发布分离模型  <code>main/dev/feat/release</code></li>
+<li>开发/发布/缺陷分离模型 <code>main/dev/feat/release/hotfix</code></li>
+</ul>
+<h4 id="常驻分支"><a href="#常驻分支" class="headerlink" title="常驻分支"></a>常驻分支</h4><p><strong>main</strong> 主干分支（锁定，被保护），仅用于发布新版本，必须限制任何角色包括管理员自己在此分支上的任何提交操作，只允许管理员在此分支上进行 <code>merge request</code> or <code>pull request</code> 请求，以及进行打版本标签的操作，同时搭建好 <code>CI/CD</code> 流程，理论上每当对 <code>main</code> 分支有一个合并操作，就可以自动触发 <code>Git</code> 钩子脚本来构建并且发布软件到生产服务器。<br>​<br><strong>dev</strong>开发分支（非锁定），平时干活的地方。每当发版时，需要被合并到 <code>main</code>。对于简单的项目而言，这样的分支模型已经够用了。</p>
+<h4 id="辅助分支-临时分支"><a href="#辅助分支-临时分支" class="headerlink" title="辅助分支 (临时分支)"></a>辅助分支 (临时分支)</h4><p>除了常驻分支，通常大的<strong>特性开发</strong>或<strong>生产缺陷修复</strong>还建议创建相应的<strong>临时分支</strong>。<br>因为：</p>
+<ol>
+<li>在分支上开发可以让你随意尝试，进退自如，比如碰上无法正常工作的特性或补丁，可以先搁置，直到有时间仔细核查修复为止。</li>
+<li>团队中如果有代码审查流程，独立的分支还可以留给审查者抽空审查的时间和改进代码的余地，并将是否合并、是否发布的权利留给审查者，为代码质量设一道门槛。</li>
+</ol>
+<p>每一类分支都有一个特定目的，如何命名每一类分支？建议用相关的主题关键字进行命名，并且建议将分支名称分置于不同<strong>命名空间（前缀）</strong>下，例如：</p>
+<table>
+<thead>
+<tr>
+<th><strong>分支</strong></th>
+<th><strong>来源分支</strong></th>
+<th><strong>合并分支</strong></th>
+<th><strong>锁定</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat-*</code></td>
+<td><code>dev</code></td>
+<td><code>dev</code></td>
+<td><strong>NO</strong></td>
+<td>特性分支，为了开发新增特定功能而建</td>
+</tr>
+<tr>
+<td><code>release-*</code></td>
+<td><code>dev</code></td>
+<td><code>dev</code>,<code>main</code></td>
+<td><strong>YES</strong></td>
+<td>预发布分支，为了新版本的发布做准备，一般命名为<code>release-&lt;版本号&gt;</code></td>
+</tr>
+<tr>
+<td><code>hotfix-*</code></td>
+<td><code>main</code></td>
+<td><code>dev</code>,<code>main</code></td>
+<td><strong>NO</strong></td>
+<td>补丁分支，为了修复生产缺陷而建，一般命名为 <code>hotfix-&lt;故障名或故障编号&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>与常驻分支不同，这些辅助性分支总是有一个<strong>有限的生命期</strong>，<strong>等被合并到常驻分支之后，就应该会被移除掉。</strong><br>​</p>
+<h2 id="扩展资料"><a href="#扩展资料" class="headerlink" title="扩展资料"></a>扩展资料</h2><ul>
+<li>整合了「提交」和「发布」的方案：<a href="https://github.com/conventional-changelog/standard-version" target="_blank" rel="noopener">conventional-changelog/standard-version</a></li>
+<li>…</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Extract and Organize</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+        <tag>SOP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>setup HTTPS(SSL) on local development environment (Ubuntu)</title>
     <url>/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/</url>
     <content><![CDATA[<h1 id="Edit-hosts-file"><a href="#Edit-hosts-file" class="headerlink" title="Edit hosts file"></a>Edit <code>hosts</code> file</h1><p>location: <code>/etc/hosts</code></p>
@@ -689,13 +688,13 @@
 <h1 id="Import-the-crt-to-the-browser-and-restart"><a href="#Import-the-crt-to-the-browser-and-restart" class="headerlink" title="Import the crt to the browser and restart"></a>Import the <code>crt</code> to the browser and restart</h1><p>Chrome:</p>
 <p><code>Setting</code></p>
 <p>-&gt; <code>(Advanced) Manage Certificates</code></p>
-<p>-&gt; <code>toggle to the &#39;Authorities&#39;(Tab)</code><br><img src="/assets/images/setup-https-local-dev-env/shot1.png" alt></p>
+<p>-&gt; <code>toggle to the &#39;Authorities&#39;(Tab)</code><br><img src="/images/setup-https-local-dev-env/shot1.png" alt></p>
 <p>-&gt; <code>Import</code></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta"># eg: import the</span></span><br><span class="line">/etc/nginx/ssl/xllily.com_CA.pem</span><br></pre></td></tr></table></figure>
 <p>-&gt; <code>Restart the browser</code></p>
 <h1 id="Configure-nginx-and-reload"><a href="#Configure-nginx-and-reload" class="headerlink" title="Configure nginx and reload"></a>Configure nginx and reload</h1><p>Edit <code>/etc/nginx/nginx.conf</code></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"># ...</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line"># ...</span><br><span class="line">	server &#123;</span><br><span class="line">		listen <span class="number">80</span>;</span><br><span class="line">		listen <span class="number">443</span> ssl http2;</span><br><span class="line">		server_name xllily.com;</span><br><span class="line">		ssl_certificate /etc/nginx/ssl/xllily.com.crt;</span><br><span class="line">		ssl_certificate_key /etc/nginx/ssl/xllily.com.key;</span><br><span class="line">		location / &#123;</span><br><span class="line">			root html;</span><br><span class="line">			index index.html index.htm;</span><br><span class="line">            <span class="meta"># you can open the proxy</span></span><br><span class="line">            # proxy_pass http:<span class="comment">//....;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"># ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># ...</span><br></pre></td></tr></table></figure>
-<h1 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h1><p><img src="/assets/images/setup-https-local-dev-env/shot2.png" alt></p>
+<h1 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h1><p><img src="/images/setup-https-local-dev-env/shot2.png" alt></p>
 ]]></content>
       <categories>
         <category>Learn A Bit</category>
