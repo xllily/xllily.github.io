@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xllily.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本指南暂不包含 fetch , pull, push, clone 等 Git 版本库操作和 CI/CD 工作流搭建等  一、版本规范：结合 semver 语义化版本以及 software release life cycle 软件发布生命周期两块概念，约定 git tag 标签规则 格式命名基础版本格式：   &amp;lt;主版本号&amp;gt;.&amp;lt;次版本号&amp;gt;.&amp;lt;修订版本号&amp;gt; 三位">
+<meta name="keywords" content="git,SOP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 指北">
+<meta property="og:url" content="https://xllily.github.io/2021/08/13/Git-Guide/index.html">
+<meta property="og:site_name" content="Just Notes">
+<meta property="og:description" content="本指南暂不包含 fetch , pull, push, clone 等 Git 版本库操作和 CI/CD 工作流搭建等  一、版本规范：结合 semver 语义化版本以及 software release life cycle 软件发布生命周期两块概念，约定 git tag 标签规则 格式命名基础版本格式：   &amp;lt;主版本号&amp;gt;.&amp;lt;次版本号&amp;gt;.&amp;lt;修订版本号&amp;gt; 三位">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://xllily.github.io/images/git-guide/angular-commit-style.png">
+<meta property="og:image" content="https://xllily.github.io/images/git-guide/git-commit.gif">
+<meta property="og:image" content="https://xllily.github.io/images/git-guide/changelog.png">
+<meta property="og:image" content="https://xllily.github.io/images/git-guide/react-release-notes.png">
+<meta property="og:updated_time" content="2024-10-14T10:47:04.977Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git 指北">
+<meta name="twitter:description" content="本指南暂不包含 fetch , pull, push, clone 等 Git 版本库操作和 CI/CD 工作流搭建等  一、版本规范：结合 semver 语义化版本以及 software release life cycle 软件发布生命周期两块概念，约定 git tag 标签规则 格式命名基础版本格式：   &amp;lt;主版本号&amp;gt;.&amp;lt;次版本号&amp;gt;.&amp;lt;修订版本号&amp;gt; 三位">
+<meta name="twitter:image" content="https://xllily.github.io/images/git-guide/angular-commit-style.png">
+
+<link rel="canonical" href="https://xllily.github.io/2021/08/13/Git-Guide/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Git 指北 | Just Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Just Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://xllily.github.io/2021/08/13/Git-Guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="「λ」xllily">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Just Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git 指北
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-13 17:33:01" itemprop="dateCreated datePublished" datetime="2021-08-13T17:33:01+08:00">2021-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-10-14 18:47:04" itemprop="dateModified" datetime="2024-10-14T18:47:04+08:00">2024-10-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Extract-and-Organize/" itemprop="url" rel="index"><span itemprop="name">Extract and Organize</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>本指南暂不包含 <code>fetch</code> , <code>pull</code>, <code>push</code>, <code>clone</code> 等 Git 版本库操作和 <code>CI/CD</code> 工作流搭建等</p>
+</blockquote>
+<h2 id="一、版本规范："><a href="#一、版本规范：" class="headerlink" title="一、版本规范："></a>一、版本规范：</h2><p>结合 <a href="https://semver.org/" target="_blank" rel="noopener">semver</a> 语义化版本以及 <a href="http://en.wikipedia.org/wiki/Software_release_life_cycle" target="_blank" rel="noopener">software release life cycle</a> 软件发布生命周期两块概念，约定 <code>git tag</code> 标签规则</p>
+<h3 id="格式命名"><a href="#格式命名" class="headerlink" title="格式命名"></a>格式命名</h3><h4 id="基础版本格式："><a href="#基础版本格式：" class="headerlink" title="基础版本格式："></a>基础版本格式：</h4><p>   <code>&lt;主版本号&gt;.&lt;次版本号&gt;.&lt;修订版本号&gt;</code> 三位数字用 <code>.</code> 连接组成一个版本号，如 <code>1.0.0</code><br>   版本号数字递增规则：</p>
+<ul>
+<li><strong>主版本号</strong>：对代码进行了不向前兼容的修改</li>
+<li><strong>次版本号</strong>：向前兼容的修改，只是新增了功能</li>
+<li><strong>修订版本号</strong>：向前兼容的故障修复、需求细节变更<h4 id="细化版本格式："><a href="#细化版本格式：" class="headerlink" title="细化版本格式："></a>细化版本格式：</h4>在原来 <code>x.y.z</code> 基础版本号后面添加<code>软件生命周期</code>作为先行版本号，以及添加<code>附加信息（编译信息、时间戳、序号等）</code>来进一步细化控制版本</li>
+<li><strong>先行版本号</strong>：表示在正式版之前发布的版本，并非稳定而且可能无法满足预期的兼容性需求，格式是标注在修订版之后，先加上一个连接号<code>-</code>, 再加上一连串以句点分隔的标识符来修饰, 。范例：<code>1.0.0-alpha.1</code>、<code>1.0.0-rc.22</code>、<code>1.0.0-beta.33</code> …<blockquote>
+<p>常见的先行版本</p>
+<ul>
+<li><code>alpha</code>: 内测版本，通常提测至测试部</li>
+<li><code>beta</code>: 公测版本，通常可以面向用户全量或者灰度发布</li>
+<li><code>rc</code>: 即 <code>Release candiate</code>，正式版本的候选版本，用作预发布<br>注：这些版本的发布可能需要团队的工作流程以及部署环境的隔离去支撑</li>
+</ul>
+</blockquote>
+</li>
+<li><strong>版本编译信息</strong>: 可以在修订版或先行版本号之后，先加上一个加号再加上一连串以句点分隔的标识符来修饰。范例：<code>1.0.0+jested</code>、<code>1.0.0-alpha+001</code>、<code>1.0.0-rc+20130313144700</code>、<code>1.0.0-beta+exp.sha.5114f85</code>、<code>1.0.0-next+0</code>…</li>
+</ul>
+<h3 id="创建标签"><a href="#创建标签" class="headerlink" title="创建标签"></a>创建标签</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建</span></span><br><span class="line">$ git tag -a <span class="string">"x.y.z-alpha+timestamp"</span> -m <span class="string">"summary..."</span></span><br><span class="line"><span class="comment"># 推送</span></span><br><span class="line">$ git push --tags</span><br></pre></td></tr></table></figure>
+<h3 id="常用命令行"><a href="#常用命令行" class="headerlink" title="常用命令行:"></a>常用命令行:</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &lt; xxx &gt; just means variable</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># List tags</span></span><br><span class="line">$ git tag</span><br><span class="line"></span><br><span class="line"><span class="comment"># Show details of the tag</span></span><br><span class="line">$ git show &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add tag to newest commit</span></span><br><span class="line">$ git tag &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add tag to specified commit</span></span><br><span class="line">$ git tag &lt;TAG Name&gt; &lt;Commit Hash ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove tag (local)</span></span><br><span class="line">$ git tag -d &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># remove tag (remote)</span></span><br><span class="line">$ git push &lt;Host Name&gt; :refs/tags/&lt;TAG Name&gt;</span><br><span class="line">$ git push &lt;Host Name&gt; :&lt;TAG Name&gt;</span><br><span class="line">$ git push --delete &lt;Host Name&gt; &lt;TAG Name&gt;</span><br><span class="line">$ git push -d &lt;Host Name&gt; &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Push specified tag to remote</span></span><br><span class="line">$ git push &lt;Host Name&gt; &lt;TAG Name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Push all tags to remote</span></span><br><span class="line">$ git push &lt;Host Name&gt; --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># Fetch all tags from remote</span></span><br><span class="line">$ git fetch --tags</span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a new branch from the TAG</span></span><br><span class="line">$ git checkout -b &lt;New Branch Name&gt; &lt;TAG Name&gt;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="二、提交规范"><a href="#二、提交规范" class="headerlink" title="二、提交规范"></a>二、提交规范</h2><h3 id="提交人"><a href="#提交人" class="headerlink" title="提交人"></a>提交人</h3><p>根据团队约定，从项目维度上去设置&lt;用户名&gt;和&lt;邮箱&gt;,不影响开发着全局配置</p>
+<h4 id="方法一：进入当前项目根目录，执行如下命令"><a href="#方法一：进入当前项目根目录，执行如下命令" class="headerlink" title="方法一：进入当前项目根目录，执行如下命令"></a>方法一：进入当前项目根目录，执行如下命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出全局配置信息</span></span><br><span class="line">$ git config --global -l</span><br><span class="line"><span class="comment"># 列出项目当前的配置信息，没有字段的将继承全局，相同的字段将优先于全局</span></span><br><span class="line">$ git config --<span class="built_in">local</span> -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置当前项目</span></span><br><span class="line">$ git config --<span class="built_in">local</span> user.name xxx</span><br><span class="line">$ git config --<span class="built_in">local</span> user.email xxx</span><br></pre></td></tr></table></figure>
+<h4 id="方式二：-在当前项目根目录-git-config-配置文件中设置"><a href="#方式二：-在当前项目根目录-git-config-配置文件中设置" class="headerlink" title="方式二： 在当前项目根目录 .git/config 配置文件中设置"></a>方式二： 在当前项目根目录 <code>.git/config</code> 配置文件中设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">name = xxx</span><br><span class="line">email = xxx</span><br></pre></td></tr></table></figure>
+<h3 id="提交风格"><a href="#提交风格" class="headerlink" title="提交风格"></a>提交风格</h3><p><img src="/images/git-guide/angular-commit-style.png" alt><br>如上图为 <code>AngularJS</code> 开源仓库参考 <a href="https://google.github.io/styleguide/jsguide.html" target="_blank" rel="noopener">Google’s JavaScript Style Guide</a> 制定并使用的提交风格，目前前端开源生态普遍遵循。<br><strong>这样统一标准的提交好处是</strong>：</p>
+<ul>
+<li>降低 <code>Code Review</code> 成本</li>
+<li>标准化结构化的提交消息文本格式，便于 <code>git log</code> 格式化打印输出日志如 <code>git log --format=&#39;%s (%h)&#39; --reverse --grep &#39;^\(feat\|fix\)&#39; --since=2020-01-01</code> 或者直接借助一些工具可自动化地“一键”生成 <code>Change Log</code></li>
+<li>便于追溯历史时快速搜索过滤</li>
+</ul>
+<p><strong>提交的消息格式如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;BLANK LINE&gt;</span><br><span class="line">&lt;footer&gt;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>每次提交可以包含页眉(<code>header</code>)、正文(<code>body</code>)和脚注(<code>footer</code>)</li>
+<li>每次提交必须包含页眉内容，其他可选</li>
+<li>每次提交的信息尽量不超过 <code>100</code> 个字符</li>
+</ul>
+<p><strong>具体说明文档：</strong></p>
+<ul>
+<li><a href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#" target="_blank" rel="noopener">AngularJS Git Commit Message Conventions</a></li>
+<li><a href="https://www.conventionalcommits.org/zh-hans/v1.0.0/" target="_blank" rel="noopener">conventionalcommits.org</a></li>
+</ul>
+<h3 id="Commit-vs-Issue"><a href="#Commit-vs-Issue" class="headerlink" title="Commit vs Issue"></a>Commit <strong><em>vs</em></strong> Issue</h3><h4 id="1-自有的Issue-系统事务操作"><a href="#1-自有的Issue-系统事务操作" class="headerlink" title="1. 自有的Issue 系统事务操作"></a>1. 自有的<code>Issue</code> 系统事务操作</h4><blockquote>
+<p><code>Github</code> 、 <code>Gitlab</code> 等都提供了关键字，允许在提交 commit message 中通过声明关键字以及对应的 ISSUE- NUMBER 来操作事务</p>
+</blockquote>
+<h5 id="1-Github-关闭事务"><a href="#1-Github-关闭事务" class="headerlink" title="1) Github 关闭事务"></a>1) Github 关闭事务</h5><h6 id="keywords"><a href="#keywords" class="headerlink" title="keywords"></a>keywords</h6><ul>
+<li><code>close</code>,<code>closes</code>,<code>closed</code>,<code>Close</code>,<code>Closes</code>,<code>Closed</code>,</li>
+<li><code>fix</code>,<code>fixes</code>,<code>fixed</code>,<code>Fix</code>,<code>Fixes</code>,<code>Fixed</code></li>
+<li><code>resolve</code>,<code>resolves</code>,<code>resolved</code>,<code>Resolve</code>,<code>Resolves</code>,<code>Resolved</code></li>
+</ul>
+<h6 id="syntax"><a href="#syntax" class="headerlink" title="syntax"></a>syntax</h6><ul>
+<li>同一个仓库 <code>KEYWORD #ISSUE-NUMBER</code>, 如    <code>Closes #10</code></li>
+<li>不同的仓库 <code>KEYWORD OWNER/REPOSITORY#ISSUE-NUMBER</code>, 如<code>Fixes octo-org/octo-repo#100</code></li>
+<li>多个Issue <code>&lt;full syntax&gt;, &lt;full syntax&gt;, ...</code>, 如 <code>Resolves #10, fix #123, closes owner/octo-repo#100</code></li>
+</ul>
+<h5 id="2-Gitlab-关闭事务"><a href="#2-Gitlab-关闭事务" class="headerlink" title="2) Gitlab 关闭事务"></a>2) Gitlab 关闭事务</h5><h6 id="keywords-syntax-pattern"><a href="#keywords-syntax-pattern" class="headerlink" title="keywords syntax pattern"></a>keywords syntax pattern</h6><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\b((?:[Cc]los(?:e[sd]?|ing)|\b[Ff]ix(?:e[sd]|ing)?|\b[Rr]esolv(?:e[sd]?|ing)|\b[Ii]mplement(?:s|ed|ing)?)(:?) +(?:(?:issues? +)?%&#123;issue_ref&#125;(?:(?: *,? +and +| *,? *)?)|([A-Z][A-Z0<span class="number">-9</span>_]+-\d+))+)</span><br></pre></td></tr></table></figure>
+<h6 id="all-keywords"><a href="#all-keywords" class="headerlink" title="all keywords"></a>all keywords</h6><ul>
+<li><code>Close</code>, <code>Closes</code>, <code>Closed</code>, <code>Closing</code>, <code>close</code>, <code>closes</code>, <code>closed</code>, <code>closing</code></li>
+<li><code>Fix</code>, <code>Fixes</code>, <code>Fixed</code>, <code>Fixing</code>, <code>fix</code>, <code>fixes</code>, <code>fixed</code>, <code>fixing</code></li>
+<li><code>Resolve</code>, <code>Resolves</code>, <code>Resolved</code>, <code>Resolving</code>, <code>resolve</code>, <code>resolves</code>, <code>resolved</code>, <code>resolving</code></li>
+<li><code>Implement</code>, <code>Implements</code>, <code>Implemented</code>, <code>Implementing</code>, <code>implement</code>, <code>implements</code>, <code>implemented</code>, <code>implementing</code></li>
+</ul>
+<h6 id="examples"><a href="#examples" class="headerlink" title="examples"></a>examples</h6><ul>
+<li>当前项目仓库的 <code>issue</code> , 如 <code>close #123</code></li>
+<li>组内跨仓库的 <code>issue</code>, 如 <code>fix group/project#123</code></li>
+<li>直接链接其他仓库 <code>issue</code>, 如 <code>Resolve https://gitlab.example.com/group/project/issues/123</code></li>
+</ul>
+<h4 id="2-第三方事务管理系统"><a href="#2-第三方事务管理系统" class="headerlink" title="2. 第三方事务管理系统"></a>2. 第三方事务管理系统</h4><blockquote>
+<p>Git 服务端推荐优先私有化部署 <a href="https://about.gitlab.com/" target="_blank" rel="noopener">GitLab</a> 以支持集成第三方事务管理系统<br>第三方事务管理系统可以是 Jira 、 禅道等</p>
+<ul>
+<li><a href="https://www.zentao.net/book//207.html" target="_blank" rel="noopener">禅道 与 GitLab 集成</a></li>
+<li><a href="https://docs.gitlab.com/ee/integration/jira/" target="_blank" rel="noopener">Jira 与 GitLab 集成</a></li>
+</ul>
+</blockquote>
+<p><code>Git</code> 可以与 <code>Jira</code> 、<code>禅道</code> 等第三方相互集成后，就可以同样通过<code>关键字</code>来直接操作事务，区别是操作的事务的编号将以第三方提供的信息为准</p>
+<h3 id="提交操作"><a href="#提交操作" class="headerlink" title="提交操作"></a>提交操作</h3><h4 id="CLI-手动"><a href="#CLI-手动" class="headerlink" title="CLI 手动"></a>CLI 手动</h4><blockquote>
+<p>以下适用于 Mac OS X (or Linux like Ubuntu)</p>
+</blockquote>
+<h5 id="1-准备一个-txt-作为提交模版"><a href="#1-准备一个-txt-作为提交模版" class="headerlink" title="1. 准备一个 *.txt 作为提交模版"></a>1. 准备一个 *.txt 作为提交模版</h5><p>打开 <a href="/files/git-commit-template.txt">template</a> 后另存为到本地，建议存放在 home 目录 <code>～/</code> 下, 并可选择性地重命名为 <code>.git-commit-template.txt</code> 隐藏文件</p>
+<h5 id="2-Git-配置提交模版"><a href="#2-Git-配置提交模版" class="headerlink" title="2. Git 配置提交模版"></a>2. Git 配置提交模版</h5><p>直接运行命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global commit.template ～/.git-commit-template.txt</span><br></pre></td></tr></table></figure></p>
+<p>或者在 <code>～/.gitconfig</code> 中编辑 <code>git</code> 配置项：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[commit]</span><br><span class="line">template = ～/.git-commit-template.txt</span><br></pre></td></tr></table></figure>
+<h5 id="3-Git-配置默认编辑器"><a href="#3-Git-配置默认编辑器" class="headerlink" title="3. Git 配置默认编辑器"></a>3. Git 配置默认编辑器</h5><p>配置默认 <code>git</code> 默认编辑器，建议同自己的代码编辑器，例如 <code>vscode</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[core]</span><br><span class="line">editor = code -w  ( -w 参数必须 ，代表等待提交信息编辑完成)</span><br></pre></td></tr></table></figure></p>
+<h5 id="test"><a href="#test" class="headerlink" title="test"></a>test</h5><p>在 Terminal 中 执行 <code>git commit</code> 回车，自动使用配置的默认编辑器调起配置好的“提交模版”<br><img src="/images/git-guide/git-commit.gif" alt></p>
+<p>Done, 编写完提交信息文本保存后关闭则提交成功，如果未保存关闭则退出保存，提交成功可以 <code>git log</code> 查看提交信息, 也可以在 <code>push</code> 前， 通过 <code>git commit --amend</code> 堪误本次提交信息。</p>
+<h4 id="CLI-脚本工具"><a href="#CLI-脚本工具" class="headerlink" title="CLI 脚本工具"></a>CLI 脚本工具</h4><ul>
+<li><a href="https://www.npmjs.com/package/git-cz" target="_blank" rel="noopener">git-cz</a></li>
+<li><a href="https://github.com/conventional-changelog/commitlint" target="_blank" rel="noopener">conventional-changelog/commitlint</a></li>
+<li>…</li>
+</ul>
+<h4 id="IDE-插件"><a href="#IDE-插件" class="headerlink" title="IDE 插件"></a>IDE 插件</h4><p>像 <code>IntelliJ IDEA</code> 此类集成 GIT 的开发环境，可以直接安装一些第三方插件，如</p>
+<ul>
+<li><a href="https://plugins.jetbrains.com/plugin/13389-conventional-commit" target="_blank" rel="noopener">plugin: conventional-commit</a></li>
+<li><a href="https://plugins.jetbrains.com/plugin/13405-angular-conventional-commit" target="_blank" rel="noopener">plugin: angular-conventional-commit</a></li>
+<li>…</li>
+</ul>
+<h2 id="三、发布管理"><a href="#三、发布管理" class="headerlink" title="三、发布管理"></a>三、发布管理</h2><h3 id="CHANGELOG-变更日志"><a href="#CHANGELOG-变更日志" class="headerlink" title="CHANGELOG 变更日志"></a>CHANGELOG 变更日志</h3><p><code>Change Log</code> 属于软件发布生命周期，面向内部协作。<br>在项目根目录书写 <code>CHANGELOG.md</code>，如：<br><img src="/images/git-guide/changelog.png" alt><br>通常在遵循<strong>提交规范</strong>后，直接使用类似 <a href="https://github.com/conventional-changelog/conventional-changelog" target="_blank" rel="noopener">conventional-changelog</a> 这样的工具可以一键生成 <code>Change Log</code>。</p>
+<h3 id="Release-Notes-发行说明"><a href="#Release-Notes-发行说明" class="headerlink" title="Release Notes 发行说明"></a>Release Notes 发行说明</h3><p>与 <code>Change Log</code> 同属于软件发布生命周期，区别是 <code>Release Notes</code>是面向外部交付的<br><code>Release Notes</code> 没有标准格式可循，通常根据要传播表达的信息的要求来采用定制化的格式样式。</p>
+<p><strong>Release Notes 可能包括以下部分：</strong></p>
+<ul>
+<li><strong>Header</strong> – 文档名称（即发行说明）、产品名称、发行编号、发行日期、注释日期、注释版本等。</li>
+<li><strong>概述</strong> - 在没有其他正式文档的情况下，对产品和更改的简要概述。</li>
+<li><strong>目的</strong> - 简要概述发行说明的目的，并列出此版本中的新增功能，包括<a href="https://en.wikipedia.org/wiki/Bug_fix" target="_blank" rel="noopener">错误修复</a>和新功能。</li>
+<li><strong>问题摘要</strong> - 对该版本中的错误或增强功能的简短描述。</li>
+<li><strong>重现步骤</strong> - 遇到错误时遵循的步骤。</li>
+<li><strong>解决方案</strong> - 为修复错误而进行的修改/增强的简短描述。</li>
+<li><strong>最终用户影响</strong> - 应用程序的最终用户需要哪些不同的操作。这应该包括其他功能是否受到这些更改的影响。</li>
+<li><strong>支持影响</strong> - 管理软件的日常过程中所需的更改。</li>
+<li><strong>注释</strong> - 有关软件或硬件<a href="https://en.wikipedia.org/wiki/Installation_(computer_programs" target="_blank" rel="noopener">安装</a>)、升级和产品文档（包括文档更新）的注释</li>
+<li><strong>免责声明</strong> - 公司和标准产品相关信息。例如; <a href="https://en.wikipedia.org/wiki/Freeware" target="_blank" rel="noopener">免费软件</a>、<a href="https://en.wikipedia.org/wiki/Copy_protection#Anti-piracy" target="_blank" rel="noopener">反盗版</a>、复制等。另见<a href="https://en.wikipedia.org/wiki/Disclaimer" target="_blank" rel="noopener">免责声明</a>。</li>
+<li><strong>联系</strong> - 支持联系信息</li>
+</ul>
+<p><code>GitLab</code> 和 <code>GitHub</code> 均将 <code>Release Notes</code> 功能集成在 <code>Tags</code> 中，当 <code>Tag</code> 推送到远程仓库，可以找到 Tag 对应的编辑按钮，在远程仓库直接在线编写 <code>Release Notes</code><br>如 <code>React</code> 版本库：<br><img src="/images/git-guide/react-release-notes.png" alt></p>
+<p><strong>参考资料：</strong></p>
+<ul>
+<li><a href="https://github.com/facebook/react/releases" target="_blank" rel="noopener">ReactJs Release Notes</a></li>
+<li><a href="http://maven.apache.org/release-notes-all.html" target="_blank" rel="noopener">Apache Maven Release Notes</a></li>
+<li><a href="https://support.apple.com/en-us/HT211808" target="_blank" rel="noopener">iOS 14 Release Notes</a></li>
+<li><a href="https://developer.apple.com/documentation/macos-release-notes" target="_blank" rel="noopener">macOS Release Notes</a></li>
+<li><a href="https://developer.apple.com/documentation/xcode-release-notes/xcode-12_5-beta-release-notes/" target="_blank" rel="noopener">Xcode Release Notes</a></li>
+<li><a href="https://www.kernel.org/doc/html/latest/admin-guide/README.html" target="_blank" rel="noopener">Linux code Release Notes (5.x)</a></li>
+<li><a href="https://docs.microsoft.com/en-gb/visualstudio/windows/?view=vs-2019" target="_blank" rel="noopener">Microsoft Visual Studio Release Notes</a></li>
+<li><a href="https://www.tesla.com/support/software-updates" target="_blank" rel="noopener">Tesla Software Update Release Notes</a></li>
+<li><a href="https://docs.microsoft.com/en-us/windows/release-health/release-information" target="_blank" rel="noopener">Windows 10 Release Notes</a></li>
+</ul>
+<h2 id="四、README"><a href="#四、README" class="headerlink" title="四、README"></a>四、README</h2><p>始终遵循 <a href="https://github.com/RichardLitt/standard-readme/blob/master/spec.zh-CN.md" target="_blank" rel="noopener">规范</a> 书写 <code>README.md</code> <strong>将利于项目维护以及交接流转。</strong></p>
+<h2 id="五、分支管理"><a href="#五、分支管理" class="headerlink" title="五、分支管理"></a>五、分支管理</h2><h3 id="Renaming-default-branch-‘master’-to-‘main’"><a href="#Renaming-default-branch-‘master’-to-‘main’" class="headerlink" title="Renaming default branch, ‘master’ to ‘main’"></a>Renaming default branch, ‘master’ to ‘main’</h3><p>由于 <code>cultural sensitivity</code> ，2020年, 计算机行业对 <a href="https://www.theserverside.com/opinion/Master-slave-terminology-alternatives-you-can-use-right-now" target="_blank" rel="noopener">master，slave</a> 这两个词的使用引起了关注，这两个词被认为 harmful and antiquated ，不适合作为行业术语，同时也引发了众多抗议。<br><code>GitHub</code> 根据 <a href="https://sfconservancy.org/news/2020/jun/23/gitbranchname/" target="_blank" rel="noopener">Conservancy 的建议</a> 采取了行动，并在 <code>Git</code> 存储库初始化时<strong>不再使用术语 master</strong>， 因此，GitHub 将默认分支从 <strong>master</strong> 重命名为了 <strong>main</strong>。</p>
+<p>相关资料：</p>
+<ul>
+<li><em><a href="https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main" target="_blank" rel="noopener">https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main</a></em></li>
+<li><em><a href="https://github.com/github/renaming" target="_blank" rel="noopener">https://github.com/github/renaming</a></em></li>
+</ul>
+<h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><ul>
+<li>生产/开发模型  <code>main/dev</code></li>
+<li>特性/发布模型 <code>main/dev/feat</code></li>
+<li>开发/发布分离模型  <code>main/dev/feat/release</code></li>
+<li>开发/发布/缺陷分离模型 <code>main/dev/feat/release/hotfix</code></li>
+</ul>
+<h4 id="常驻分支"><a href="#常驻分支" class="headerlink" title="常驻分支"></a>常驻分支</h4><p><strong>main</strong> 主干分支（锁定，被保护），仅用于发布新版本，必须限制任何角色包括管理员自己在此分支上的任何提交操作，只允许管理员在此分支上进行 <code>merge request</code> or <code>pull request</code> 请求，以及进行打版本标签的操作，同时搭建好 <code>CI/CD</code> 流程，理论上每当对 <code>main</code> 分支有一个合并操作，就可以自动触发 <code>Git</code> 钩子脚本来构建并且发布软件到生产服务器。<br>​<br><strong>dev</strong>开发分支（非锁定），平时干活的地方。每当发版时，需要被合并到 <code>main</code>。对于简单的项目而言，这样的分支模型已经够用了。</p>
+<h4 id="辅助分支-临时分支"><a href="#辅助分支-临时分支" class="headerlink" title="辅助分支 (临时分支)"></a>辅助分支 (临时分支)</h4><p>除了常驻分支，通常大的<strong>特性开发</strong>或<strong>生产缺陷修复</strong>还建议创建相应的<strong>临时分支</strong>。<br>因为：</p>
+<ol>
+<li>在分支上开发可以让你随意尝试，进退自如，比如碰上无法正常工作的特性或补丁，可以先搁置，直到有时间仔细核查修复为止。</li>
+<li>团队中如果有代码审查流程，独立的分支还可以留给审查者抽空审查的时间和改进代码的余地，并将是否合并、是否发布的权利留给审查者，为代码质量设一道门槛。</li>
+</ol>
+<p>每一类分支都有一个特定目的，如何命名每一类分支？建议用相关的主题关键字进行命名，并且建议将分支名称分置于不同<strong>命名空间（前缀）</strong>下，例如：</p>
+<table>
+<thead>
+<tr>
+<th><strong>分支</strong></th>
+<th><strong>来源分支</strong></th>
+<th><strong>合并分支</strong></th>
+<th><strong>锁定</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat-*</code></td>
+<td><code>dev</code></td>
+<td><code>dev</code></td>
+<td><strong>NO</strong></td>
+<td>特性分支，为了开发新增特定功能而建</td>
+</tr>
+<tr>
+<td><code>release-*</code></td>
+<td><code>dev</code></td>
+<td><code>dev</code>,<code>main</code></td>
+<td><strong>YES</strong></td>
+<td>预发布分支，为了新版本的发布做准备，一般命名为<code>release-&lt;版本号&gt;</code></td>
+</tr>
+<tr>
+<td><code>hotfix-*</code></td>
+<td><code>main</code></td>
+<td><code>dev</code>,<code>main</code></td>
+<td><strong>NO</strong></td>
+<td>补丁分支，为了修复生产缺陷而建，一般命名为 <code>hotfix-&lt;故障名或故障编号&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p>与常驻分支不同，这些辅助性分支总是有一个<strong>有限的生命期</strong>，<strong>等被合并到常驻分支之后，就应该会被移除掉。</strong><br>​</p>
+<h2 id="六、扩展资料"><a href="#六、扩展资料" class="headerlink" title="六、扩展资料"></a>六、扩展资料</h2><ul>
+<li>整合了「提交」和「发布」的方案：<a href="https://github.com/conventional-changelog/standard-version" target="_blank" rel="noopener">conventional-changelog/standard-version</a></li>
+<li>…</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>「λ」xllily
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://xllily.github.io/2021/08/13/Git-Guide/" title="Git 指北">https://xllily.github.io/2021/08/13/Git-Guide/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+              <a href="/tags/SOP/" rel="tag"># SOP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/29/Hello-State/" rel="prev" title="Hello State">
+      <i class="fa fa-chevron-left"></i> Hello State
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/10/14/Web-UI-物语/" rel="next" title="Web-UI-物语">
+      Web-UI-物语 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80ODcyOC8yNTIyMg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、版本规范："><span class="nav-number">1.</span> <span class="nav-text">一、版本规范：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式命名"><span class="nav-number">1.1.</span> <span class="nav-text">格式命名</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础版本格式："><span class="nav-number">1.1.1.</span> <span class="nav-text">基础版本格式：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#细化版本格式："><span class="nav-number">1.1.2.</span> <span class="nav-text">细化版本格式：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建标签"><span class="nav-number">1.2.</span> <span class="nav-text">创建标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令行"><span class="nav-number">1.3.</span> <span class="nav-text">常用命令行:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、提交规范"><span class="nav-number">2.</span> <span class="nav-text">二、提交规范</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提交人"><span class="nav-number">2.1.</span> <span class="nav-text">提交人</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法一：进入当前项目根目录，执行如下命令"><span class="nav-number">2.1.1.</span> <span class="nav-text">方法一：进入当前项目根目录，执行如下命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方式二：-在当前项目根目录-git-config-配置文件中设置"><span class="nav-number">2.1.2.</span> <span class="nav-text">方式二： 在当前项目根目录 .git/config 配置文件中设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交风格"><span class="nav-number">2.2.</span> <span class="nav-text">提交风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Commit-vs-Issue"><span class="nav-number">2.3.</span> <span class="nav-text">Commit vs Issue</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-自有的Issue-系统事务操作"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 自有的Issue 系统事务操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-Github-关闭事务"><span class="nav-number">2.3.1.1.</span> <span class="nav-text">1) Github 关闭事务</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#keywords"><span class="nav-number">2.3.1.1.1.</span> <span class="nav-text">keywords</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#syntax"><span class="nav-number">2.3.1.1.2.</span> <span class="nav-text">syntax</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Gitlab-关闭事务"><span class="nav-number">2.3.1.2.</span> <span class="nav-text">2) Gitlab 关闭事务</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#keywords-syntax-pattern"><span class="nav-number">2.3.1.2.1.</span> <span class="nav-text">keywords syntax pattern</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#all-keywords"><span class="nav-number">2.3.1.2.2.</span> <span class="nav-text">all keywords</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#examples"><span class="nav-number">2.3.1.2.3.</span> <span class="nav-text">examples</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-第三方事务管理系统"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 第三方事务管理系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#提交操作"><span class="nav-number">2.4.</span> <span class="nav-text">提交操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CLI-手动"><span class="nav-number">2.4.1.</span> <span class="nav-text">CLI 手动</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-准备一个-txt-作为提交模版"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">1. 准备一个 *.txt 作为提交模版</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-Git-配置提交模版"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">2. Git 配置提交模版</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-Git-配置默认编辑器"><span class="nav-number">2.4.1.3.</span> <span class="nav-text">3. Git 配置默认编辑器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#test"><span class="nav-number">2.4.1.4.</span> <span class="nav-text">test</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CLI-脚本工具"><span class="nav-number">2.4.2.</span> <span class="nav-text">CLI 脚本工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IDE-插件"><span class="nav-number">2.4.3.</span> <span class="nav-text">IDE 插件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、发布管理"><span class="nav-number">3.</span> <span class="nav-text">三、发布管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CHANGELOG-变更日志"><span class="nav-number">3.1.</span> <span class="nav-text">CHANGELOG 变更日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Release-Notes-发行说明"><span class="nav-number">3.2.</span> <span class="nav-text">Release Notes 发行说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、README"><span class="nav-number">4.</span> <span class="nav-text">四、README</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、分支管理"><span class="nav-number">5.</span> <span class="nav-text">五、分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Renaming-default-branch-‘master’-to-‘main’"><span class="nav-number">5.1.</span> <span class="nav-text">Renaming default branch, ‘master’ to ‘main’</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型"><span class="nav-number">5.2.</span> <span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常驻分支"><span class="nav-number">5.2.1.</span> <span class="nav-text">常驻分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#辅助分支-临时分支"><span class="nav-number">5.2.2.</span> <span class="nav-text">辅助分支 (临时分支)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、扩展资料"><span class="nav-number">6.</span> <span class="nav-text">六、扩展资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="「λ」xllily"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">「λ」xllily</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xllily" title="GitHub → https://github.com/xllily" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xllily.slikij@gmail.com" title="E-Mail → mailto:xllily.slikij@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">「λ」xllily</span>
+</div>
+  <div class="powered-by">
+    Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58b675d5bf731501" async="async"></script>
+  </div>
+<style>
+canvas{
+    transform: scale3d(1,1,1);
+    -webkit-transform: scale3d(1,1,1);
+}
+footer.footer{
+    color: initial;
+}
+</style>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+<script>
+    ; (function () {
+        window.addEventListener('load', () => {
+            try{
+              var div = document.createElement('div')
+              div.classList.add('backgroud-container');
+              div.style.cssText = 'position:fixed;width:100%;height:100%;top:0;left:0;right:0;bottom:0;z-index:-1;';
+              document.body.appendChild(div);
+            }catch(e){};
+
+            var threejs = document.createElement('script');
+            threejs.type = 'text/javascript';
+            threejs.async = true;
+            threejs.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js';
+
+            var vantajs = document.createElement('script');
+            vantajs.type = 'text/javascript';
+            vantajs.async = true;
+            vantajs.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js';
+
+            var total_scripts = document.getElementsByTagName('script')
+            var last_script = total_scripts[total_scripts.length - 1];
+            last_script.parentNode.insertBefore(threejs, last_script.nextSibling);
+
+            threejs.onload = function () {
+                var total_scripts = document.getElementsByTagName('script')
+                var last_script = total_scripts[total_scripts.length - 1];
+                last_script.parentNode.insertBefore(vantajs, last_script.nextSibling);
+            }
+
+            vantajs.onload = function () {
+                VANTA.WAVES({
+                    el: ".backgroud-container",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    color: 0x8c8c8c,
+                    shininess: 36.00,
+                    waveHeight: 22.00,
+                    zoom: 0.65
+                });
+            }
+        });
+    })();
+</script>
+    </div>
+</body>
+</html>

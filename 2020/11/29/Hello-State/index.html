@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xllily.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="TL;DR 主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。 而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV 的设计模式，在此设计模式下开发，就绕不">
+<meta name="keywords" content="get started,web,state">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hello State">
+<meta property="og:url" content="https://xllily.github.io/2020/11/29/Hello-State/index.html">
+<meta property="og:site_name" content="Just Notes">
+<meta property="og:description" content="TL;DR 主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。 而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV 的设计模式，在此设计模式下开发，就绕不">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://xllily.github.io/images/hello-state/mvvm.jpg">
+<meta property="og:image" content="https://xllily.github.io/images/hello-state/components.png">
+<meta property="og:image" content="https://xllily.github.io/images/hello-state/flux.jpg">
+<meta property="og:updated_time" content="2024-10-14T10:47:04.977Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hello State">
+<meta name="twitter:description" content="TL;DR 主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。 而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV 的设计模式，在此设计模式下开发，就绕不">
+<meta name="twitter:image" content="https://xllily.github.io/images/hello-state/mvvm.jpg">
+
+<link rel="canonical" href="https://xllily.github.io/2020/11/29/Hello-State/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Hello State | Just Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Just Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://xllily.github.io/2020/11/29/Hello-State/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="「λ」xllily">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Just Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hello State
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-11-29 16:30:07" itemprop="dateCreated datePublished" datetime="2020-11-29T16:30:07+08:00">2020-11-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-10-14 18:47:04" itemprop="dateModified" datetime="2024-10-14T18:47:04+08:00">2024-10-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Chat-Aimlessly/" itemprop="url" rel="index"><span itemprop="name">Chat Aimlessly</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong><em>TL;DR</em></strong></p>
+<p>主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；<br>目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。</p>
+<p>而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV<em> 的设计模式，在此设计模式下开发，就绕不开至关重要的的概念：<strong>状态管理</strong>，笔者也一如既往固执己见地认为，整个状态管理的过程其实就是贯彻 MV</em> 对 Model、View 、 Controller/View Model 三者分层管理具体实施的过程，从而尽可能地保证 View 层的单薄，保证 Controller 的逻辑“C位”， 保证 Model 的数据中心，自始至终将应用的可维护性控制在一个较好的水平。</p>
+<p>今天借 「State Management」 题发挥，基于团队目前项目所采用的技术框架 Vue, 来聊一聊状态管理。</p>
+<h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>Vue 框架也是深受 <code>MVVM</code>（model, view, view-model) 优秀的编程模型规范的启发,</p>
+<p><img src="/images/hello-state/mvvm.jpg" alt></p>
+<p>同时结合了<strong>组件化</strong>的先进理念，自然而然地驱使开发者将整个WEB应用抽象分离到一个一个组件的颗粒度， 当一个应用不断被组件化抽象，小到一个按钮，大到一个页面，每个组件本身就是一个个独立的 <code>vm</code> 单元。</p>
+<p><img src="/images/hello-state/components.png" alt></p>
+<p>在 <a href="https://cn.vuejs.org/v2/guide/single-file-components.html" target="_blank" rel="noopener">SFC (single-file components)</a> 单文件组件的开发范式下，每个 <code>*.vue</code> 文件就是一个 <code>vm</code> ， <code>&lt;template&gt;...&lt;/template&gt;</code> 可以理解为 <code>vm</code> 中的 <code>v</code> ；而  <code>&lt;style&gt;&lt;style&gt;</code> 可以理解为 <code>vm</code> 中的 <code>m</code>的样式控制部分，<code>&lt;script&gt;&lt;/script&gt;</code> 可以理解为 <code>vm</code>中的 <code>m</code>的逻辑和数据部分, 另外框架底层实现了一个 <code>MVVM</code> 模型中的“绑定器” ，通过开发者对每个视图模型的声明式编程来驱动程序的视图更新。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// *.vue</span></span><br><span class="line">vm</span><br><span class="line">├── v <span class="comment">// view</span></span><br><span class="line">│   └── template</span><br><span class="line">└── m <span class="comment">// model</span></span><br><span class="line">    ├── style</span><br><span class="line">    └── script</span><br><span class="line">        ├── data</span><br><span class="line">        │   ├── data()&#123;&#125;</span><br><span class="line">        │   └── computed:&#123;&#125;</span><br><span class="line">        └── logic</span><br><span class="line">            ├── lifecycle-hooks <span class="comment">// created,...</span></span><br><span class="line">            ├── watch:&#123;&#125;</span><br><span class="line">            └── methods&#123;&#125;</span><br><span class="line"><span class="comment">// 这种“奇怪的结构“思维，源于笔者入门编程时，深受 `MVC`（model, view, controller）编程模型启蒙式的“洗脑”，应用程序分层的思维早已根深蒂固</span></span><br></pre></td></tr></table></figure></p>
+<p>如此，开发者管理维护单个组件（<code>vm</code> 实例）本身，确实可以做到非常高效、清晰，<br>但是随着应用迭代，不知不觉，整个应用也变成了庞大的 “vm” 集合， 相隔层级较深的组件与组件之间可能形成了较长的通信路径。</p>
+<p>而 <code>Vue</code> 本身内置的数据流管理方案有限， <code>props</code>(其实本质就像一个函数定义的参数), <code>event emit</code> 等其实在复杂场景发挥有限，不适合长路径的通信，无法支撑组织管理整个”前端应用“的状态，虽然又不是不能用，但是要追求合理可维护性则显的捉襟见肘。</p>
+<p>另外，在整个前端应用生命周期下，数据既可能来源服务端接口通信，有可能来源于用户的交互操作，还有可能来源与组件之间的通信变更等，依托”绑定器“，不同流向的数据不断双向交织，并且如“化学反应”般不断产生“次生”数据，随着应用逐渐壮大的同时，形成的一张极其庞大的数据“网”笼罩着前端开发者，应用也变得越来越难以维护，开发者顿时失去了 MMVM 分层模式带来的舒适的开发体验，前端应用似乎也迎来了生命周期的”软件危机“，变的危如累卵，应用的故障将在任何时候任何地方变的一触即发。</p>
+<p>如何再次贯彻 MV* 的模式思想？是否有办法再次将整个前端应用如”上帝视角“般的分层？前端开发者如何再次破局，突破瓶颈，拯救”软件危机“？</p>
+<a id="more"></a>
+<h1 id="Flux"><a href="#Flux" class="headerlink" title="Flux"></a><a href="https://facebook.github.io/flux/" target="_blank" rel="noopener">Flux</a></h1><p>答案是肯定的，就在彼时，“状态管理”的思想横空出世也顺利成章（其实万变不离其宗，依然是编程模式，依然是分层的思想），将前端应用着实变成了一部“状态机”，管理好状态，即是管理好了应用。</p>
+<p>依然是前端界风向标 <code>Facebook</code> 首当其冲，引入经典的编程思想，在前端生态提出了 <code>Flux</code> 设计思想, 「状态管理」也由此慢慢在前端生态大行其道，可谓一发不可收拾， <a href="https://redux.js.org/" target="_blank" rel="noopener">redux</a>、<a href="https://mobx.js.org/README.html" target="_blank" rel="noopener">mobx</a>、<a href="https://dvajs.com/" target="_blank" rel="noopener">dvajs</a>、<a href="https://rematchjs.org/" target="_blank" rel="noopener">rematchjs</a> 、 <a href="https://vuex.vuejs.org/" target="_blank" rel="noopener">vuex</a> 等优秀的状态管理方案，也如雨后春笋般纷纷涌现，成为前端开发者的福音。</p>
+<p><img src="/images/hello-state/flux.jpg" alt></p>
+<ul>
+<li>View： 视图层</li>
+<li>Action（动作）：视图层发出的消息（比如mouseClick）</li>
+<li>Dispatcher（派发器）：用来接收Actions、执行回调函数</li>
+<li>Store（数据层）：用来存放应用的状态，一旦发生变动，就提醒Views要更新页面</li>
+</ul>
+<p>用户访问 <code>View</code>, <code>View</code> 发出用户的 <code>Action</code>, <code>Dispatcher</code> 收到 <code>Action</code>, 要求 <code>Store</code> <code>进行相应的更新，可能是从服务端获取新数据，可能是从其他组件获取其他组件数据，Store</code> 根据一系列业务逻辑更新后，发出一个 <code>“change”</code> 事件， <code>View</code> 收到 <code>“change”</code> 事件后，最终呈现更新后的 <code>View</code>.<br>整个应用改变的过程，数据永远来源于 <code>Store</code>, 形成<strong>单一数据源</strong>，有效的将交织的数据流梳理清理，不用去管数据流在 <code>Store</code> 前是什么，导致应用突变的逻辑永远只存在 <code>Store</code> 中，开发只需要关注 <code>Store</code> 就能有效的洞察应用的改变逻辑，应用的可维护性得到了大大跃升。<br>对于开发者过度分离，导致 <code>Store</code> 过于臃肿，完全可以模块化 <code>Store</code> 后，通过与组件的生命周期保持同步，实现 <code>Store</code> 模块的动态异步的加载与卸载<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Vue CLI "SFC" Example</span></span><br><span class="line">src</span><br><span class="line">├── components <span class="comment">// 通用组件</span></span><br><span class="line">├── container <span class="comment">// 容器组件</span></span><br><span class="line">│   ├── index.vue <span class="comment">// App.vue</span></span><br><span class="line">│   ├── Hello <span class="comment">// Hello 组件</span></span><br><span class="line">│   │   ├── components <span class="comment">// Hello 组件独有子组件</span></span><br><span class="line">│   │   │   └── ...</span><br><span class="line">│   │   ├── api <span class="comment">// Hello 组件独有 api</span></span><br><span class="line">│   │   ├── store <span class="comment">// Hello 组件独有的状态，为了将状态从 vm  中二次分层，并且保持与 vm 生命周期同步，动态注册卸载</span></span><br><span class="line">│   │   └── index.vue <span class="comment">// Hello 组件 vm</span></span><br><span class="line">│   └── ... <span class="comment">// other compoents</span></span><br><span class="line">├── store <span class="comment">// 状态模块（状态实例的初始化以及全局等需要共享的状态）</span></span><br><span class="line">├── service <span class="comment">// 网络服务 (通用的 api、白名单配置以及 请求封装)</span></span><br><span class="line">├── settings <span class="comment">// 程序设置</span></span><br><span class="line">├── utils <span class="comment">// 工具</span></span><br><span class="line">├── mixins <span class="comment">// 混入</span></span><br><span class="line">├── main.js <span class="comment">//程序初始化入口</span></span><br><span class="line">└── ...</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span></span></span><br><span class="line"><span class="comment"> * store 的异步加载:</span></span><br><span class="line"><span class="comment"> * 1. https://vuex.vuejs.org/guide/modules.html#dynamic-module-registration</span></span><br><span class="line"><span class="comment"> * 2. https://medium.com/<span class="doctag">@arliber</span>/vuex-next-steps-namespaces-and-dynamic-modules-92ea23a0ee9a</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h1><p>一个原汁原味的 <a href="https://facebook.github.io/flux/" target="_blank" rel="noopener">Flux</a> 例子</p>
+<h2 id="Dispatch-Actions"><a href="#Dispatch-Actions" class="headerlink" title="Dispatch Actions"></a>Dispatch Actions</h2><ol>
+<li><p>初始化派发器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Facebook Dispatcher Library.</span></span><br><span class="line"><span class="comment">// see: https://facebook.github.io/flux/docs/dispatcher</span></span><br><span class="line"><span class="keyword">var</span> AppDispatcher = <span class="keyword">new</span> Dispatcher();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面中有个对列表新增一个 item 的按钮</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button onClick=&#123; <span class="keyword">this</span>.createNewItem &#125;&gt;New Item&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按钮上绑定了一个点击事件 <code>createNewItem</code> ，发送一个 <code>new-item</code> 的 <code>&quot;action&quot;</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">createNewItem: <span class="function"><span class="keyword">function</span>(<span class="params"> evt </span>) </span>&#123;</span><br><span class="line">    AppDispatcher.dispatch(&#123;</span><br><span class="line">        actionName: <span class="string">'new-item'</span>,</span><br><span class="line">        newItem: &#123; <span class="attr">name</span>: <span class="string">'Stan'</span> &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Store-Responds"><a href="#Store-Responds" class="headerlink" title="Store Responds"></a>Store Responds</h2><ol>
+<li><p>列表 Store</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ListStore = &#123;</span><br><span class="line">    items: []</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>派发器上注册一个响应的处理器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">AppDispatcher.register( <span class="function"><span class="keyword">function</span>(<span class="params"> payload </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span>( payload.actionName ) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'new-item'</span>:</span><br><span class="line">            ListStore.items.push( payload.newItem );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">				……</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>至此，视图可以通过派发器触发 <code>Store</code> 更新.</p>
+<h2 id="Store-Emits-Event"><a href="#Store-Emits-Event" class="headerlink" title="Store Emits Event"></a>Store Emits Event</h2><blockquote>
+<p>Can  use <a href="http://notes.jetienne.com/2011/03/22/microeventjs.html" target="_blank" rel="noopener">MicroEvent.js</a> this is easy</p>
+</blockquote>
+<p>接下来就是在 <code>Store</code> 中处理具体的业务逻辑，那么最终需要再触发 <code>View</code> 更新。<br>现在很多优秀的状态管理方案，如 <code>Redux</code>, <code>Vuex</code> 等已经底层实现自动触发视图更新，只需要在初始化应用的时候去将应用于你的 <code>Store</code> 绑定即可, 原理其实类似 <code>jQuery</code> 时代的 <code>trigger</code> .</p>
+<ol>
+<li><p>赋予 <code>Store</code> 发送事件的能力</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MicroEvent.mixin( ListStore );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Store</code> 数据更新后同步发送 <code>change</code> 事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">'new-item'</span>:</span><br><span class="line">            ListStore.items.push( payload.newItem );</span><br><span class="line">            <span class="comment">// Tell the view store changed!</span></span><br><span class="line">            ListStore.trigger( <span class="string">'change'</span> );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="View-Responds"><a href="#View-Responds" class="headerlink" title="View Responds"></a>View Responds</h2><ol>
+<li><p>组件初始化订阅 <code>change</code> 事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">componentDidMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ListStore.bind( <span class="string">'change'</span>, <span class="keyword">this</span>.listChanged );</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组件初始化注销监听 <code>change</code> 事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">componentWillUnmount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ListStore.unbind( <span class="string">'change'</span>, <span class="keyword">this</span>.listChanged );</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>change</code> 事件只做一件事情，触发组件视图更新</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">listChanged: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.forceUpdate();</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>React jsx render</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// Remember, ListStore is global!</span></span><br><span class="line">        <span class="keyword">var</span> items = ListStore.getAll();</span><br><span class="line">        <span class="comment">// Build list items markup by looping</span></span><br><span class="line">        <span class="comment">// over the entire list</span></span><br><span class="line">        <span class="keyword">var</span> itemHtml = items.map( <span class="function"><span class="keyword">function</span>(<span class="params"> listItem </span>) </span>&#123;</span><br><span class="line">            <span class="comment">// "key" is important, should be a unique</span></span><br><span class="line">            <span class="comment">// identifier for each list item</span></span><br><span class="line">            <span class="keyword">return</span> &lt;li key=&#123; listItem.id &#125;&gt;</span><br><span class="line">                &#123; listItem.name &#125;</span><br><span class="line">              &lt;/li&gt;;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> &lt;div&gt;</span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &#123; itemHtml &#125;</span><br><span class="line">            &lt;/ul&gt;</span><br><span class="line">            &lt;button onClick=&#123; this.createNewItem &#125;&gt;New Item&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="One-More-Things"><a href="#One-More-Things" class="headerlink" title="One More Things"></a>One More Things</h2><p><code>actions</code> 可以统一的组织，一个 <code>store</code> 可以有许多 <code>actions</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ListActions = &#123;</span><br><span class="line">    add: <span class="function"><span class="keyword">function</span>(<span class="params"> item </span>) </span>&#123;</span><br><span class="line">        AppDispatcher.dispatch(&#123;</span><br><span class="line">            eventName: <span class="string">'new-item'</span>,</span><br><span class="line">            newItem: item</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// other actions...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="End-Thanks"><a href="#End-Thanks" class="headerlink" title="End, Thanks!"></a>End, Thanks!</h1><p>现如今众多的状态管理方案以其「丰富的<code>API</code>」以及「语法糖」设计, 开箱即用，帮助开发者保证了高效快速开发的同时依然可以随心所欲的对应用编程合理地分层，当然，凡事过犹不及，对于程序的分层设计、状态管理也是一样的，需要开发者在实际项目开发中三思后实施。</p>
+<p>至此，碎碎念地表达了拥抱 <code>State Management</code>，如有不当，恭请指正～。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>「λ」xllily
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://xllily.github.io/2020/11/29/Hello-State/" title="Hello State">https://xllily.github.io/2020/11/29/Hello-State/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/get-started/" rel="tag"># get started</a>
+              <a href="/tags/web/" rel="tag"># web</a>
+              <a href="/tags/state/" rel="tag"># state</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/08/Automatically-Disable-Touchpad-When-External-Mouse-Is-Connected-Ubuntu/" rel="prev" title="Automatically Disable Touchpad When External Mouse Is Connected (Ubuntu)">
+      <i class="fa fa-chevron-left"></i> Automatically Disable Touchpad When External Mouse Is Connected (Ubuntu)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/13/Git-Guide/" rel="next" title="Git 指北">
+      Git 指北 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80ODcyOC8yNTIyMg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-number">1.</span> <span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flux"><span class="nav-number">2.</span> <span class="nav-text">Flux</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Example"><span class="nav-number">3.</span> <span class="nav-text">Example</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dispatch-Actions"><span class="nav-number">3.1.</span> <span class="nav-text">Dispatch Actions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Store-Responds"><span class="nav-number">3.2.</span> <span class="nav-text">Store Responds</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Store-Emits-Event"><span class="nav-number">3.3.</span> <span class="nav-text">Store Emits Event</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View-Responds"><span class="nav-number">3.4.</span> <span class="nav-text">View Responds</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#One-More-Things"><span class="nav-number">3.5.</span> <span class="nav-text">One More Things</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#End-Thanks"><span class="nav-number">4.</span> <span class="nav-text">End, Thanks!</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="「λ」xllily"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">「λ」xllily</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xllily" title="GitHub → https://github.com/xllily" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xllily.slikij@gmail.com" title="E-Mail → mailto:xllily.slikij@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">「λ」xllily</span>
+</div>
+  <div class="powered-by">
+    Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58b675d5bf731501" async="async"></script>
+  </div>
+<style>
+canvas{
+    transform: scale3d(1,1,1);
+    -webkit-transform: scale3d(1,1,1);
+}
+footer.footer{
+    color: initial;
+}
+</style>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+<script>
+    ; (function () {
+        window.addEventListener('load', () => {
+            try{
+              var div = document.createElement('div')
+              div.classList.add('backgroud-container');
+              div.style.cssText = 'position:fixed;width:100%;height:100%;top:0;left:0;right:0;bottom:0;z-index:-1;';
+              document.body.appendChild(div);
+            }catch(e){};
+
+            var threejs = document.createElement('script');
+            threejs.type = 'text/javascript';
+            threejs.async = true;
+            threejs.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js';
+
+            var vantajs = document.createElement('script');
+            vantajs.type = 'text/javascript';
+            vantajs.async = true;
+            vantajs.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js';
+
+            var total_scripts = document.getElementsByTagName('script')
+            var last_script = total_scripts[total_scripts.length - 1];
+            last_script.parentNode.insertBefore(threejs, last_script.nextSibling);
+
+            threejs.onload = function () {
+                var total_scripts = document.getElementsByTagName('script')
+                var last_script = total_scripts[total_scripts.length - 1];
+                last_script.parentNode.insertBefore(vantajs, last_script.nextSibling);
+            }
+
+            vantajs.onload = function () {
+                VANTA.WAVES({
+                    el: ".backgroud-container",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    color: 0x8c8c8c,
+                    shininess: 36.00,
+                    waveHeight: 22.00,
+                    zoom: 0.65
+                });
+            }
+        });
+    })();
+</script>
+    </div>
+</body>
+</html>

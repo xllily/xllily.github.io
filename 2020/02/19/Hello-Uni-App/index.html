@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xllily.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="最后更新于 2020-2-20, 信息出入请以 uni-app official document 为准为了保证信息有效性, 大量使用了文字链接关联官方文档的相关内容  ( 图片源 uni-app official document ) 开局一张图，内容开始编。 近期接手维护一个基于 uni-app 框架开发的项目，故笔墨伺候，简单做下功课。 以下内容对于未听说过或者未使用过 uni-app的前">
+<meta name="keywords" content="get started,web,uni app">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hello uni-app">
+<meta property="og:url" content="https://xllily.github.io/2020/02/19/Hello-Uni-App/index.html">
+<meta property="og:site_name" content="Just Notes">
+<meta property="og:description" content="最后更新于 2020-2-20, 信息出入请以 uni-app official document 为准为了保证信息有效性, 大量使用了文字链接关联官方文档的相关内容  ( 图片源 uni-app official document ) 开局一张图，内容开始编。 近期接手维护一个基于 uni-app 框架开发的项目，故笔墨伺候，简单做下功课。 以下内容对于未听说过或者未使用过 uni-app的前">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://xllily.github.io/images/hello-uni-app/front-cover.png">
+<meta property="og:updated_time" content="2024-10-14T10:47:04.977Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hello uni-app">
+<meta name="twitter:description" content="最后更新于 2020-2-20, 信息出入请以 uni-app official document 为准为了保证信息有效性, 大量使用了文字链接关联官方文档的相关内容  ( 图片源 uni-app official document ) 开局一张图，内容开始编。 近期接手维护一个基于 uni-app 框架开发的项目，故笔墨伺候，简单做下功课。 以下内容对于未听说过或者未使用过 uni-app的前">
+<meta name="twitter:image" content="https://xllily.github.io/images/hello-uni-app/front-cover.png">
+
+<link rel="canonical" href="https://xllily.github.io/2020/02/19/Hello-Uni-App/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Hello uni-app | Just Notes</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Just Notes</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://xllily.github.io/2020/02/19/Hello-Uni-App/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="「λ」xllily">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Just Notes">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hello uni-app
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-19 09:16:55" itemprop="dateCreated datePublished" datetime="2020-02-19T09:16:55+08:00">2020-02-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-10-14 18:47:04" itemprop="dateModified" datetime="2024-10-14T18:47:04+08:00">2024-10-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Extract-and-Organize/" itemprop="url" rel="index"><span itemprop="name">Extract and Organize</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>最后更新于 <code>2020-2-20</code>, 信息出入请以 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> 为准<br>为了保证信息有效性, 大量使用了文字链接关联官方文档的相关内容</p>
+</blockquote>
+<p><img src="/images/hello-uni-app/front-cover.png" alt><br>(<strong><em> 图片源 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app official document</a> </em></strong>)</p>
+<p>开局一张图，内容开始编。</p>
+<p>近期接手维护一个基于 <a href="https://uniapp.dcloud.io/" target="_blank" rel="noopener">uni-app</a> 框架开发的项目，故笔墨伺候，简单做下功课。</p>
+<p>以下内容对于未听说过或者未使用过 <code>uni-app</code>的前端“熟练工”相对比较友好些，内容有误，敬请指正。</p>
+<p><code>uni-app</code> 是一个使用 <code>Vue.js</code> 开发全平台(<code>App</code>,<code>小程序</code>,<code>Web/H5</code>)前端应用的框架, 由”为开发者而生的” <a href="https://www.w3.org/" target="_blank" rel="noopener">W3C</a> 成员及 <a href="https://www.html5plus.org/" target="_blank" rel="noopener">HTML5 中国产业联盟</a>的发起单位，数字天堂(北京)网络技术有限公司(<a href="https://www.dcloud.io/" target="_blank" rel="noopener">DCloud</a>)出品。</p>
+<blockquote>
+<p><code>uni</code>，<a href="https://uniapp.dcloud.io/history" target="_blank" rel="noopener">读</a> <code>you ni</code>，是统一的意思.<br><code>app</code> 当指“应用（软件）”时，按 <code>Google</code> 翻译以及 <code>Apple</code> 官方读音, 读<code>/æp/</code>，而非 <code>/eɪ̯.pʰiː.pʰiː/</code></p>
+</blockquote>
+<p>已知全貌，准予置评。 🙈🙈🙈</p>
+<p>开始吧…</p>
+<a id="more"></a>
+<h1 id="已有技术储备"><a href="#已有技术储备" class="headerlink" title="已有技术储备"></a>已有技术储备</h1><ul>
+<li><p><a href="https://cn.vuejs.org/v2/guide/" target="_blank" rel="noopener">Vue</a>, <a href="https://cli.vuejs.org/" target="_blank" rel="noopener">Vue CLI</a></p>
+</li>
+<li><p><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/" target="_blank" rel="noopener">微信小程序原生开发</a></p>
+</li>
+</ul>
+<h1 id="摘几点规范"><a href="#摘几点规范" class="headerlink" title="摘几点规范"></a>摘几点规范</h1><ol>
+<li><p>页面文件遵循<a href="https://vue-loader.vuejs.org/zh/spec.html" target="_blank" rel="noopener">Vue 单文件组件 (SFC) 规范</a>, 见 Vue 官方文档关于<a href="https://cn.vuejs.org/v2/guide/single-file-components.html" target="_blank" rel="noopener">单文件组件</a>介绍</p>
+</li>
+<li><p>组件的标签靠近了微信小程序的规范,不推荐使用 HTML 标签,但如果开发者使用了 <code>div</code> 等 <code>HTML</code> 标签，在编译到非 H5 平台时也会被编译器转换为 <code>view</code> 等 <code>uni-app</code> 组件标签，同时包括 <code>css</code> 里的元素选择器也会同时转译。但为了管理方便、策略统一，<strong>建议使用 <a href="https://uniapp.dcloud.io/component/README" target="_blank" rel="noopener">uni-app 组件标签</a></strong></p>
+</li>
+<li><p>为了兼容多端,建议使用 <strong><code>flex</code> 布局</strong> , 样式单位使用 <strong><a href="https://uniapp.dcloud.io/frame?id=%E5%B0%BA%E5%AF%B8%E5%8D%95%E4%BD%8D" target="_blank" rel="noopener">rpx</a> 自适应单位</strong></p>
+</li>
+<li><p>选择 <code>uni-app</code> 框架的目的自然是为了满足跨端需求,抑或是为了项目将来可能出现的跨端需求时尽可能降低开发成本, 因此，应该尽可能避免使用各平台的原生 <code>api</code>, 比如不要使用 <code>H5</code> 平台浏览器自带的对象，比如 <code>document</code>、 <code>window</code>、<code>localstorage</code>、<code>cookie</code>等，更不要使用像 <code>jQuery</code> 等依赖这些浏览器对象的实现的框架, 不管是 <code>App</code> 还是各家 <code>小程序</code>, <code>快应用</code>均不支持.<br>因此, 建议拥抱使用 <a href="https://uniapp.dcloud.io/api/README" target="_blank" rel="noopener">uni-app 提供的 api</a>, <code>uni</code> 的 <code>api</code>是足够完成业务的，将各平台的 <code>api</code> 交由 <code>uni-app</code> 框架内部统一去适配处理. 事实上, <code>uni</code> 的 <code>api</code> 在编译到各个平台运行时就是会转为个平台对应的原始<code>api</code> 的.</p>
+</li>
+</ol>
+<h1 id="记几点知晓"><a href="#记几点知晓" class="headerlink" title="记几点知晓"></a>记几点知晓</h1><ol>
+<li><p>目测 <code>uni-app</code> 并没有同步更新 <code>CLI</code> 和 <a href="https://www.dcloud.io/hbuilderx.html" target="_blank" rel="noopener">官方 IDE HbuilderX</a> 中使用的 <code>uni-app</code> 版本, 如需享有 <code>uni-app</code> 各种新版本升级带来的全方位提升以及 <code>uni-app</code> 项目友好的开发体验, 还是须拥抱 <code>HbuilderX IDE</code>. (<strong><em>说到此, 笔者着实受限于目前 <code>HbuilderX</code> 无 <code>Linux</code> 版本, 只得默默使用 <code>CLI</code> 开发</em></strong>)</p>
+</li>
+<li><p><code>uni-app</code> 除了支持 ECMAScript 的 JS API 外, 支持了靠近<a href="https://developers.weixin.qq.com/miniprogram/dev/api/" target="_blank" rel="noopener">微信小程序 API</a>的<a href="https://uniapp.dcloud.io/api/README" target="_blank" rel="noopener">扩展 API</a>,将前缀 <code>wx</code> 替换为 <code>uni</code></p>
+</li>
+<li><p><code>uni-app</code> 在支持 <code>Vue</code> 的基础上( 目前并未 <code>100%</code> 全面支持,详请可下文<a href="./#Vue-js">注意事项中关于Vue的说明</a> ), 靠近了小程序,补充了 <a href="https://uniapp.dcloud.io/frame?id=%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F" target="_blank" rel="noopener">应用的生命周期和页面的生命周期</a></p>
+</li>
+<li><p><code>uni-app</code> 路由方式同样靠近了微信小程序,在 <code>pages.json</code> 中配置路由页面, 在页面生命周期中的 <code>onLoad</code> 函数中获取路由携带的参数, 详见 <code>uni-app</code> 的<a href="https://uniapp.dcloud.io/frame?id=%E8%B7%AF%E7%94%B1" target="_blank" rel="noopener">路由</a>, 当然开发者如需保持与 <code>vue-router</code> 一致的开发体验,可以尝试在 <a href="https://ext.dcloud.net.cn/search?q=vue-router" target="_blank" rel="noopener">uni-app 插件市场</a> 甄别合适插件择优慎用.</p>
+</li>
+<li><p><code>uni-app</code> 中的数据绑定, 则遵循了 <code>Vue 2.0</code> 的写法实现, 不支持微信小程序的数据绑定写法</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ❌ 微信小程序的数据绑定方式是无效的--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">id</span>=<span class="string">"item-&#123;&#123;id&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- ⭕ 请使用 Vue 的数据绑定方式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">v-bind:id</span>=<span class="string">"'item-' + id "</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">:id</span>=<span class="string">"'item-' + id "</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="跨端开发"><a href="#跨端开发" class="headerlink" title="跨端开发"></a>跨端开发</h1><h2 id="条件编译"><a href="#条件编译" class="headerlink" title="条件编译"></a>条件编译</h2><h3 id="“编译时”-条件编译"><a href="#“编译时”-条件编译" class="headerlink" title="“编译时” 条件编译"></a>“编译时” <a href="https://uniapp.dcloud.io/platform" target="_blank" rel="noopener">条件编译</a></h3><ol>
+<li><p>代码的条件编译</p>
+<p>在 <code>C 语言</code>中，通过 <code>#ifdef</code>、<code>#ifndef</code> 的方式，为 <code>windows</code>、<code>mac</code> 等不同 <code>os</code> 编译不同的代码。<br><code>uni-app</code> 参考这个思路，同样提供了<strong>条件编译</strong>的方式</p>
+<p><strong>写法：</strong></p>
+<p>以 <code>#ifdef</code> 或 <code>#ifndef</code> 加 <code>%PLATFORM%</code> 开头，以 <code>#endif</code> 结尾。</p>
+<ul>
+<li><code>#ifdef</code>：if defined 仅在某平台存在</li>
+<li><code>#ifndef</code>：if not defined 除了某平台均存在</li>
+<li><code>%PLATFORM%</code>：平台名称</li>
+</ul>
+<p><strong>支持的文件:</strong></p>
+<ul>
+<li><code>*.vue</code></li>
+<li><code>*.js</code></li>
+<li><code>*.css</code></li>
+<li><code>pages.json</code></li>
+<li>各预编译语言文件，如：<code>*.scss</code>、<code>*.less</code>、<code>*.stylus</code>、<code>*.ts</code>、<code>*.pug</code></li>
+</ul>
+<p><strong>注意：</strong></p>
+<ul>
+<li><p>条件编译是利用注释实现的，在不同语法里注释写法不一样，如: <code>js</code> 使用 <code>// 注释</code>、<code>css</code> 使用 <code>/* 注释 */</code>、<code>vue/nvue</code> 模板里使用 <code>&lt;!-- 注释 --&gt;</code>；</p>
+</li>
+<li><p><code>pages.json</code> 的条件编译，如不同平台的 <code>key</code> 名称相同，<code>cli</code> 项目下开发者自己安装的校验器会报错，需自行关闭这些校验器对 <code>json</code> 相同 <code>key</code> 的校验规则。</p>
+</li>
+</ul>
+<p><strong><code>%PLATFORM%</code>值:</strong></p>
+<table class="table">
+<thead>
+<tr>
+<th>值</th>
+<th>平台</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>APP-PLUS</td>
+<td>App</td>
+</tr>
+<tr>
+<td>APP-PLUS-NVUE</td>
+<td>App nvue</td>
+</tr>
+<tr>
+<td>H5</td>
+<td>H5</td>
+</tr>
+<tr>
+<td>MP-WEIXIN</td>
+<td>微信小程序</td>
+</tr>
+<tr>
+<td>MP-ALIPAY</td>
+<td>支付宝小程序</td>
+</tr>
+<tr>
+<td>MP-BAIDU</td>
+<td>百度小程序</td>
+</tr>
+<tr>
+<td>MP-TOUTIAO</td>
+<td>头条小程序</td>
+</tr>
+<tr>
+<td>MP-QQ</td>
+<td>QQ 小程序（目前仅 cli 版支持）</td>
+</tr>
+<tr>
+<td>MP</td>
+<td>微信小程序/支付宝小程序/百度小程序/头条小程序/QQ 小程序</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>示例:</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--  #ifdef  %PLATFORM% --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--  #endif --&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// #ifdef  %PLATFORM%</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"hello uni app"</span>);</span><br><span class="line"><span class="comment">// #endif</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">// #ifdef  %PLATFORM%</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="string">"path"</span>:<span class="string">"pages/home/home"</span>,</span><br><span class="line">     <span class="string">"style"</span>:&#123;</span><br><span class="line">         <span class="string">"navigationBarTitleText"</span>:<span class="string">"Hell uni-app"</span></span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// #endif</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*  #ifdef  %PLATFORM%  */</span></span><br><span class="line"><span class="selector-tag">view</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*  #endif  */</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>static</code> 资源文件的条件编译</p>
+<p><code>static</code> 目录下创建不同名称的专有目录（目录名称同 <code>%PLATFORM%</code> 值,但字母须均为<strong>小写</strong>）,<br>专有目录下的静态资源只有在特定平台才会编译进去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">┌─static</span><br><span class="line">│  ├─mp-weixin</span><br><span class="line">│  │  └─a.png</span><br><span class="line">│  └─b.png</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面文件的条件编译</p>
+<p>可以在项目根目录创建 <code>platforms</code> 目录，然后创建对应不同平台的<code>APP-PLUS</code>、<code>MP-WEIXIN</code>、…等子目录，存放对应不同平台的页面文件</p>
+</li>
+</ol>
+<h3 id="“运行时”-判断"><a href="#“运行时”-判断" class="headerlink" title="“运行时” 判断:"></a>“运行时” 判断:</h3><ol>
+<li><p><a href="https://uniapp.dcloud.io/platform" target="_blank" rel="noopener">api 获取平台信息</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uni.getSystemInfoSync().platform; <span class="comment">// 输出 android | ios | devtools</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在“编译时”的<a href="./#条件编译">条件编译</a>中自行定义一个变量，赋不同值，来供后续在”运行时“代码中，获取所需具体的环境信息。</p>
+</li>
+</ol>
+<h2 id="异常可能性排查指南"><a href="#异常可能性排查指南" class="headerlink" title="异常可能性排查指南"></a>异常可能性排查指南</h2><blockquote>
+<p>传送门系列, 实战爬坑必备</p>
+</blockquote>
+<ul>
+<li><a href="https://uniapp.dcloud.io/matter?id=h5%E6%AD%A3%E5%B8%B8%E4%BD%86app%E5%BC%82%E5%B8%B8%E7%9A%84%E5%8F%AF%E8%83%BD%E6%80%A7" target="_blank" rel="noopener">H5 正常但 App 异常的可能性</a></li>
+<li><a href="https://uniapp.dcloud.io/matter?id=h5%E6%AD%A3%E5%B8%B8%E4%BD%86%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%82%E5%B8%B8%E7%9A%84%E5%8F%AF%E8%83%BD%E6%80%A7" target="_blank" rel="noopener">H5 正常但小程序异常的可能性</a></li>
+<li><a href="https://uniapp.dcloud.io/matter?id=%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%AD%A3%E5%B8%B8%E4%BD%86app%E5%BC%82%E5%B8%B8%E7%9A%84%E5%8F%AF%E8%83%BD%E6%80%A7" target="_blank" rel="noopener">小程序正常但 App 异常的可能性</a></li>
+<li><a href="https://uniapp.dcloud.io/matter?id=%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%88%96app%E6%AD%A3%E5%B8%B8%EF%BC%8C%E4%BD%86h5%E5%BC%82%E5%B8%B8%E7%9A%84%E5%8F%AF%E8%83%BD%E6%80%A7" target="_blank" rel="noopener">小程序或 App 正常，但 H5 异常的可能性</a></li>
+<li><a href="https://uniapp.dcloud.io/matter?id=app%E6%AD%A3%E5%B8%B8%EF%BC%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F%E3%80%81h5%E5%BC%82%E5%B8%B8%E7%9A%84%E5%8F%AF%E8%83%BD%E6%80%A7" target="_blank" rel="noopener">App 正常，小程序、H5 异常的可能性</a></li>
+</ul>
+<h2 id="各端兼容适配指北"><a href="#各端兼容适配指北" class="headerlink" title="各端兼容适配指北"></a>各端兼容适配指北</h2><blockquote>
+<p>传送门系列, 实战爬坑必备</p>
+</blockquote>
+<ul>
+<li><a href="https://uniapp.dcloud.io/matter?id=h5-%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F" target="_blank" rel="noopener">H5 开发注意</a></li>
+<li><a href="https://uniapp.dcloud.io/matter?id=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F" target="_blank" rel="noopener">微信小程序开发注意</a></li>
+<li><a href="https://uniapp.dcloud.io/matter?id=%E6%94%AF%E4%BB%98%E5%AE%9D%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F" target="_blank" rel="noopener">支付宝小程序开发注意</a></li>
+<li><a href="https://uniapp.dcloud.io/matter?id=%E7%99%BE%E5%BA%A6%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E6%B3%A8%E6%84%8F" target="_blank" rel="noopener">百度小程序开发注意</a></li>
+<li><a href="https://uniapp.dcloud.io/matter?id=%E5%90%84%E5%AE%B6%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8%E4%B8%8D%E5%90%8C%EF%BC%8C%E4%BC%9A%E9%80%A0%E6%88%90css%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98" target="_blank" rel="noopener">各家小程序的浏览器内核不同可能引起的 css 兼容性问题</a></li>
+</ul>
+<h2 id="各端规范"><a href="#各端规范" class="headerlink" title="各端规范"></a>各端规范</h2><blockquote>
+<p>传送门系列, 各平台官方</p>
+</blockquote>
+<ul>
+<li><a href="http://www.html5plus.org/doc/h5p.html" target="_blank" rel="noopener">App 扩展 HTML5+</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/" target="_blank" rel="noopener">微信小程序</a></li>
+<li><a href="https://opendocs.alipay.com/mini/developer/getting-started" target="_blank" rel="noopener">支付宝小程序</a></li>
+<li><a href="https://developer.toutiao.com/dev/cn/mini-app/introduction/about-mini-app/general-introduction" target="_blank" rel="noopener">字节跳动小程序</a></li>
+<li><a href="https://smartprogram.baidu.com/docs/develop/fuctionlist/list/" target="_blank" rel="noopener">百度小程序</a></li>
+<li><a href="https://q.qq.com/wiki/develop/miniprogram/frame/" target="_blank" rel="noopener">QQ小程序</a></li>
+<li><a href="https://weex.apache.org/zh/guide/introduction.html" target="_blank" rel="noopener">Weex</a></li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><blockquote>
+<p>传送门系列, 实战爬坑必备</p>
+</blockquote>
+<ul>
+<li><a href="https://uniapp.dcloud.io/matter?id=vendorjs%E8%BF%87%E5%A4%A7%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F" target="_blank" rel="noopener">vendor.js 文件过大的处理方式</a></li>
+</ul>
+<h1 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h1><h2 id="Vue-js"><a href="#Vue-js" class="headerlink" title="Vue.js"></a>Vue.js</h2><ol>
+<li><p><code>uni-app</code> 在发布到 <code>H5</code> 时支持所有 <code>Vue</code> 的语法</p>
+</li>
+<li><p><code>uni-app</code> 发布到 <code>App</code> 和 <code>小程序</code> 时，无法实现全部 <code>Vue</code> 语法</p>
+</li>
+<li><p>此外, <code>uni-app</code> <strong>老版本</strong>(即 <code>manifest.json</code> 中 <code>&quot;usingComponents&quot;:false</code>),<strong>不</strong>支持 <code>Vue</code> 的<strong>部分</strong>模板语法</p>
+<ol>
+<li>不支持部分复杂的 <code>JavaScript</code> 渲染表达式</li>
+<li>不支持过滤器</li>
+</ol>
+<blockquote>
+<p>那么何为老版本,找了下社区文档,从一篇名为”uni-app 新老编译模式差异说明”的帖子中可以了解到 <code>1.8版本</code> 之前的为老版本,而从 <code>1.8版本</code> 起新增了编译模式: <code>自定义组件模式</code> ,原来的老版本的编译模式则命名为 <code>template模板模式</code> ,新版本向下兼容同时支持了两种编译模式.那么后续创建项目需要选择编译模式时, 当然优先选择对 <code>Vue</code> 支持度更高,性能更佳的新模式:<code>自定义组件模式</code>.</p>
+<p>这篇帖子非常详细地介绍了<strong>如何切换编译模式</strong>, <strong>非自定义组件模式升级为自定义组件模式注意</strong>, <strong>不同编译模式支持的 Vue 语法差异</strong>, 详情可移步至<a href="https://ask.dcloud.net.cn/article/35843" target="_blank" rel="noopener">“uni-app 新老编译模式差异说明”</a></p>
+</blockquote>
+</li>
+<li><p><code>uni-app</code> <a href="https://ask.dcloud.net.cn/article/35021" target="_blank" rel="noopener">全局变量的几种实现方式</a>: <code>公用模块</code>, <code>挂载Vue.prototype</code>, <code>globalData</code>, <code>Vuex</code> 各有千秋, 其中 <a href="https://vuex.vuejs.org/zh/" target="_blank" rel="noopener">Vuex</a> 的数据响应机制最适合处理变量.</p>
+<p>但是需要注意的的是, 在 <code>uni-app</code> 中使用 <a href="https://uniapp.dcloud.io/use-weex?id=%E4%BB%8B%E7%BB%8D" target="_blank" rel="noopener">Weex</a>, 也就是文件名为 <code>.nvue</code> 时, 不支持 <code>挂载Vue.prototype</code> 的方式, 而且 <code>nvue</code> ( native vue ) <a href="https://uniapp.dcloud.io/use-weex?id=vue-%E5%92%8C-nvue-%E5%85%B1%E4%BA%AB%E7%9A%84%E5%8F%98%E9%87%8F%E5%92%8C%E6%95%B0%E6%8D%AE" target="_blank" rel="noopener">是从 HBuilderX 2.2.5 起，也才支持 Vuex</a></p>
+<p>如果希望 <code>.vue</code> 和 <code>.nvue</code> 复用一些方法的话，目前只能推荐采用公用模块的方案，分别在 <code>.vue</code> 和 <code>.nvue</code> 文件中引入。</p>
+</li>
+<li><p><strong>非</strong> <code>H5</code> 端不支持在<strong>自定义组件</strong>上使用 <code>Class</code> 与 <code>Style</code> 绑定, 也不支持 <a href="https://cn.vuejs.org/v2/guide/class-and-style.html" target="_blank" rel="noopener">Vue 的 Class 与 Style 绑定</a> 中的 <code>classObject</code> 和 <code>styleObject</code> 语法</p>
+</li>
+<li><p>在 <code>H5</code> 平台 使用 <code>v-for</code> 循环整数时和其他平台存在差异，如 <code>v-for=&quot;(item, index) in 10&quot;</code> 中，<code>H5</code> 平台 <code>item</code> 从 <code>1</code> 开始，其他平台 <code>item</code> 从 <code>0</code> 开始，可使用第二个参数 <code>index</code> 来保证一致。</p>
+</li>
+<li><p>在<strong>非</strong> <code>H5</code> 平台 循环对象时不支持第三个参数，如 <code>v-for=&quot;(value, name, index) in object&quot;</code> 中， <code>index</code> 参数是不支持的。</p>
+</li>
+<li><p><strong>完整</strong>支持 <code>Vue</code> 的 <a href="https://uniapp.dcloud.io/use?id=data-%E5%B1%9E%E6%80%A7" target="_blank" rel="noopener">data 属性</a>, 计算属性, 条件渲染, 列表渲染, 表单控件绑定</p>
+</li>
+<li><p><strong>几乎</strong><a href="https://uniapp.dcloud.io/use?id=%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8" target="_blank" rel="noopener">全支持 Vue 的事件处理器</a></p>
+<ol>
+<li>为兼容各端，事件需使用 <code>v-on</code> 或 <code>@</code> 的方式绑定，请勿使用小程序端的 <code>bind</code> 和 <code>catch</code> 进行事件绑定.</li>
+<li>事件修饰符: <code>.prevent</code>, <code>.self</code>, <code>.once</code>, <code>.capture</code>, <code>.passive</code> 仅在 H5 平台支持, <code>.stop</code> 全平台均支持， 阻止事件冒泡，在<strong>非</strong> <code>H5</code> 端**使用时同时阻止事件的默认行为, <code>uni-app</code>专注移动端，未支持键盘事件，因此不支持按键修饰符。</li>
+</ol>
+</li>
+<li><p><a href="https://uniapp.dcloud.io/use?id=v-html%E6%8C%87%E4%BB%A4" target="_blank" rel="noopener">v-html</a>: 目前只支持 <code>H5</code> 端和在 <a href="https://ask.dcloud.net.cn/article/36599" target="_blank" rel="noopener">uni-app V3 版本编译模式</a>下的 <code>App</code> 端, 社区有<a href="https://ask.dcloud.net.cn/article/35772" target="_blank" rel="noopener">跨端的富文本处理方案</a></p>
+</li>
+<li><p>除了支持 <code>Vue</code> “组件三步法”：<code>引入</code>, <code>注册</code>, <code>使用</code> 外, <code>uni-app 2.5.0+</code> 版本支持在 <code>page.json</code>中配置组件,配置完成后, 无需引入, 无需注册, 即可直接使用, 详见 <a href="https://uniapp.dcloud.io/collocation/pages?id=easycom" target="_blank" rel="noopener">easycom</a></p>
+</li>
+<li><p>非 <code>H5</code> 端不支持如下组件特性:</p>
+<ul>
+<li><code>Slots</code>（scoped 暂时还没做支持）</li>
+<li>动态组件</li>
+<li>异步组件</li>
+<li><code>inline-template</code></li>
+<li><code>X-Templates</code></li>
+<li><code>keep-alive</code></li>
+<li><code>transition</code> （可使用 <a href="https://uniapp.dcloud.io/api/ui/animation" target="_blank" rel="noopener">animation</a> 或 <code>CSS</code> 动画替代）</li>
+<li><strong>老版本</strong>以及新版中<code>非自定义组件编译模式</code>不支持在组件上定义 <code>click</code> 等原生事件、不支持 <code>v-show</code>（可用 <code>v-if</code> 代替）, 也不支持以定义 <code>class</code> 的方式来实现 <code>style</code> 样式属性(例：<code>&lt;card class=&quot;class-name&quot;&gt; &lt;/card&gt;</code> 样式是不会生效的)</li>
+<li><strong>老版本</strong>以及新版中<code>非自定义组件编译模式</code>在组件里使用 <code>slot</code> 嵌套的其他组件时不支持 <code>v-for</code></li>
+</ul>
+</li>
+<li><p>在 <code>main.js</code> 入口文件中, <code>Vue.component</code>注册全局组件时第一个参数必须是静态的字符串, <code>.nvue</code> 页面暂<strong>不</strong>支持全局组件,另外,关于自定义组件的命名, 除了不能使用标准的 <code>HTML</code> 及 <code>SVG</code> 标签名外, 也不能使用 <code>uni-app</code> 中的 <code>保留关键字</code>,附上<a href="https://uniapp.dcloud.io/use?id=%E5%91%BD%E5%90%8D%E9%99%90%E5%88%B6" target="_blank" rel="noopener">列表</a>.</p>
+</li>
+</ol>
+<h2 id="Weex-nvue"><a href="#Weex-nvue" class="headerlink" title="Weex(nvue)"></a>Weex(nvue)</h2><blockquote>
+<p>传送门<br><a href="https://uniapp.dcloud.io/use-weex" target="_blank" rel="noopener">使用 Weex/nvue 注意事项</a></p>
+</blockquote>
+<h2 id="HTML5"><a href="#HTML5" class="headerlink" title="HTML5+"></a>HTML5+</h2><blockquote>
+<p>传送门<br><a href="https://uniapp.dcloud.io/use-html5plus" target="_blank" rel="noopener">使用 HTML5+ 注意事项</a></p>
+</blockquote>
+<h1 id="开始实操项目-Enjoy！"><a href="#开始实操项目-Enjoy！" class="headerlink" title="开始实操项目, Enjoy！"></a>开始实操项目, Enjoy！</h1><blockquote>
+<p>其他的内容例如 <code>uni-app</code> 框架的 <a href="https://uniapp.dcloud.io/collocation/pages" target="_blank" rel="noopener">配置，框架接口</a> 和 <a href="https://uniapp.dcloud.io/component/README" target="_blank" rel="noopener">组件</a> 以及 <a href="https://uniapp.dcloud.io/api/README" target="_blank" rel="noopener">API</a>, 其实与 <a href="https://developers.weixin.qq.com/miniprogram/dev/framework/" target="_blank" rel="noopener">微信小程序</a> 大同小异， 拥有了小程序原生开发技术， 直接在实践中按需查阅即可。</p>
+</blockquote>
+<h2 id="官方推荐"><a href="#官方推荐" class="headerlink" title="官方推荐"></a>官方推荐</h2><ul>
+<li><a href="https://uniapp.dcloud.io/quickstart?id=_1-%E9%80%9A%E8%BF%87-hbuilderx-%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2" target="_blank" rel="noopener">HbuilderX 可视化界面</a></li>
+<li><a href="https://uniapp.dcloud.io/quickstart?id=_2-%E9%80%9A%E8%BF%87vue-cli%E5%91%BD%E4%BB%A4%E8%A1%8C" target="_blank" rel="noopener">HbuilderX 和 Vue CLI</a></li>
+</ul>
+<h2 id="个人实践"><a href="#个人实践" class="headerlink" title="个人实践"></a>个人实践</h2><ul>
+<li><a href="#">Visual Studio Code 和 Vue CLI <code>(敬请期待)</code></a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>「λ」xllily
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://xllily.github.io/2020/02/19/Hello-Uni-App/" title="Hello uni-app">https://xllily.github.io/2020/02/19/Hello-Uni-App/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/get-started/" rel="tag"># get started</a>
+              <a href="/tags/web/" rel="tag"># web</a>
+              <a href="/tags/uni-app/" rel="tag"># uni app</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/02/28/Stop-the-occupied-port-by-cmd-on-windows-OS/" rel="prev" title="Stop the occupied port by cmd on windows OS">
+      <i class="fa fa-chevron-left"></i> Stop the occupied port by cmd on windows OS
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/" rel="next" title="setup HTTPS(SSL) on local development environment (Ubuntu)">
+      setup HTTPS(SSL) on local development environment (Ubuntu) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80ODcyOC8yNTIyMg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#已有技术储备"><span class="nav-number">1.</span> <span class="nav-text">已有技术储备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘几点规范"><span class="nav-number">2.</span> <span class="nav-text">摘几点规范</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#记几点知晓"><span class="nav-number">3.</span> <span class="nav-text">记几点知晓</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跨端开发"><span class="nav-number">4.</span> <span class="nav-text">跨端开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件编译"><span class="nav-number">4.1.</span> <span class="nav-text">条件编译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“编译时”-条件编译"><span class="nav-number">4.1.1.</span> <span class="nav-text">“编译时” 条件编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#“运行时”-判断"><span class="nav-number">4.1.2.</span> <span class="nav-text">“运行时” 判断:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常可能性排查指南"><span class="nav-number">4.2.</span> <span class="nav-text">异常可能性排查指南</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各端兼容适配指北"><span class="nav-number">4.3.</span> <span class="nav-text">各端兼容适配指北</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各端规范"><span class="nav-number">4.4.</span> <span class="nav-text">各端规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">4.5.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注意事项"><span class="nav-number">5.</span> <span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js"><span class="nav-number">5.1.</span> <span class="nav-text">Vue.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Weex-nvue"><span class="nav-number">5.2.</span> <span class="nav-text">Weex(nvue)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML5"><span class="nav-number">5.3.</span> <span class="nav-text">HTML5+</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始实操项目-Enjoy！"><span class="nav-number">6.</span> <span class="nav-text">开始实操项目, Enjoy！</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#官方推荐"><span class="nav-number">6.1.</span> <span class="nav-text">官方推荐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#个人实践"><span class="nav-number">6.2.</span> <span class="nav-text">个人实践</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="「λ」xllily"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">「λ」xllily</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/xllily" title="GitHub → https://github.com/xllily" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:xllily.slikij@gmail.com" title="E-Mail → mailto:xllily.slikij@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">「λ」xllily</span>
+</div>
+  <div class="powered-by">
+    Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58b675d5bf731501" async="async"></script>
+  </div>
+<style>
+canvas{
+    transform: scale3d(1,1,1);
+    -webkit-transform: scale3d(1,1,1);
+}
+footer.footer{
+    color: initial;
+}
+</style>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+  <script data-pjax>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+<script>
+    ; (function () {
+        window.addEventListener('load', () => {
+            try{
+              var div = document.createElement('div')
+              div.classList.add('backgroud-container');
+              div.style.cssText = 'position:fixed;width:100%;height:100%;top:0;left:0;right:0;bottom:0;z-index:-1;';
+              document.body.appendChild(div);
+            }catch(e){};
+
+            var threejs = document.createElement('script');
+            threejs.type = 'text/javascript';
+            threejs.async = true;
+            threejs.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js';
+
+            var vantajs = document.createElement('script');
+            vantajs.type = 'text/javascript';
+            vantajs.async = true;
+            vantajs.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js';
+
+            var total_scripts = document.getElementsByTagName('script')
+            var last_script = total_scripts[total_scripts.length - 1];
+            last_script.parentNode.insertBefore(threejs, last_script.nextSibling);
+
+            threejs.onload = function () {
+                var total_scripts = document.getElementsByTagName('script')
+                var last_script = total_scripts[total_scripts.length - 1];
+                last_script.parentNode.insertBefore(vantajs, last_script.nextSibling);
+            }
+
+            vantajs.onload = function () {
+                VANTA.WAVES({
+                    el: ".backgroud-container",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    color: 0x8c8c8c,
+                    shininess: 36.00,
+                    waveHeight: 22.00,
+                    zoom: 0.65
+                });
+            }
+        });
+    })();
+</script>
+    </div>
+</body>
+</html>
