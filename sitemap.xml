@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://xllily.github.io/2024/10/14/Web-UI-Jottings/</loc>
+    <loc>https://xllily.github.io/2024/10/15/Simplifying-Web-UI/</loc>
     
     <lastmod>2024-10-15</lastmod>
     
@@ -180,27 +180,6 @@
   </url>
   
   <url>
-    <loc>https://xllily.github.io/tags/issue/</loc>
-    <lastmod>2024-10-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xllily.github.io/tags/cmd/</loc>
-    <lastmod>2024-10-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://xllily.github.io/tags/windows/</loc>
-    <lastmod>2024-10-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://xllily.github.io/tags/UI/</loc>
     <lastmod>2024-10-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -237,6 +216,27 @@
   
   <url>
     <loc>https://xllily.github.io/tags/UI-Components/</loc>
+    <lastmod>2024-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xllily.github.io/tags/issue/</loc>
+    <lastmod>2024-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xllily.github.io/tags/cmd/</loc>
+    <lastmod>2024-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://xllily.github.io/tags/windows/</loc>
     <lastmod>2024-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

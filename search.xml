@@ -626,24 +626,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Stop the occupied port by cmd on windows OS</title>
-    <url>/2017/02/28/Stop-the-occupied-port-by-cmd-on-windows-OS/</url>
-    <content><![CDATA[<h3 id="List-corresponding-ports-and-PIDs-of-all-the-network-connections"><a href="#List-corresponding-ports-and-PIDs-of-all-the-network-connections" class="headerlink" title="List corresponding ports and PIDs of all the network connections"></a>List corresponding ports and PIDs of all the network connections</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
-<h3 id="Show-the-network-connections-on-the-occupied-port"><a href="#Show-the-network-connections-on-the-occupied-port" class="headerlink" title="Show the network connections on the occupied port"></a>Show the network connections on the occupied port</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">netstat -ano|<span class="built_in">find</span> "the occupied port number"</span><br></pre></td></tr></table></figure>
-<h3 id="Stop-the-network-connections-by-corresponding-PID-number-of-the-occupied-port"><a href="#Stop-the-network-connections-by-corresponding-PID-number-of-the-occupied-port" class="headerlink" title="Stop the network connections by corresponding PID number of the occupied port"></a>Stop the network connections by corresponding PID number of the occupied port</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">taskkill</span> /F /PID [the corresponding PID number]</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Learn A Bit</category>
-      </categories>
-      <tags>
-        <tag>issue</tag>
-        <tag>cmd</tag>
-        <tag>windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Web UI Jottings</title>
-    <url>/2024/10/14/Web-UI-Jottings/</url>
+    <title>Simplifying Web UI</title>
+    <url>/2024/10/15/Simplifying-Web-UI/</url>
     <content><![CDATA[<h2 id="从原始-CSS-到-CSS-框架的演变"><a href="#从原始-CSS-到-CSS-框架的演变" class="headerlink" title="从原始 CSS 到 CSS 框架的演变"></a>从原始 CSS 到 CSS 框架的演变</h2><p>在 CSS 发展的初期，开发者主要使用以下几种方式来编写和应用样式：</p>
 <ul>
 <li><strong>内联样式</strong>：在 HTML 标签内直接使用 <code>style</code> 属性。这种方式简单直接，但难以维护和复用。</li>
@@ -686,7 +670,7 @@
 <li>CSS-in-JS 的出现，如 <strong>Styled Components</strong>，将 CSS 与 JavaScript 融合在一起，特别适用于 React 生态，通过将样式组件化，极大地提升了代码的可维护性和灵活性。</li>
 </ul>
 <p>从手写样式到样式框架雏形，再到样式预处理器，接着是各种UI组件库到现在的Atomic样式设计，这些工具给开发者提供了越来越多的选择，每一种选择都推动了前端技术的进步，也为开发者带来了更大的创作自由和表达空间。无论是希望通过现成组件快速上线项目，还是想要实现高度定制化的风格，这些工具都为开发者提供了广泛的支持。</p>
-<img src="/2024/10/14/Web-UI-Jottings/npm-trends.jpg" title="This is an npm-trends image">
+<img src="/2024/10/15/Simplifying-Web-UI/npm-trends.jpg" title="This is an npm-trends image">
 <blockquote>
 <p>如图所示，NPM Trends 的下载安装量统计，2024 年这个时间点之后，Tailwind CSS 依旧一骑绝尘，持续上行，而 Bootstrap 和 Styled Components 则似乎出现了些许下行的趋势。</p>
 </blockquote>
@@ -699,6 +683,22 @@
         <tag>CSS in JS</tag>
         <tag>Atomic CSS</tag>
         <tag>UI Components</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Stop the occupied port by cmd on windows OS</title>
+    <url>/2017/02/28/Stop-the-occupied-port-by-cmd-on-windows-OS/</url>
+    <content><![CDATA[<h3 id="List-corresponding-ports-and-PIDs-of-all-the-network-connections"><a href="#List-corresponding-ports-and-PIDs-of-all-the-network-connections" class="headerlink" title="List corresponding ports and PIDs of all the network connections"></a>List corresponding ports and PIDs of all the network connections</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
+<h3 id="Show-the-network-connections-on-the-occupied-port"><a href="#Show-the-network-connections-on-the-occupied-port" class="headerlink" title="Show the network connections on the occupied port"></a>Show the network connections on the occupied port</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">netstat -ano|<span class="built_in">find</span> "the occupied port number"</span><br></pre></td></tr></table></figure>
+<h3 id="Stop-the-network-connections-by-corresponding-PID-number-of-the-occupied-port"><a href="#Stop-the-network-connections-by-corresponding-PID-number-of-the-occupied-port" class="headerlink" title="Stop the network connections by corresponding PID number of the occupied port"></a>Stop the network connections by corresponding PID number of the occupied port</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line"><span class="built_in">taskkill</span> /F /PID [the corresponding PID number]</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Learn A Bit</category>
+      </categories>
+      <tags>
+        <tag>issue</tag>
+        <tag>cmd</tag>
+        <tag>windows</tag>
       </tags>
   </entry>
   <entry>
