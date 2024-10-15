@@ -661,6 +661,7 @@
 <p>Bootstrap 于 <strong>2011 年</strong> 由 Twitter 的开发者 Mark Otto 和 Jacob Thornton 发布，其结合了现代化的响应式布局理念和组件化风格，迅速成为广泛应用的 CSS 框架。Bootstrap 的成功在于它将响应式网格布局、样式和组件整合到了一起，为开发者提供了一种“一站式”的前端开发解决方案。Bootstrap 引入了大量的预定义样式和 UI 组件，极大地降低了开发复杂性，尤其是在构建跨浏览器兼容的用户界面时，Bootstrap 的贡献功不可没。</p>
 <p>Bootstrap 的出现标志着前端开发进入了一个新的时代，使得开发者能够高效地实现页面布局。然而，Bootstrap 的预定义样式也逐渐显现出其局限性——页面设计趋于一致，缺乏个性化表达。这种标准化设计虽然提升了效率，但也导致了许多网站的“千篇一律”现象，限制了创意的发挥。随着前端领域需求的多样化，开发者开始寻求更加灵活和高度可定制化的解决方案，一场新的变革正在酝酿之中。</p>
 <h2 id="从-CSS-预处理器到-UI-组件库的兴起"><a href="#从-CSS-预处理器到-UI-组件库的兴起" class="headerlink" title="从 CSS 预处理器到 UI 组件库的兴起"></a>从 CSS 预处理器到 UI 组件库的兴起</h2><p>在 CSS 预处理器提升了样式管理的效率之后，<strong>UI 组件库</strong>随着在<a href="https://modern-web.dev/" target="_blank" rel="noopener">Modern Web</a>时代的全面到来应运而生。它们不仅提供了样式，还封装了交互逻辑与功能，使得前端开发更加模块化与高效。UI 组件库的出现将“预制组件”带入了前端开发的日常，为开发者提供了一整套标准化、可复用的组件，极大地减少了样式和功能的重复开发。以下几位重要的玩家在这一过程中发挥了关键作用：</p>
+<a id="more"></a>
 <ul>
 <li><strong>2014 年：<a href="https://github.com/mui/material-ui/" target="_blank" rel="noopener">Material-UI</a></strong> 问世，作为第一个基于 Google Material Design 规范的 React 组件库，它为前端界带来了现代化的设计风格与极致的用户体验。Material-UI 的推出帮助开发者能够轻松实现视觉一致性和交互规范化，从而大幅提升了开发速度和用户体验, 自 2022 年以来的强劲增长尤为引人注目。其在 2021 年发布的 <strong>v5</strong> 版本中，引入了更加灵活的样式系统、更完善的 TypeScript 支持，以及与现代工具（如 Emotion）集成的改进，从而逐渐确立了其在前端开发领域的主导地位。</li>
 <li><strong>2016 年：<a href="https://github.com/ant-design/ant-design" target="_blank" rel="noopener">Ant Design</a></strong> 由阿里巴巴推出，主要面向企业级应用，其设计规范与丰富的组件使其迅速成为企业级后台的首选工具。Ant Design 不仅提供了完备的组件库，还带有系统化的设计语言，这对于构建大型企业应用至关重要。</li>
