@@ -537,6 +537,95 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello State</title>
+    <url>/2020/11/29/Hello-State/</url>
+    <content><![CDATA[<p><strong><em>TL;DR</em></strong></p>
+<p>主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；<br>目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。</p>
+<p>而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV<em> 的设计模式，在此设计模式下开发，就绕不开至关重要的的概念：<strong>状态管理</strong>，笔者也一如既往固执己见地认为，整个状态管理的过程其实就是贯彻 MV</em> 对 Model、View 、 Controller/View Model 三者分层管理具体实施的过程，从而尽可能地保证 View 层的单薄，保证 Controller 的逻辑“C位”， 保证 Model 的数据中心，自始至终将应用的可维护性控制在一个较好的水平。</p>
+<p>今天借 「State Management」 题发挥，基于团队目前项目所采用的技术框架 Vue, 来聊一聊状态管理。</p>
+<h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>Vue 框架也是深受 <code>MVVM</code>（model, view, view-model) 优秀的编程模型规范的启发,</p>
+<img src="/2020/11/29/Hello-State/mvvm.jpg" title="This is mvvm an image">
+<p>同时结合了<strong>组件化</strong>的先进理念，自然而然地驱使开发者将整个WEB应用抽象分离到一个一个组件的颗粒度， 当一个应用不断被组件化抽象，小到一个按钮，大到一个页面，每个组件本身就是一个个独立的 <code>vm</code> 单元。</p>
+<img src="/2020/11/29/Hello-State/components.png" title="This is components an image">
+<p>在 <a href="https://cn.vuejs.org/v2/guide/single-file-components.html" target="_blank" rel="noopener">SFC (single-file components)</a> 单文件组件的开发范式下，每个 <code>*.vue</code> 文件就是一个 <code>vm</code> ， <code>&lt;template&gt;...&lt;/template&gt;</code> 可以理解为 <code>vm</code> 中的 <code>v</code> ；而  <code>&lt;style&gt;&lt;style&gt;</code> 可以理解为 <code>vm</code> 中的 <code>m</code>的样式控制部分，<code>&lt;script&gt;&lt;/script&gt;</code> 可以理解为 <code>vm</code>中的 <code>m</code>的逻辑和数据部分, 另外框架底层实现了一个 <code>MVVM</code> 模型中的“绑定器” ，通过开发者对每个视图模型的声明式编程来驱动程序的视图更新。<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// *.vue</span></span><br><span class="line">vm</span><br><span class="line">├── v <span class="comment">// view</span></span><br><span class="line">│   └── template</span><br><span class="line">└── m <span class="comment">// model</span></span><br><span class="line">    ├── style</span><br><span class="line">    └── script</span><br><span class="line">        ├── data</span><br><span class="line">        │   ├── data()&#123;&#125;</span><br><span class="line">        │   └── computed:&#123;&#125;</span><br><span class="line">        └── logic</span><br><span class="line">            ├── lifecycle-hooks <span class="comment">// created,...</span></span><br><span class="line">            ├── watch:&#123;&#125;</span><br><span class="line">            └── methods&#123;&#125;</span><br><span class="line"><span class="comment">// 这种“奇怪的结构“思维，源于笔者入门编程时，深受 `MVC`（model, view, controller）编程模型启蒙式的“洗脑”，应用程序分层的思维早已根深蒂固</span></span><br></pre></td></tr></table></figure></p>
+<p>如此，开发者管理维护单个组件（<code>vm</code> 实例）本身，确实可以做到非常高效、清晰，<br>但是随着应用迭代，不知不觉，整个应用也变成了庞大的 “vm” 集合， 相隔层级较深的组件与组件之间可能形成了较长的通信路径。</p>
+<p>而 <code>Vue</code> 本身内置的数据流管理方案有限， <code>props</code>(其实本质就像一个函数定义的参数), <code>event emit</code> 等其实在复杂场景发挥有限，不适合长路径的通信，无法支撑组织管理整个”前端应用“的状态，虽然又不是不能用，但是要追求合理可维护性则显的捉襟见肘。</p>
+<p>另外，在整个前端应用生命周期下，数据既可能来源服务端接口通信，有可能来源于用户的交互操作，还有可能来源与组件之间的通信变更等，依托”绑定器“，不同流向的数据不断双向交织，并且如“化学反应”般不断产生“次生”数据，随着应用逐渐壮大的同时，形成的一张极其庞大的数据“网”笼罩着前端开发者，应用也变得越来越难以维护，开发者顿时失去了 MMVM 分层模式带来的舒适的开发体验，前端应用似乎也迎来了生命周期的”软件危机“，变的危如累卵，应用的故障将在任何时候任何地方变的一触即发。</p>
+<p>如何再次贯彻 MV* 的模式思想？是否有办法再次将整个前端应用如”上帝视角“般的分层？前端开发者如何再次破局，突破瓶颈，拯救”软件危机“？</p>
+<a id="more"></a>
+<h1 id="Flux"><a href="#Flux" class="headerlink" title="Flux"></a><a href="https://facebook.github.io/flux/" target="_blank" rel="noopener">Flux</a></h1><p>答案是肯定的，就在彼时，“状态管理”的思想横空出世也顺利成章（其实万变不离其宗，依然是编程模式，依然是分层的思想），将前端应用着实变成了一部“状态机”，管理好状态，即是管理好了应用。</p>
+<p>依然是前端界风向标 <code>Facebook</code> 首当其冲，引入经典的编程思想，在前端生态提出了 <code>Flux</code> 设计思想, 「状态管理」也由此慢慢在前端生态大行其道，可谓一发不可收拾， <a href="https://redux.js.org/" target="_blank" rel="noopener">redux</a>、<a href="https://mobx.js.org/README.html" target="_blank" rel="noopener">mobx</a>、<a href="https://dvajs.com/" target="_blank" rel="noopener">dvajs</a>、<a href="https://rematchjs.org/" target="_blank" rel="noopener">rematchjs</a> 、 <a href="https://vuex.vuejs.org/" target="_blank" rel="noopener">vuex</a> 等优秀的状态管理方案，也如雨后春笋般纷纷涌现，成为前端开发者的福音。</p>
+<img src="/2020/11/29/Hello-State/flux.jpg" title="This is flux an image">
+<ul>
+<li>View： 视图层</li>
+<li>Action（动作）：视图层发出的消息（比如mouseClick）</li>
+<li>Dispatcher（派发器）：用来接收Actions、执行回调函数</li>
+<li>Store（数据层）：用来存放应用的状态，一旦发生变动，就提醒Views要更新页面</li>
+</ul>
+<p>用户访问 <code>View</code>, <code>View</code> 发出用户的 <code>Action</code>, <code>Dispatcher</code> 收到 <code>Action</code>, 要求 <code>Store</code> <code>进行相应的更新，可能是从服务端获取新数据，可能是从其他组件获取其他组件数据，Store</code> 根据一系列业务逻辑更新后，发出一个 <code>“change”</code> 事件， <code>View</code> 收到 <code>“change”</code> 事件后，最终呈现更新后的 <code>View</code>.<br>整个应用改变的过程，数据永远来源于 <code>Store</code>, 形成<strong>单一数据源</strong>，有效的将交织的数据流梳理清理，不用去管数据流在 <code>Store</code> 前是什么，导致应用突变的逻辑永远只存在 <code>Store</code> 中，开发只需要关注 <code>Store</code> 就能有效的洞察应用的改变逻辑，应用的可维护性得到了大大跃升。<br>对于开发者过度分离，导致 <code>Store</code> 过于臃肿，完全可以模块化 <code>Store</code> 后，通过与组件的生命周期保持同步，实现 <code>Store</code> 模块的动态异步的加载与卸载<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Vue CLI "SFC" Example</span></span><br><span class="line">src</span><br><span class="line">├── components <span class="comment">// 通用组件</span></span><br><span class="line">├── container <span class="comment">// 容器组件</span></span><br><span class="line">│   ├── index.vue <span class="comment">// App.vue</span></span><br><span class="line">│   ├── Hello <span class="comment">// Hello 组件</span></span><br><span class="line">│   │   ├── components <span class="comment">// Hello 组件独有子组件</span></span><br><span class="line">│   │   │   └── ...</span><br><span class="line">│   │   ├── api <span class="comment">// Hello 组件独有 api</span></span><br><span class="line">│   │   ├── store <span class="comment">// Hello 组件独有的状态，为了将状态从 vm  中二次分层，并且保持与 vm 生命周期同步，动态注册卸载</span></span><br><span class="line">│   │   └── index.vue <span class="comment">// Hello 组件 vm</span></span><br><span class="line">│   └── ... <span class="comment">// other compoents</span></span><br><span class="line">├── store <span class="comment">// 状态模块（状态实例的初始化以及全局等需要共享的状态）</span></span><br><span class="line">├── service <span class="comment">// 网络服务 (通用的 api、白名单配置以及 请求封装)</span></span><br><span class="line">├── settings <span class="comment">// 程序设置</span></span><br><span class="line">├── utils <span class="comment">// 工具</span></span><br><span class="line">├── mixins <span class="comment">// 混入</span></span><br><span class="line">├── main.js <span class="comment">//程序初始化入口</span></span><br><span class="line">└── ...</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span></span></span><br><span class="line"><span class="comment"> * store 的异步加载:</span></span><br><span class="line"><span class="comment"> * 1. https://vuex.vuejs.org/guide/modules.html#dynamic-module-registration</span></span><br><span class="line"><span class="comment"> * 2. https://medium.com/<span class="doctag">@arliber</span>/vuex-next-steps-namespaces-and-dynamic-modules-92ea23a0ee9a</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h1><p>一个原汁原味的 <a href="https://facebook.github.io/flux/" target="_blank" rel="noopener">Flux</a> 例子</p>
+<h2 id="Dispatch-Actions"><a href="#Dispatch-Actions" class="headerlink" title="Dispatch Actions"></a>Dispatch Actions</h2><ol>
+<li><p>初始化派发器</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Facebook Dispatcher Library.</span></span><br><span class="line"><span class="comment">// see: https://facebook.github.io/flux/docs/dispatcher</span></span><br><span class="line"><span class="keyword">var</span> AppDispatcher = <span class="keyword">new</span> Dispatcher();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>页面中有个对列表新增一个 item 的按钮</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;button onClick=&#123; <span class="keyword">this</span>.createNewItem &#125;&gt;New Item&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按钮上绑定了一个点击事件 <code>createNewItem</code> ，发送一个 <code>new-item</code> 的 <code>&quot;action&quot;</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">createNewItem: <span class="function"><span class="keyword">function</span>(<span class="params"> evt </span>) </span>&#123;</span><br><span class="line">    AppDispatcher.dispatch(&#123;</span><br><span class="line">        actionName: <span class="string">'new-item'</span>,</span><br><span class="line">        newItem: &#123; <span class="attr">name</span>: <span class="string">'Stan'</span> &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Store-Responds"><a href="#Store-Responds" class="headerlink" title="Store Responds"></a>Store Responds</h2><ol>
+<li><p>列表 Store</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ListStore = &#123;</span><br><span class="line">    items: []</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>派发器上注册一个响应的处理器</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">AppDispatcher.register( <span class="function"><span class="keyword">function</span>(<span class="params"> payload </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span>( payload.actionName ) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'new-item'</span>:</span><br><span class="line">            ListStore.items.push( payload.newItem );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">				……</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>至此，视图可以通过派发器触发 <code>Store</code> 更新.</p>
+<h2 id="Store-Emits-Event"><a href="#Store-Emits-Event" class="headerlink" title="Store Emits Event"></a>Store Emits Event</h2><blockquote>
+<p>Can  use <a href="http://notes.jetienne.com/2011/03/22/microeventjs.html" target="_blank" rel="noopener">MicroEvent.js</a> this is easy</p>
+</blockquote>
+<p>接下来就是在 <code>Store</code> 中处理具体的业务逻辑，那么最终需要再触发 <code>View</code> 更新。<br>现在很多优秀的状态管理方案，如 <code>Redux</code>, <code>Vuex</code> 等已经底层实现自动触发视图更新，只需要在初始化应用的时候去将应用于你的 <code>Store</code> 绑定即可, 原理其实类似 <code>jQuery</code> 时代的 <code>trigger</code> .</p>
+<ol>
+<li><p>赋予 <code>Store</code> 发送事件的能力</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">MicroEvent.mixin( ListStore );</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Store</code> 数据更新后同步发送 <code>change</code> 事件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">'new-item'</span>:</span><br><span class="line">            ListStore.items.push( payload.newItem );</span><br><span class="line">            <span class="comment">// Tell the view store changed!</span></span><br><span class="line">            ListStore.trigger( <span class="string">'change'</span> );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="View-Responds"><a href="#View-Responds" class="headerlink" title="View Responds"></a>View Responds</h2><ol>
+<li><p>组件初始化订阅 <code>change</code> 事件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">componentDidMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ListStore.bind( <span class="string">'change'</span>, <span class="keyword">this</span>.listChanged );</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组件初始化注销监听 <code>change</code> 事件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">componentWillUnmount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ListStore.unbind( <span class="string">'change'</span>, <span class="keyword">this</span>.listChanged );</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>change</code> 事件只做一件事情，触发组件视图更新</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">listChanged: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.forceUpdate();</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>React jsx render</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// Remember, ListStore is global!</span></span><br><span class="line">        <span class="keyword">var</span> items = ListStore.getAll();</span><br><span class="line">        <span class="comment">// Build list items markup by looping</span></span><br><span class="line">        <span class="comment">// over the entire list</span></span><br><span class="line">        <span class="keyword">var</span> itemHtml = items.map( <span class="function"><span class="keyword">function</span>(<span class="params"> listItem </span>) </span>&#123;</span><br><span class="line">            <span class="comment">// "key" is important, should be a unique</span></span><br><span class="line">            <span class="comment">// identifier for each list item</span></span><br><span class="line">            <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#123;</span> <span class="attr">listItem.id</span> &#125;&gt;</span></span></span><br><span class="line"><span class="xml">                &#123; listItem.name &#125;</span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span>;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &#123; itemHtml &#125;</span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;</span> <span class="attr">this.createNewItem</span> &#125;&gt;</span>New Item<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="One-More-Things"><a href="#One-More-Things" class="headerlink" title="One More Things"></a>One More Things</h2><p><code>actions</code> 可以统一的组织，一个 <code>store</code> 可以有许多 <code>actions</code><br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ListActions = &#123;</span><br><span class="line">    add: <span class="function"><span class="keyword">function</span>(<span class="params"> item </span>) </span>&#123;</span><br><span class="line">        AppDispatcher.dispatch(&#123;</span><br><span class="line">            eventName: <span class="string">'new-item'</span>,</span><br><span class="line">            newItem: item</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// other actions...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="End-Thanks"><a href="#End-Thanks" class="headerlink" title="End, Thanks!"></a>End, Thanks!</h1><p>现如今众多的状态管理方案以其「丰富的<code>API</code>」以及「语法糖」设计, 开箱即用，帮助开发者保证了高效快速开发的同时依然可以随心所欲的对应用编程合理地分层，当然，凡事过犹不及，对于程序的分层设计、状态管理也是一样的，需要开发者在实际项目开发中三思后实施。</p>
+<p>至此，碎碎念地表达了拥抱 <code>State Management</code>，如有不当，恭请指正～。</p>
+]]></content>
+      <categories>
+        <category>Chat Aimlessly</category>
+      </categories>
+      <tags>
+        <tag>get started</tag>
+        <tag>web</tag>
+        <tag>state</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Stop the occupied port by cmd on windows OS</title>
     <url>/2017/02/28/Stop-the-occupied-port-by-cmd-on-windows-OS/</url>
     <content><![CDATA[<h3 id="List-corresponding-ports-and-PIDs-of-all-the-network-connections"><a href="#List-corresponding-ports-and-PIDs-of-all-the-network-connections" class="headerlink" title="List corresponding ports and PIDs of all the network connections"></a>List corresponding ports and PIDs of all the network connections</h3><figure class="highlight cmd"><table><tr><td class="code"><pre><span class="line">netstat -ano</span><br></pre></td></tr></table></figure>
@@ -677,95 +766,6 @@
         <tag>openssl</tag>
         <tag>https</tag>
         <tag>development env</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello State</title>
-    <url>/2020/11/29/Hello-State/</url>
-    <content><![CDATA[<p><strong><em>TL;DR</em></strong></p>
-<p>主导着当今世界前端技术发展的两家公司依然是 Google, Facebook；<br>目前前端的”三大框架“：Google 「Angular」 ，Facebook 「React」，而「Vue」也不完全算是是“自立门户”，也是吸收并借鉴了前者的优秀思想并进一步融合。</p>
-<p>而 “三大框架” ，哪怕自身只是一个 View Library, 无一列外也都离不开 MV<em> 的设计模式，在此设计模式下开发，就绕不开至关重要的的概念：<strong>状态管理</strong>，笔者也一如既往固执己见地认为，整个状态管理的过程其实就是贯彻 MV</em> 对 Model、View 、 Controller/View Model 三者分层管理具体实施的过程，从而尽可能地保证 View 层的单薄，保证 Controller 的逻辑“C位”， 保证 Model 的数据中心，自始至终将应用的可维护性控制在一个较好的水平。</p>
-<p>今天借 「State Management」 题发挥，基于团队目前项目所采用的技术框架 Vue, 来聊一聊状态管理。</p>
-<h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><p>Vue 框架也是深受 <code>MVVM</code>（model, view, view-model) 优秀的编程模型规范的启发,</p>
-<img src="/2020/11/29/Hello-State/mvvm.jpg" title="This is mvvm an image">
-<p>同时结合了<strong>组件化</strong>的先进理念，自然而然地驱使开发者将整个WEB应用抽象分离到一个一个组件的颗粒度， 当一个应用不断被组件化抽象，小到一个按钮，大到一个页面，每个组件本身就是一个个独立的 <code>vm</code> 单元。</p>
-<img src="/2020/11/29/Hello-State/components.png" title="This is components an image">
-<p>在 <a href="https://cn.vuejs.org/v2/guide/single-file-components.html" target="_blank" rel="noopener">SFC (single-file components)</a> 单文件组件的开发范式下，每个 <code>*.vue</code> 文件就是一个 <code>vm</code> ， <code>&lt;template&gt;...&lt;/template&gt;</code> 可以理解为 <code>vm</code> 中的 <code>v</code> ；而  <code>&lt;style&gt;&lt;style&gt;</code> 可以理解为 <code>vm</code> 中的 <code>m</code>的样式控制部分，<code>&lt;script&gt;&lt;/script&gt;</code> 可以理解为 <code>vm</code>中的 <code>m</code>的逻辑和数据部分, 另外框架底层实现了一个 <code>MVVM</code> 模型中的“绑定器” ，通过开发者对每个视图模型的声明式编程来驱动程序的视图更新。<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// *.vue</span></span><br><span class="line">vm</span><br><span class="line">├── v <span class="comment">// view</span></span><br><span class="line">│   └── template</span><br><span class="line">└── m <span class="comment">// model</span></span><br><span class="line">    ├── style</span><br><span class="line">    └── script</span><br><span class="line">        ├── data</span><br><span class="line">        │   ├── data()&#123;&#125;</span><br><span class="line">        │   └── computed:&#123;&#125;</span><br><span class="line">        └── logic</span><br><span class="line">            ├── lifecycle-hooks <span class="comment">// created,...</span></span><br><span class="line">            ├── watch:&#123;&#125;</span><br><span class="line">            └── methods&#123;&#125;</span><br><span class="line"><span class="comment">// 这种“奇怪的结构“思维，源于笔者入门编程时，深受 `MVC`（model, view, controller）编程模型启蒙式的“洗脑”，应用程序分层的思维早已根深蒂固</span></span><br></pre></td></tr></table></figure></p>
-<p>如此，开发者管理维护单个组件（<code>vm</code> 实例）本身，确实可以做到非常高效、清晰，<br>但是随着应用迭代，不知不觉，整个应用也变成了庞大的 “vm” 集合， 相隔层级较深的组件与组件之间可能形成了较长的通信路径。</p>
-<p>而 <code>Vue</code> 本身内置的数据流管理方案有限， <code>props</code>(其实本质就像一个函数定义的参数), <code>event emit</code> 等其实在复杂场景发挥有限，不适合长路径的通信，无法支撑组织管理整个”前端应用“的状态，虽然又不是不能用，但是要追求合理可维护性则显的捉襟见肘。</p>
-<p>另外，在整个前端应用生命周期下，数据既可能来源服务端接口通信，有可能来源于用户的交互操作，还有可能来源与组件之间的通信变更等，依托”绑定器“，不同流向的数据不断双向交织，并且如“化学反应”般不断产生“次生”数据，随着应用逐渐壮大的同时，形成的一张极其庞大的数据“网”笼罩着前端开发者，应用也变得越来越难以维护，开发者顿时失去了 MMVM 分层模式带来的舒适的开发体验，前端应用似乎也迎来了生命周期的”软件危机“，变的危如累卵，应用的故障将在任何时候任何地方变的一触即发。</p>
-<p>如何再次贯彻 MV* 的模式思想？是否有办法再次将整个前端应用如”上帝视角“般的分层？前端开发者如何再次破局，突破瓶颈，拯救”软件危机“？</p>
-<a id="more"></a>
-<h1 id="Flux"><a href="#Flux" class="headerlink" title="Flux"></a><a href="https://facebook.github.io/flux/" target="_blank" rel="noopener">Flux</a></h1><p>答案是肯定的，就在彼时，“状态管理”的思想横空出世也顺利成章（其实万变不离其宗，依然是编程模式，依然是分层的思想），将前端应用着实变成了一部“状态机”，管理好状态，即是管理好了应用。</p>
-<p>依然是前端界风向标 <code>Facebook</code> 首当其冲，引入经典的编程思想，在前端生态提出了 <code>Flux</code> 设计思想, 「状态管理」也由此慢慢在前端生态大行其道，可谓一发不可收拾， <a href="https://redux.js.org/" target="_blank" rel="noopener">redux</a>、<a href="https://mobx.js.org/README.html" target="_blank" rel="noopener">mobx</a>、<a href="https://dvajs.com/" target="_blank" rel="noopener">dvajs</a>、<a href="https://rematchjs.org/" target="_blank" rel="noopener">rematchjs</a> 、 <a href="https://vuex.vuejs.org/" target="_blank" rel="noopener">vuex</a> 等优秀的状态管理方案，也如雨后春笋般纷纷涌现，成为前端开发者的福音。</p>
-<img src="/2020/11/29/Hello-State/flux.jpg" title="This is flux an image">
-<ul>
-<li>View： 视图层</li>
-<li>Action（动作）：视图层发出的消息（比如mouseClick）</li>
-<li>Dispatcher（派发器）：用来接收Actions、执行回调函数</li>
-<li>Store（数据层）：用来存放应用的状态，一旦发生变动，就提醒Views要更新页面</li>
-</ul>
-<p>用户访问 <code>View</code>, <code>View</code> 发出用户的 <code>Action</code>, <code>Dispatcher</code> 收到 <code>Action</code>, 要求 <code>Store</code> <code>进行相应的更新，可能是从服务端获取新数据，可能是从其他组件获取其他组件数据，Store</code> 根据一系列业务逻辑更新后，发出一个 <code>“change”</code> 事件， <code>View</code> 收到 <code>“change”</code> 事件后，最终呈现更新后的 <code>View</code>.<br>整个应用改变的过程，数据永远来源于 <code>Store</code>, 形成<strong>单一数据源</strong>，有效的将交织的数据流梳理清理，不用去管数据流在 <code>Store</code> 前是什么，导致应用突变的逻辑永远只存在 <code>Store</code> 中，开发只需要关注 <code>Store</code> 就能有效的洞察应用的改变逻辑，应用的可维护性得到了大大跃升。<br>对于开发者过度分离，导致 <code>Store</code> 过于臃肿，完全可以模块化 <code>Store</code> 后，通过与组件的生命周期保持同步，实现 <code>Store</code> 模块的动态异步的加载与卸载<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Vue CLI "SFC" Example</span></span><br><span class="line">src</span><br><span class="line">├── components <span class="comment">// 通用组件</span></span><br><span class="line">├── container <span class="comment">// 容器组件</span></span><br><span class="line">│   ├── index.vue <span class="comment">// App.vue</span></span><br><span class="line">│   ├── Hello <span class="comment">// Hello 组件</span></span><br><span class="line">│   │   ├── components <span class="comment">// Hello 组件独有子组件</span></span><br><span class="line">│   │   │   └── ...</span><br><span class="line">│   │   ├── api <span class="comment">// Hello 组件独有 api</span></span><br><span class="line">│   │   ├── store <span class="comment">// Hello 组件独有的状态，为了将状态从 vm  中二次分层，并且保持与 vm 生命周期同步，动态注册卸载</span></span><br><span class="line">│   │   └── index.vue <span class="comment">// Hello 组件 vm</span></span><br><span class="line">│   └── ... <span class="comment">// other compoents</span></span><br><span class="line">├── store <span class="comment">// 状态模块（状态实例的初始化以及全局等需要共享的状态）</span></span><br><span class="line">├── service <span class="comment">// 网络服务 (通用的 api、白名单配置以及 请求封装)</span></span><br><span class="line">├── settings <span class="comment">// 程序设置</span></span><br><span class="line">├── utils <span class="comment">// 工具</span></span><br><span class="line">├── mixins <span class="comment">// 混入</span></span><br><span class="line">├── main.js <span class="comment">//程序初始化入口</span></span><br><span class="line">└── ...</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span></span></span><br><span class="line"><span class="comment"> * store 的异步加载:</span></span><br><span class="line"><span class="comment"> * 1. https://vuex.vuejs.org/guide/modules.html#dynamic-module-registration</span></span><br><span class="line"><span class="comment"> * 2. https://medium.com/<span class="doctag">@arliber</span>/vuex-next-steps-namespaces-and-dynamic-modules-92ea23a0ee9a</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h1><p>一个原汁原味的 <a href="https://facebook.github.io/flux/" target="_blank" rel="noopener">Flux</a> 例子</p>
-<h2 id="Dispatch-Actions"><a href="#Dispatch-Actions" class="headerlink" title="Dispatch Actions"></a>Dispatch Actions</h2><ol>
-<li><p>初始化派发器</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Facebook Dispatcher Library.</span></span><br><span class="line"><span class="comment">// see: https://facebook.github.io/flux/docs/dispatcher</span></span><br><span class="line"><span class="keyword">var</span> AppDispatcher = <span class="keyword">new</span> Dispatcher();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>页面中有个对列表新增一个 item 的按钮</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">&lt;button onClick=&#123; <span class="keyword">this</span>.createNewItem &#125;&gt;New Item&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>按钮上绑定了一个点击事件 <code>createNewItem</code> ，发送一个 <code>new-item</code> 的 <code>&quot;action&quot;</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">createNewItem: <span class="function"><span class="keyword">function</span>(<span class="params"> evt </span>) </span>&#123;</span><br><span class="line">    AppDispatcher.dispatch(&#123;</span><br><span class="line">        actionName: <span class="string">'new-item'</span>,</span><br><span class="line">        newItem: &#123; <span class="attr">name</span>: <span class="string">'Stan'</span> &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="Store-Responds"><a href="#Store-Responds" class="headerlink" title="Store Responds"></a>Store Responds</h2><ol>
-<li><p>列表 Store</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ListStore = &#123;</span><br><span class="line">    items: []</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>派发器上注册一个响应的处理器</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">AppDispatcher.register( <span class="function"><span class="keyword">function</span>(<span class="params"> payload </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span>( payload.actionName ) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'new-item'</span>:</span><br><span class="line">            ListStore.items.push( payload.newItem );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">				……</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>至此，视图可以通过派发器触发 <code>Store</code> 更新.</p>
-<h2 id="Store-Emits-Event"><a href="#Store-Emits-Event" class="headerlink" title="Store Emits Event"></a>Store Emits Event</h2><blockquote>
-<p>Can  use <a href="http://notes.jetienne.com/2011/03/22/microeventjs.html" target="_blank" rel="noopener">MicroEvent.js</a> this is easy</p>
-</blockquote>
-<p>接下来就是在 <code>Store</code> 中处理具体的业务逻辑，那么最终需要再触发 <code>View</code> 更新。<br>现在很多优秀的状态管理方案，如 <code>Redux</code>, <code>Vuex</code> 等已经底层实现自动触发视图更新，只需要在初始化应用的时候去将应用于你的 <code>Store</code> 绑定即可, 原理其实类似 <code>jQuery</code> 时代的 <code>trigger</code> .</p>
-<ol>
-<li><p>赋予 <code>Store</code> 发送事件的能力</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">MicroEvent.mixin( ListStore );</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>Store</code> 数据更新后同步发送 <code>change</code> 事件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">case</span> <span class="string">'new-item'</span>:</span><br><span class="line">            ListStore.items.push( payload.newItem );</span><br><span class="line">            <span class="comment">// Tell the view store changed!</span></span><br><span class="line">            ListStore.trigger( <span class="string">'change'</span> );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="View-Responds"><a href="#View-Responds" class="headerlink" title="View Responds"></a>View Responds</h2><ol>
-<li><p>组件初始化订阅 <code>change</code> 事件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">componentDidMount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ListStore.bind( <span class="string">'change'</span>, <span class="keyword">this</span>.listChanged );</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>组件初始化注销监听 <code>change</code> 事件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">componentWillUnmount: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    ListStore.unbind( <span class="string">'change'</span>, <span class="keyword">this</span>.listChanged );</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>change</code> 事件只做一件事情，触发组件视图更新</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line">listChanged: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.forceUpdate();</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>React jsx render</p>
-<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    render: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// Remember, ListStore is global!</span></span><br><span class="line">        <span class="keyword">var</span> items = ListStore.getAll();</span><br><span class="line">        <span class="comment">// Build list items markup by looping</span></span><br><span class="line">        <span class="comment">// over the entire list</span></span><br><span class="line">        <span class="keyword">var</span> itemHtml = items.map( <span class="function"><span class="keyword">function</span>(<span class="params"> listItem </span>) </span>&#123;</span><br><span class="line">            <span class="comment">// "key" is important, should be a unique</span></span><br><span class="line">            <span class="comment">// identifier for each list item</span></span><br><span class="line">            <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span> <span class="attr">key</span>=<span class="string">&#123;</span> <span class="attr">listItem.id</span> &#125;&gt;</span></span></span><br><span class="line"><span class="xml">                &#123; listItem.name &#125;</span></span><br><span class="line"><span class="xml">              <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span>;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line">            &lt;ul&gt;</span><br><span class="line">                &#123; itemHtml &#125;</span><br><span class="line"><span class="xml">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;</span> <span class="attr">this.createNewItem</span> &#125;&gt;</span>New Item<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="One-More-Things"><a href="#One-More-Things" class="headerlink" title="One More Things"></a>One More Things</h2><p><code>actions</code> 可以统一的组织，一个 <code>store</code> 可以有许多 <code>actions</code><br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ListActions = &#123;</span><br><span class="line">    add: <span class="function"><span class="keyword">function</span>(<span class="params"> item </span>) </span>&#123;</span><br><span class="line">        AppDispatcher.dispatch(&#123;</span><br><span class="line">            eventName: <span class="string">'new-item'</span>,</span><br><span class="line">            newItem: item</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// other actions...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="End-Thanks"><a href="#End-Thanks" class="headerlink" title="End, Thanks!"></a>End, Thanks!</h1><p>现如今众多的状态管理方案以其「丰富的<code>API</code>」以及「语法糖」设计, 开箱即用，帮助开发者保证了高效快速开发的同时依然可以随心所欲的对应用编程合理地分层，当然，凡事过犹不及，对于程序的分层设计、状态管理也是一样的，需要开发者在实际项目开发中三思后实施。</p>
-<p>至此，碎碎念地表达了拥抱 <code>State Management</code>，如有不当，恭请指正～。</p>
-]]></content>
-      <categories>
-        <category>Chat Aimlessly</category>
-      </categories>
-      <tags>
-        <tag>get started</tag>
-        <tag>web</tag>
-        <tag>state</tag>
       </tags>
   </entry>
 </search>
