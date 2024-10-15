@@ -28,13 +28,13 @@
 <meta property="og:site_name" content="Just Notes">
 <meta property="og:description" content="Edit hosts filelocation: /etc/hosts 123# e.g:# add a local domain127.0.0.1 xllily.com Install nginx123456apt-get updateapt-get install nginx# create folder &apos;ssl&apos; for subsequent usecd /etc/nginxmkdir s">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://xllily.github.io/images/setup-https-local-dev-env/shot1.png">
-<meta property="og:image" content="https://xllily.github.io/images/setup-https-local-dev-env/shot2.png">
-<meta property="og:updated_time" content="2024-10-14T10:47:04.978Z">
+<meta property="og:image" content="https://xllily.github.io/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/shot1.png">
+<meta property="og:image" content="https://xllily.github.io/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/shot2.png">
+<meta property="og:updated_time" content="2024-10-15T01:50:46.370Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="setup HTTPS(SSL) on local development environment (Ubuntu)">
 <meta name="twitter:description" content="Edit hosts filelocation: /etc/hosts 123# e.g:# add a local domain127.0.0.1 xllily.com Install nginx123456apt-get updateapt-get install nginx# create folder &apos;ssl&apos; for subsequent usecd /etc/nginxmkdir s">
-<meta name="twitter:image" content="https://xllily.github.io/images/setup-https-local-dev-env/shot1.png">
+<meta name="twitter:image" content="https://xllily.github.io/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/shot1.png">
 
 <link rel="canonical" href="https://xllily.github.io/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/">
 
@@ -232,7 +232,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-14 18:47:04" itemprop="dateModified" datetime="2024-10-14T18:47:04+08:00">2024-10-14</time>
+                <time title="Modified: 2024-10-15 09:50:46" itemprop="dateModified" datetime="2024-10-15T09:50:46+08:00">2024-10-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -308,13 +308,13 @@
 <h1 id="Import-the-crt-to-the-browser-and-restart"><a href="#Import-the-crt-to-the-browser-and-restart" class="headerlink" title="Import the crt to the browser and restart"></a>Import the <code>crt</code> to the browser and restart</h1><p>Chrome:</p>
 <p><code>Setting</code></p>
 <p>-&gt; <code>(Advanced) Manage Certificates</code></p>
-<p>-&gt; <code>toggle to the &#39;Authorities&#39;(Tab)</code><br><img src="/images/setup-https-local-dev-env/shot1.png" alt></p>
+<p>-&gt; <code>toggle to the &#39;Authorities&#39;(Tab)</code><br><img src="/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/shot1.png" title="This is an image"></p>
 <p>-&gt; <code>Import</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># eg: import the</span></span><br><span class="line">/etc/nginx/ssl/xllily.com_CA.pem</span><br></pre></td></tr></table></figure>
 <p>-&gt; <code>Restart the browser</code></p>
 <h1 id="Configure-nginx-and-reload"><a href="#Configure-nginx-and-reload" class="headerlink" title="Configure nginx and reload"></a>Configure nginx and reload</h1><p>Edit <code>/etc/nginx/nginx.conf</code></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># ...</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line"># ...</span><br><span class="line">	server &#123;</span><br><span class="line">		listen <span class="number">80</span>;</span><br><span class="line">		listen <span class="number">443</span> ssl http2;</span><br><span class="line">		server_name xllily.com;</span><br><span class="line">		ssl_certificate /etc/nginx/ssl/xllily.com.crt;</span><br><span class="line">		ssl_certificate_key /etc/nginx/ssl/xllily.com.key;</span><br><span class="line">		location / &#123;</span><br><span class="line">			root html;</span><br><span class="line">			index index.html index.htm;</span><br><span class="line">            <span class="meta"># you can open the proxy</span></span><br><span class="line">            # proxy_pass http:<span class="comment">//....;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"># ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># ...</span><br></pre></td></tr></table></figure>
-<h1 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h1><p><img src="/images/setup-https-local-dev-env/shot2.png" alt></p>
+<h1 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h1><img src="/2020/03/09/setup-HTTPS(SSL)-on-local-development-environment/shot2.png" title="This is an image">
 
     </div>
 
